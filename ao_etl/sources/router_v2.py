@@ -15,6 +15,13 @@ from .marches_online_v2 import MarchesOnlineExtractor
 from .place_numeric_v2 import PlaceNumericExtractor
 from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
 
+# Import de la fonction de construction d'URL (quand disponible)
+try:
+    from ao_etl.pipeline.consolidate import build_market_url
+    HAS_BUILD_MARKET_URL = True
+except ImportError:
+    HAS_BUILD_MARKET_URL = False
+
 
 def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
     """
@@ -73,30 +80,27 @@ def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
     if result.review_needed:
         status = ExtractionStatus.PARTIAL
     
-    # Construire l'URL source selon la plateforme
+    # Construire l'URL source avec build_market_url (si disponible) ou fallback
     url_source = ""
-    if result.source_type == "FRANCE_MARCHES":
-        # Fallback France Marchés: nom de fichier sans .html
-        url_source = f"https://www.francemarches.com/appel-offre/{result.raw.get('filename', '').replace('.html', '')}"
-    elif result.source_type == "MARCHES_ONLINE":
-        # Pour Marchés Online, l'URL doit être dans les notes ou extraite du HTML
-        # Chercher une URL dans les notes
-        for note in result.extraction_notes:
-            if "http" in note:
-                import re
-                urls = re.findall(r'https?://[^\s"\']+', note)
-                if urls:
-                    url_source = urls[0]
-                    break
-    elif result.source_type == "PLACE_NUMERIC":
-        # Fallback PLACE: reconstruire depuis l'ID
-        filename = result.raw.get('filename', '')
-        import re
-        m = re.match(r'(\d+)\?orgAcronyme=([a-z0-9]+)', filename)
-        if m:
-            url_source = f"https://www.marches-publics.gouv.fr/app.php/entreprise/consultation/{m.group(1)}?orgAcronyme={m.group(2)}"
-    elif result.source_type == "JOUE":
-        # URL JOUE/TED est déjà construite dans l'extracteur
+    filename = result.raw.get('filename', '')
+    
+    if HAS_BUILD_MARKET_URL:
+        # Utiliser la fonction complète de consolidate.py
+        # Récupérer le HTML brut pour extraction canonical si disponible
+        html_content = result.raw.get('html_content', '')
+        
+        # Essayer d'abord l'URL extraite par l'extracteur
+        extracted_url = result.raw.get('url_source', '')
+        
+        market_url, url_source_type = build_market_url(
+            source_file=filename,
+            source_platform=result.source_type,
+            source_url=extracted_url if extracted_url else None,
+            html_content=html_content if html_content else None,
+        )
+        url_source = market_url or ""
+    else:
+        # Fallback: utiliser l'URL extraite par l'extracteur
         url_source = result.raw.get('url_source', '')
     
     return MarketData(
@@ -168,29 +172,30 @@ def detect_source_type(file_path: Path, html: str, soup: BeautifulSoup) -> str:
         "title-avis" in html_lower):
         return "MARCHES_ONLINE"
     
-    # 2. PLACE: format orgAcronyme avec "Détail de la consultation"
+    # 2. JOUE: Journal Officiel de l'Union Européenne (PRIORITAIRE - avant BOAMP)
+    # Car les fichiers JOUE peuvent contenir "nom officiel" qui trigger BOAMP
+    if (name.startswith("13joue") or 
+        "13/joue/" in html_lower or
+        "journal officiel de l'union européenne" in text or
+        "ted.europa.eu" in html_lower):
+        return "JOUE"
+    
+    # 3. PLACE: format orgAcronyme avec "Détail de la consultation"
     if "orgacronyme" in name or ("détail de la consultation" in text and "heure de paris" in text):
         return "PLACE_NUMERIC"
     
-    # 3. BOAMP: structure avec sections numérotées et labels (marches-publics.gouv.fr)
+    # 4. BOAMP: structure avec sections numérotées et labels (marches-publics.gouv.fr)
     if ("marches-publics.gouv.fr" in html_lower or 
         ("identifiant interne" in text and 
          "nom officiel" in text and 
          "section 1 -" in text)):
         return "BOAMP_XML"
     
-    # 4. France Marchés: texte légal structuré
+    # 5. France Marchés: texte légal structuré
     if ("intitulé de l'appel d'offre public" in text or 
         "nom et adresse officiels de l'organisme acheteur public" in text or
         "weboramaitemtag" in html_lower):
         return "FRANCE_MARCHES"
-    
-    # 5. JOUE: Journal Officiel de l'Union Européenne (13/joue/XXXXXXXX)
-    if (name.startswith("13joue") or 
-        "13/joue/" in html_lower or
-        "journal officiel de l'union européenne" in text or
-        "ted.europa.eu" in html_lower):
-        return "JOUE"
     
     # Fallback par patterns de nom de fichier
     if "boamp" in name or name.startswith("3"):
@@ -254,4 +259,10 @@ def extract_from_html(file_path: Path, html: str):
     """
     context = build_context(file_path, html)
     extractor = get_extractor(context)
-    return extractor.extract()
+    result = extractor.extract()
+    
+    # Stocker le HTML brut et le nom de fichier pour build_market_url
+    result.raw['html_content'] = html
+    result.raw['filename'] = file_path.name
+    
+    return result

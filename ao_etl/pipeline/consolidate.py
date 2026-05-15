@@ -629,6 +629,34 @@ def build_market_url(
         # 2. canonical dans HTML ou URL publique explicite ?
         if canonical_url:
             return canonical_url, "canonical"
+        # 3. Fallback BOAMP: construire depuis le nom de fichier si pattern boamp
+        if "boamp" in sf.lower():
+            # Extraire l'ID du nom de fichier
+            import re
+            m = re.search(r'(\d+)', sf)
+            if m:
+                boamp_id = m.group(1)
+                return f"https://www.boamp.fr/avis/detail/{boamp_id}", "fallback_boamp"
+        return None, ""
+    
+    # ── JOUE ──
+    if platform == "JOUE":
+        # 1. source_url fiable ?
+        if _is_reliable_url(existing):
+            return existing, "source_url"
+        # 2. canonical dans HTML ?
+        if canonical_url:
+            return canonical_url, "canonical"
+        # 3. Fallback JOUE/TED: construire depuis le nom de fichier
+        # Pattern: 13joueXXXXXXXX-YYYY-...
+        import re
+        m = re.match(r"13joue(\d{8,12})", sf, re.I)
+        if m:
+            numero = m.group(1)
+            # Format TED: 2026/S 123-456789
+            if len(numero) >= 10:
+                annee = numero[:2] if numero.startswith('20') else numero[2:4]
+                return f"https://ted.europa.eu/udl?uri=TED:NOTICE:{numero}-20{annee}:TEXT:FR", "fallback_joue"
         return None, ""
 
     # ── Plateformes non reconnues : source_url si fiable, sinon None ──
