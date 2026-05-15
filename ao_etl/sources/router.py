@@ -1,15 +1,25 @@
 """Router de détection et d'extraction par source."""
 
+import os
 import re
 from pathlib import Path
 from typing import Optional
 
 from bs4 import BeautifulSoup
 
-from ao_etl.models.market import MarketData, SourceType
+from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
 from ao_etl.sources.base import BaseExtractor
 
-# Import des extracteurs spécifiques (à créer)
+# Détection de la version d'extracteur (legacy ou v2)
+EXTRACTOR_VERSION = os.environ.get('AO_EXTRACTOR_VERSION', 'legacy').lower()
+
+if EXTRACTOR_VERSION == 'v2':
+    # Version 2: extracteurs modernes avec pont vers MarketData
+    from ao_etl.sources.router_v2 import extract_for_source_v2 as _extract_v2
+else:
+    _extract_v2 = None
+
+# Import des extracteurs legacy (par défaut)
 from ao_etl.sources.france_marches import FranceMarchesExtractor
 from ao_etl.sources.marches_online import MarchesOnlineExtractor
 from ao_etl.sources.place_numeric import PlaceNumericExtractor
@@ -92,9 +102,22 @@ def extract_for_source(filepath: Path) -> MarketData:
         
     Returns:
         Données extraites (même partielles en cas d'erreur)
+        
+    Note:
+        Si AO_EXTRACTOR_VERSION=v2, utilise les extracteurs V2 avec pont vers MarketData.
+        Sinon, utilise les extracteurs legacy.
     """
     path = Path(filepath)
     
+    # Si version V2 est configurée, utiliser le routeur V2
+    if EXTRACTOR_VERSION == 'v2' and _extract_v2 is not None:
+        try:
+            return _extract_v2(path)
+        except Exception as e:
+            # En cas d'erreur V2, fallback sur legacy
+            pass
+    
+    # Version legacy (par défaut)
     try:
         content = path.read_text(encoding='utf-8', errors='ignore')
         soup = BeautifulSoup(content, 'html.parser')
