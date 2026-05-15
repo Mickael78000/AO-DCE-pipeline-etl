@@ -258,7 +258,15 @@ PRIORITÉ DES SOURCES (décroissante)
 P1 — Champs csv_* : valeurs extraites de façon déterministe. À préserver sauf contradiction forte dans le HTML.
 P2 — extraction_notes : signaux de l'extracteur Python. Fiables si présents.
 P3 — Signaux html_* : extraits ciblés du HTML source.
-P4 — Inférence contrôlée par règle fermée (voir taxonomies ci-dessous).
+P4 — source_url : Si une URL valide est présente dans source_url, tu peux l'utiliser pour compléter les données manquantes (estimation, durée, localisation, etc.) en analysant le contenu de la page si nécessaire.
+P5 — Inférence contrôlée par règle fermée (voir taxonomies ci-dessous).
+
+UTILISATION DE L'URL SOURCE:
+- Si source_url contient une URL valide (HTTPS) et que des champs csv_* sont vides ou "missing", utilise cette URL pour compléter les informations manquantes.
+- Pour France Marchés: https://www.francemarches.com/appel-offre/{slug}
+- Pour Marchés Online: https://www.marchesonline.com/...
+- Pour BOAMP: https://www.boamp.fr/avis/detail/{id}
+- Pour TED/JOUE: https://ted.europa.eu/udl?uri=TED:NOTICE:{numero}-{annee}:TEXT:FR
 
 ════════════════════════════════════════════
 TAXONOMIES FERMÉES (valeurs autorisées uniquement)

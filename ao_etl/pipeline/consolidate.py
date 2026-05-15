@@ -694,6 +694,11 @@ def _consolidate_row(
         source_file, platform, source_url=existing_url, html_content=html_content
     )
 
+    # Mettre à jour la row avec l'URL calculée pour que build_resolved_hints l'utilise
+    if market_url and (not existing_url or existing_url == "-"):
+        row["URL source HTTPS"] = market_url
+        existing_url = market_url
+
     def _attach_market_url(rec: ConsolidatedRecord, url_src: str = "") -> None:
         """Injecte market_url dans source_trace et trace sa provenance.
 
