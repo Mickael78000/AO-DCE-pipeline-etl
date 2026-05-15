@@ -58,7 +58,11 @@ def detect_source(filepath: Path, content: str) -> SourceType:
     if name.startswith('26-') or 'boamp' in name:
         return SourceType.BOAMP_XML
     
-    # 5. Fallback: standard
+    # 5. JOUE: nom commence par "13" ou contient "joue"
+    if name.startswith('13') or 'joue' in name:
+        return SourceType.BOAMP_XML  # JOUE mapped to BOAMP for legacy
+    
+    # 6. Fallback: standard
     return SourceType.STANDARD
 
 

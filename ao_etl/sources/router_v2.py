@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from .base_v2 import ExtractionContext, ExtractionResult
 from .boamp_xml_v2 import BoampExtractor
 from .france_marches_v2 import FranceMarchesExtractor
+from .joue_v2 import JoueExtractor
 from .marches_online_v2 import MarchesOnlineExtractor
 from .place_numeric_v2 import PlaceNumericExtractor
 from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
@@ -34,6 +35,7 @@ def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
         "BOAMP_XML": SourceType.BOAMP_XML,
         "FRANCE_MARCHES": SourceType.FRANCE_MARCHES,
         "MARCHES_ONLINE": SourceType.MARCHES_ONLINE,
+        "JOUE": SourceType.BOAMP_XML,  # JOUE mapped to BOAMP for legacy compatibility
         "STANDARD": SourceType.STANDARD,
         "UNKNOWN": SourceType.UNKNOWN,
     }
@@ -93,6 +95,9 @@ def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
         m = re.match(r'(\d+)\?orgAcronyme=([a-z0-9]+)', filename)
         if m:
             url_source = f"https://www.marches-publics.gouv.fr/app.php/entreprise/consultation/{m.group(1)}?orgAcronyme={m.group(2)}"
+    elif result.source_type == "JOUE":
+        # URL JOUE/TED est déjà construite dans l'extracteur
+        url_source = result.raw.get('url_source', '')
     
     return MarketData(
         filename=result.raw.get('filename', ''),
@@ -180,12 +185,22 @@ def detect_source_type(file_path: Path, html: str, soup: BeautifulSoup) -> str:
         "weboramaitemtag" in html_lower):
         return "FRANCE_MARCHES"
     
+    # 5. JOUE: Journal Officiel de l'Union Européenne (13/joue/XXXXXXXX)
+    if (name.startswith("13joue") or 
+        "13/joue/" in html_lower or
+        "journal officiel de l'union européenne" in text or
+        "ted.europa.eu" in html_lower):
+        return "JOUE"
+    
     # Fallback par patterns de nom de fichier
     if "boamp" in name or name.startswith("3"):
         return "BOAMP_XML"
     
     if "s2d" in name:
         return "PLACE_NUMERIC"
+    
+    if "joue" in name or name.startswith("13"):
+        return "JOUE"
     
     return "UNKNOWN"
 
@@ -206,6 +221,7 @@ def get_extractor(context: ExtractionContext):
         "BOAMP_XML": BoampExtractor,
         "FRANCE_MARCHES": FranceMarchesExtractor,
         "MARCHES_ONLINE": MarchesOnlineExtractor,
+        "JOUE": JoueExtractor,
     }
     
     extractor_cls = mapping.get(source_type, FranceMarchesExtractor)

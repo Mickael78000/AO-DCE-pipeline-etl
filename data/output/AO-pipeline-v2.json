@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-15T18:37:29.486835",
+  "timestamp": "2026-05-15T19:24:42.617318",
   "version": "2.0.0",
   "files_discovered": 61,
   "files_by_category": {
@@ -20,12 +20,25 @@
   "rows_updated": 1,
   "rows_added": 60,
   "total_rows": 61,
-  "validation_passed": true,
-  "unique_references": 61,
-  "duplicate_references": 0,
+  "validation_passed": false,
+  "unique_references": 60,
+  "duplicate_references": 1,
   "buyer_completion_rate": 100.0,
-  "new_rows_with_issues": 0,
-  "anomalies": [],
+  "new_rows_with_issues": 30,
+  "anomalies": [
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "PM BROKER 26-15",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "PM BROKER 26-15",
+      "message": "Référence dupliquée (2 occurrences)"
+    }
+  ],
   "output_csv": "data/output/AO-pipeline-v2.csv",
   "output_report_json": "data/output/AO-pipeline-v2.json"
 }

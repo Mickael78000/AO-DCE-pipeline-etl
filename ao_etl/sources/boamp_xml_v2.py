@@ -55,6 +55,9 @@ class BoampExtractor(BaseExtractor):
         result.deadline = self._deadline(text)
         result.location = self._location(text)
         
+        # 4. URL source (BOAMP)
+        result.raw['url_source'] = self._build_url(text)
+        
         # 4. Sélectionner le meilleur titre
         result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
         for trace in traces:
@@ -119,3 +122,11 @@ class BoampExtractor(BaseExtractor):
         
         parts = [p for p in [city, cp, nuts] if p]
         return " / ".join(parts) if parts else ""
+    
+    def _build_url(self, text: str) -> str:
+        """Construit l'URL BOAMP depuis l'identifiant."""
+        identifiant = self._value_after_label(text, "Identifiant interne")
+        if identifiant:
+            # URL BOAMP: https://www.boamp.fr/avis/detail/[identifiant]
+            return f"https://www.boamp.fr/avis/detail/{identifiant}"
+        return ""

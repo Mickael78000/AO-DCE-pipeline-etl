@@ -105,9 +105,14 @@ class MarchesOnlineExtractor(BaseExtractor):
                 score=10  # Score faible car souvent catégorie
             ))
         
-        # 4. Localisation et date
+        # 4. Localisation, date, estimation, durée
         result.location = self._extract_location(soup, text)
         result.deadline = self._extract_deadline(soup, text)
+        result.estimation = self._extract_estimation(soup, text)
+        result.duration = self._extract_duration(soup, text)
+        
+        # 5. URL source (Marchés Online)
+        result.raw['url_source'] = self._build_url()
         
         # 5. Sélectionner le meilleur titre
         result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
@@ -176,4 +181,70 @@ class MarchesOnlineExtractor(BaseExtractor):
         if m:
             return normalize_text(m.group(1))
         
+        return ""
+    
+    def _extract_estimation(self, soup, text: str) -> str:
+        """Extrait l'estimation du marché."""
+        # Pattern 1: Estimation globale
+        m = re.search(
+            r"Estimation\s*(?:globale)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
+            text,
+            re.I,
+        )
+        if m:
+            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        
+        # Pattern 2: Valeur totale
+        m = re.search(
+            r"Valeur\s*(?:totale|estim[ée]e)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
+            text,
+            re.I,
+        )
+        if m:
+            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        
+        # Chercher dans les lots
+        lots = re.findall(
+            r"Lot\s*\d+.*?(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€)",
+            text,
+            re.I,
+        )
+        if lots:
+            # Somme des lots si possible
+            total = sum(int(l.replace(' ', '').replace(',', '').split('.')[0]) for l in lots)
+            return f"{total} EUR"
+        
+        return ""
+    
+    def _extract_duration(self, soup, text: str) -> str:
+        """Extrait la durée du marché."""
+        # Pattern: Durée en mois/ans
+        m = re.search(
+            r"Dur[ée]e\s*[:\-]?\s*(\d+(?:\.\d+)?)\s*(?:mois|ans?)",
+            text,
+            re.I,
+        )
+        if m:
+            return m.group(0)
+        
+        # Pattern: Période
+        m = re.search(
+            r"P[ée]riode\s*[:\-]?\s*(\d+)\s*(?:mois|ans?)",
+            text,
+            re.I,
+        )
+        if m:
+            return m.group(0)
+        
+        return ""
+    
+    def _build_url(self) -> str:
+        """Construit l'URL Marchés Online depuis le nom de fichier."""
+        name = self.filename()
+        # Pattern: ao-XXXXX-X.html
+        m = re.match(r"ao-(\d+)-\d+", name, re.I)
+        if m:
+            ref = m.group(1)
+            # URL type: https://www.marchesonline.com/appel-offre/ao-XXXXX-1
+            return f"https://www.marchesonline.com/appel-offre/ao-{ref}-1"
         return ""

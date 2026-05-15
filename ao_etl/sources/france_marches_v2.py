@@ -75,7 +75,12 @@ class FranceMarchesExtractor(BaseExtractor):
             or self._guess_reference_from_filename()
         )
         result.deadline = self._deadline(text)
-        result.location = self._label_value(text, "Lieu principal d'exécution du marché")
+        result.location = self._location(text)
+        result.estimation = self._estimation(text)
+        result.duration = self._duration(text)
+        
+        # 4. URL source (France Marchés)
+        result.raw['url_source'] = self._build_url()
         
         # 4. Sélectionner le meilleur titre
         result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
@@ -206,6 +211,69 @@ class FranceMarchesExtractor(BaseExtractor):
         
         return result
 
+    def _location(self, text: str) -> str:
+        """Extrait la localisation d'exécution."""
+        # Essayer plusieurs labels pour la localisation
+        location = (
+            self._label_value(text, "Lieu principal d'exécution du marché")
+            or self._label_value(text, "Lieu d'exécution")
+            or self._label_value(text, "Département")
+        )
+        return location
+    
+    def _estimation(self, text: str) -> str:
+        """Extrait l'estimation du marché."""
+        # Pattern 1: Valeur estimée du marché / Montant
+        m = re.search(
+            r"Valeur estim[ée]e(?:\s*totale)?\s*du\s*march[ée]\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
+            text,
+            re.I,
+        )
+        if m:
+            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        
+        # Pattern 2: Montant total / Total
+        m = re.search(
+            r"Montant total\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
+            text,
+            re.I,
+        )
+        if m:
+            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        
+        # Pattern 3: Juste le nombre avec EUR/€
+        m = re.search(r"(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€)", text, re.I)
+        if m:
+            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        
+        return ""
+    
+    def _duration(self, text: str) -> str:
+        """Extrait la durée du marché."""
+        # Pattern: Durée ou période
+        m = re.search(
+            r"Dur[ée]e(?:\s*totale)?\s*:?\s*(\d+(?:\s*mois|\s*ans?))",
+            text,
+            re.I,
+        )
+        if m:
+            return m.group(1)
+        
+        # Pattern: Période de
+        m = re.search(r"P[ée]riode\s*:?\s*(\d+\s*(?:mois|ans?))", text, re.I)
+        if m:
+            return m.group(1)
+        
+        return ""
+    
+    def _build_url(self) -> str:
+        """Construit l'URL France Marchés depuis le nom de fichier."""
+        name = self.filename()
+        if name.endswith(".html"):
+            slug = name[:-5]
+            return f"https://www.francemarches.com/appel-offre/{slug}"
+        return ""
+    
     def _guess_reference_from_filename(self) -> str:
         """Extrait une référence depuis le nom de fichier."""
         name = self.filename()
