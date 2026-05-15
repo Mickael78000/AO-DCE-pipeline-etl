@@ -1,0 +1,3533 @@
+{
+  "schema_version": "v4",
+  "validation_mode": "strict",
+  "closed_value_lists": {
+    "categorie_normee": [
+      "Etat",
+      "collectivite_territoriale",
+      "etablissement_public",
+      "EPIC",
+      "EPA",
+      "GIP",
+      "semi_public",
+      "autre",
+      "non_precise"
+    ],
+    "type_marche_norme": [
+      "services",
+      "fournitures",
+      "travaux",
+      "prestations_intellectuelles",
+      "accord_cadre_bc",
+      "accord_cadre_mixte",
+      "marche_composite",
+      "non_precise"
+    ],
+    "procedure_regime": [
+      "droit_commun",
+      "defense_et_securite",
+      "autre",
+      "non_precise"
+    ],
+    "allotissement_statut": [
+      "alloti",
+      "non_alloti",
+      "partiellement_alloti",
+      "non_precise"
+    ],
+    "statut_verification": [
+      "verifie",
+      "partiellement_verifie",
+      "non_verifie",
+      "ambigu"
+    ],
+    "niveau_confiance": [
+      "eleve",
+      "moyen",
+      "faible"
+    ],
+    "nature_montant": [
+      "global",
+      "estimation",
+      "plafond",
+      "minimum",
+      "non_precise"
+    ],
+    "preuve_niveau": [
+      "verifie",
+      "deduit",
+      "absent",
+      "non_precise"
+    ],
+    "ccag_mode_determination": [
+      "mention_directe",
+      "mention_bibliographie",
+      "deduit_type_marche",
+      "deduit_lot",
+      "non_precise"
+    ]
+  },
+  "montants": {
+    "rules": {
+      "require_distinct_fields": true,
+      "forbid_copy_estimate_into_maximum": true,
+      "forbid_copy_maximum_into_estimate": true,
+      "require_source_brute_for_numeric_values": true,
+      "require_nature_for_each_amount": true,
+      "require_currency_for_each_amount": true,
+      "allow_null_when_unknown": true
+    },
+    "fields": {
+      "global": {
+        "required": false,
+        "use_when": "Montant global explicite du marché",
+        "allowed_sources": [
+          "RC",
+          "CCAP",
+          "CCTP",
+          "annexe_financiere"
+        ]
+      },
+      "estime": {
+        "required": false,
+        "use_when": "Estimation économique explicite",
+        "source_priority": [
+          "RC",
+          "avis",
+          "DCE"
+        ]
+      },
+      "maximum": {
+        "required": false,
+        "use_when": "Plafond contractuel explicite",
+        "source_priority": [
+          "RC",
+          "CCAP",
+          "annexe_financiere"
+        ]
+      },
+      "minimum": {
+        "required": false,
+        "use_when": "Seuil minimal explicite",
+        "source_priority": [
+          "RC",
+          "CCAP",
+          "annexe_financiere"
+        ]
+      }
+    },
+    "market_types": {
+      "services": {
+        "default_amount_scope": "global"
+      },
+      "fournitures": {
+        "default_amount_scope": "global"
+      },
+      "travaux": {
+        "default_amount_scope": "global"
+      },
+      "prestations_intellectuelles": {
+        "default_amount_scope": "global"
+      },
+      "accord_cadre_bc": {
+        "default_amount_scope": "maximum"
+      },
+      "accord_cadre_mixte": {
+        "default_amount_scope": "split"
+      },
+      "marche_composite": {
+        "default_amount_scope": "split"
+      }
+    }
+  },
+  "composite_market_model": {
+    "enabled": true,
+    "required_fields": [
+      "composite_type",
+      "components",
+      "global_amount",
+      "component_amounts"
+    ],
+    "composite_type_values": [
+      "forfaitaire_plus_ac_bc",
+      "forfaitaire_plus_ac_marches_subsequents",
+      "ac_bc_plus_marches_subsequents",
+      "autre"
+    ],
+    "components": [
+      {
+        "component_id": "forfaitaire",
+        "component_type": "forfaitaire",
+        "amount_scope": "global",
+        "required": true
+      },
+      {
+        "component_id": "accord_cadre",
+        "component_type": "accord_cadre",
+        "amount_scope": "maximum",
+        "required": true
+      }
+    ],
+    "splitting_rules": {
+      "if_composite": "component_amounts must be populated",
+      "if_global_amount_known": "global_amount must be separate from component_amounts",
+      "if_component_missing": "set null and record conflict",
+      "if_ambiguous": "do not consolidate without explicit evidence"
+    }
+  },
+  "field_constraints": {
+    "ccag": {
+      "if_mentionne_false_then_principal_null": true,
+      "if_principal_non_null_then_mentionne_true": true,
+      "if_hypothesis_present_then_niveau_preuve_must_be_deduit": true
+    },
+    "allotissement": {
+      "if_statut_non_alloti_then_nombre_lots_zero_or_null": true,
+      "if_statut_alloti_then_nombre_lots_must_be_positive": true
+    },
+    "lots": {
+      "if_lots_present_then_allotissement_statut_must_not_be_non_alloti": true,
+      "if_number_of_lots_gt_0_then_each_lot_must_have_lot_numero_and_lot_titre": true,
+      "if_lot_contains_amounts_then_amount_scope_must_be_explicit": true
+    },
+    "dates": {
+      "iso_8601_required": true,
+      "timezone_required_when_time_present": true
+    },
+    "conflicts": {
+      "only_real_conflicts": true,
+      "separate_absence_from_conflict": true,
+      "record_hypotheses_elsewhere": true
+    }
+  },
+  "extraction_strategy": {
+    "priority_order": [
+      "reference",
+      "acheteur",
+      "date_limite_remise_offres",
+      "plateforme_remise_offres",
+      "procedure",
+      "type_marche",
+      "allotissement",
+      "montants",
+      "lots",
+      "ccag",
+      "dce",
+      "conflits",
+      "controle"
+    ],
+    "ambiguity_policy": "prefer_null_over_inference",
+    "normalization_policy": "strict_enum_only",
+    "market_deduplication": {
+      "enabled": true,
+      "keys": [
+        "reference_consolidee",
+        "acheteur.nom",
+        "date_limite_remise_offres.valeur_iso"
+      ]
+    }
+  },
+  "document_source": {
+    "filename": "extraction_rc.json",
+    "document_type": "RC",
+    "source_reference": "6_Reglements_Consultation_PDF",
+    "extraction_date": "2026-05-15",
+    "version": "v4"
+  },
+  "marches": [
+    {
+      "reference": "DGFiP-DRS-2500077",
+      "reference_source": "DGFiP-DRS-25000477 (page 1), DGFiP-DRS-2500077 (page 4/header)",
+      "reference_consolidee": "DGFiP-DRS-2500077",
+      "identification_confiance": "eleve",
+      "titre": "Assistance externe pour la conduite de consultations organisees dans le cadre des dispositions du code de la commande publique pour les marches de techniques de l'information et de la communication",
+      "acheteur": {
+        "nom": "Direction Generale des Finances Publiques",
+        "structure_juridique": "Direction Generale des Finances Publiques - Service des Systemes d'Information, Departement des Ressources et du Support",
+        "categorie_normee": "Etat",
+        "service_interne": "Departement des Ressources et du Support (DRS)",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "10, rue Auguste Blanqui",
+        "code_postal": "93186",
+        "ville": "MONTREUIL Cedex",
+        "pays": "France",
+        "source_brute": "10, rue Auguste Blanqui, 93186 MONTREUIL Cedex"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-04T17:00:00+02:00",
+        "valeur_brute": "04/06/2026, a 17H00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "04/06/2026, a 17H00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "PLACE",
+        "url": "https://www.marches-publics.gouv.fr",
+        "source_brute": "Plate-forme des Achats de l'Etat (PLACE)"
+      },
+      "type_marche": {
+        "source": "Prestations intellectuelles",
+        "consolide": "prestations intellectuelles",
+        "categorie_normee": "prestations_intellectuelles"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert passe en application des articles L.2124-2 et R.2161-2 a 5 du code de la commande publique",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "24 mois ferme + 2 reconductions tacites de 12 mois = 48 mois maximum",
+        "source_brute": "24 mois + 2 reconductions de 12 mois"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Montant global non explicitement defini, structure AC avec min/max",
+          "source_brute": "Sans minimum, maximum 1 200 000 EUR HT",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": 400000,
+          "devise": "EUR",
+          "precision": "480 000 EUR TTC estime sur duree totale, soit environ 400 000 EUR HT",
+          "source_brute": "Montant estimatif sur sa duree totale est de : 480 000 EUR TTC",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": 1200000,
+          "devise": "EUR",
+          "precision": "1 200 000 EUR HT (soit 1 440 000 EUR TTC) pour duree maximale de 4 ans",
+          "source_brute": "Le montant maximum du marche est fixe a 1 200 000 EUR HT",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": 0,
+          "devise": "EUR",
+          "precision": "Marche conclu sans minimum en quantite ou en valeur",
+          "source_brute": "Le marche est conclu sans minimum en quantite ou en valeur",
+          "nature": "minimum"
+        },
+        "nature_marche": "accord_cadre_bc"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Division en lots : Non"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "Type de marche : Prestations intellectuelles (implicite CCAG PI)",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "deduit_type_marche",
+        "niveau_preuve": "deduit",
+        "hypothese": "CCAG PI applicable car type 'Prestations intellectuelles'"
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Prix",
+          "ponderation": "45%",
+          "commentaire": "Offre economiquement la plus avantageuse - critere prix",
+          "source_brute": "critere prix pour 45%"
+        },
+        {
+          "critere": "Qualite technique de l'offre",
+          "ponderation": "45%",
+          "commentaire": "Offre economiquement la plus avantageuse - critere qualite technique",
+          "source_brute": "critere qualite technique de l'offre pour 45%"
+        },
+        {
+          "critere": "Environnemental",
+          "ponderation": "10%",
+          "commentaire": "Offre economiquement la plus avantageuse - critere environnemental",
+          "source_brute": "critere environnemental 10%"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Reglement de la Consultation (RC)",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "RC n° DGFIP_DRS_2500077_RC du 09/04/2026"
+          },
+          {
+            "nom": "Cahier des Clauses Techniques Particulieres (CCTP)",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "CCTP n° DGFIP_DRS_2500077_CCTP du 09/04/2026"
+          },
+          {
+            "nom": "Cahier des Clauses Administratives Particulieres (CCAP)",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "CCAP n° DGFIP_DRS_2500077_CCAP du 09/04/2026"
+          },
+          {
+            "nom": "Engagement de discretion et de confidentialite simplifie",
+            "type_piece": "autre",
+            "obligatoire": true,
+            "source_brute": "DGFIP_DRS_2500077_Engagement_Discrétion_et_Confidentialité simplifié"
+          },
+          {
+            "nom": "Formulaire DC1 - Lettre de candidature",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "Formulaire Lettre de candidature – Désignation du mandataire"
+          },
+          {
+            "nom": "Formulaire DC2 - Declaration du candidat",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "Formulaire Déclaration du candidat individuel ou du membre du groupement"
+          },
+          {
+            "nom": "Annexe financiere BPU",
+            "type_piece": "piece_financiere",
+            "obligatoire": true,
+            "source_brute": "Annexe financière à l'acte d'engagement"
+          },
+          {
+            "nom": "Tableau Profils/Charges",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Tableau Profils/Charges a completer"
+          },
+          {
+            "nom": "Scenario de commande",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Scenario de commande"
+          },
+          {
+            "nom": "Fiche Consignes signature electronique",
+            "type_piece": "guide",
+            "obligatoire": true,
+            "source_brute": "Fiche Consignes relatives a la signature electronique"
+          },
+          {
+            "nom": "Cahier des clauses simplifiees de cybersécurite",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des clauses simplifiees de cybersécurite"
+          }
+        ]
+      },
+      "conflits": [
+        {
+          "champ": "reference",
+          "valeur_source": "DGFiP-DRS-25000477",
+          "valeur_consolidee": "DGFiP-DRS-2500077",
+          "motif_conflit": "Reference incoherente entre page 1 (DGFiP-DRS-25000477) et page 4/header (DGFiP-DRS-2500077). Valeur retenue : DGFiP-DRS-2500077 (plus frequente dans le document).",
+          "gravite": "mineur",
+          "statut": "resolu",
+          "preuve": "Page 4 et en-tetes repetitifs utilisent DGFiP-DRS-2500077"
+        }
+      ],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "bonne",
+        "commentaire": "Reference du marche incoherente dans le document source mais resolue. Montants clairement identifies."
+      },
+      "source_extrait": {
+        "fichier": "DGFIP_DRS_2500077_RC.txt",
+        "page": 4,
+        "section": "1.1. Nom et adresse officiels de l'acheteur public",
+        "citation_brute": "Direction Generale des Finances Publiques Service des Systemes d'Information Departement des Ressources et du Support 10, rue Auguste Blanqui 93186 MONTREUIL Cedex"
+      }
+    },
+    {
+      "reference": "M_3530",
+      "reference_source": "M_3530",
+      "reference_consolidee": "M_3530",
+      "identification_confiance": "eleve",
+      "titre": "Prestations de services informatiques pour le developpement et la maintenance des outils informatiques du GCS UniHA",
+      "acheteur": {
+        "nom": "GCS UniHA",
+        "structure_juridique": "Groupement de Cooperation Sanitaire (GCS) - Centrale d'achat",
+        "categorie_normee": "semi_public",
+        "service_interne": "Direction des systemes d'information",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "83 Boulevard Marius Vivier Merle",
+        "code_postal": "69003",
+        "ville": "LYON",
+        "pays": "France",
+        "source_brute": "83 Boulevard Marius Vivier Merle, 69003 LYON"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-02T12:00:00+02:00",
+        "valeur_brute": "02/06/2026 a 12H",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "02/06/2026 a 12H"
+      },
+      "plateforme_remise_offres": {
+        "nom": "PLACE",
+        "url": "https://www.marches-publics.gouv.fr",
+        "source_brute": "PLACE - profil acheteur GCS UniHA"
+      },
+      "type_marche": {
+        "source": "Accord-cadre mono-attributaire pour partie a bons de commande et pour partie a marches subsequents",
+        "consolide": "accord-cadre mono-attributaire mixte",
+        "categorie_normee": "accord_cadre_mixte"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert (articles L.2124-2, R.2124-2, R.2161-2 a R.2161-5 du Code de la commande publique)",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "4 ans maximum",
+        "source_brute": "La duree du marche est de 4 ans maximum"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Montant global non explicitement defini - structure AC avec max par lot",
+          "source_brute": "Intitulé du lot Montant maximum - Lot 1: 400 000 euros HT, Lot 2: 500 000 euros HT",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": 900000,
+          "devise": "EUR",
+          "precision": "Somme des maximums par lot comme estimation",
+          "source_brute": "Sans minimum et avec maximum en montant pour chaque lot",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": 900000,
+          "devise": "EUR",
+          "precision": "Lot 1 = 400 000 EUR HT, Lot 2 = 500 000 EUR HT, Total = 900 000 EUR HT",
+          "source_brute": "Lot 1: 400 000 euros HT, Lot 2: 500 000 euros HT",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": 0,
+          "devise": "EUR",
+          "precision": "Sans minimum en montant",
+          "source_brute": "sans minimum",
+          "nature": "minimum"
+        },
+        "nature_marche": "accord_cadre_mixte"
+      },
+      "allotissement": {
+        "statut": "alloti",
+        "nombre_lots": 2,
+        "source_brute": "Le present marche se divise en 2 lots"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "CCAG non explicitement mentionne dans l'extrait du RC",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": "Probablement CCAG Prestations Intellectuelles vu objet developpement"
+      },
+      "lots": [
+        {
+          "lot_numero": "1",
+          "lot_titre": "Prestations de developpement informatique Webdev, Windev et autres technologies PCSOFT",
+          "lot_objet": "Developpement et maintenance suite logicielle PAGE",
+          "description_technique_succincte": "Suite logicielle PAGE - Technologies PCSOFT (Webdev, Windev)",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non defini - structure AC",
+              "source_brute": "Non specifie"
+            },
+            "estime": {
+              "valeur": 400000,
+              "devise": "EUR",
+              "precision": "Maximum du lot utilise comme estimation",
+              "source_brute": "400 000 euros HT"
+            },
+            "maximum": {
+              "valeur": 400000,
+              "devise": "EUR",
+              "precision": "Plafond lot 1",
+              "source_brute": "400 000 euros HT"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Prix des prestations",
+              "ponderation": "40%",
+              "commentaire": "40 points sur 100",
+              "source_brute": "1-Prix des prestations apprécies au regard des prix renseignes dans le BPU: 40 points"
+            },
+            {
+              "critere": "Valeur technique",
+              "ponderation": "60%",
+              "commentaire": "60 points : organisation/methodologie (25pts), projets globaux (20pts), equipe (10pts), securite (5pts)",
+              "source_brute": "2-Valeur technique: 60 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Non mentionne specifiquement pour le lot",
+            "niveau_preuve": "absent",
+            "hypothese": null
+          }
+        },
+        {
+          "lot_numero": "2",
+          "lot_titre": "Prestations de developpement informatique sur les technologies Open Source (PHP, SYMFONY, PYTHON) ainsi que les technologies IA et BlockChain",
+          "lot_objet": "Developpement et maintenance portail Energie et solutions IA/Blockchain",
+          "description_technique_succincte": "Portail Energie - Technologies Open Source PHP/Symfony/Python + IA et Blockchain",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non defini - structure AC",
+              "source_brute": "Non specifie"
+            },
+            "estime": {
+              "valeur": 500000,
+              "devise": "EUR",
+              "precision": "Maximum du lot utilise comme estimation",
+              "source_brute": "500 000 euros HT"
+            },
+            "maximum": {
+              "valeur": 500000,
+              "devise": "EUR",
+              "precision": "Plafond lot 2",
+              "source_brute": "500 000 euros HT"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Prix des prestations",
+              "ponderation": "40%",
+              "commentaire": "40 points sur 100",
+              "source_brute": "1-Prix des prestations: 40 points"
+            },
+            {
+              "critere": "Valeur technique",
+              "ponderation": "60%",
+              "commentaire": "60 points : organisation/methodologie (25pts), projets globaux (20pts), equipe (10pts), securite (5pts)",
+              "source_brute": "2-Valeur technique: 60 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Non mentionne specifiquement pour le lot",
+            "niveau_preuve": "absent",
+            "hypothese": null
+          }
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Reglement de la Consultation (RC)",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "RC et annexes"
+          },
+          {
+            "nom": "Annexe 1 - Declaration de sous-traitance",
+            "type_piece": "formulaire",
+            "obligatoire": false,
+            "source_brute": "A remettre le cas echeant"
+          },
+          {
+            "nom": "Cahier des Clauses Administratives et Techniques Particulieres (CCATP)",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "CCATP et annexes 1-11"
+          },
+          {
+            "nom": "Bordereau des Prix Unitaires (BPU)",
+            "type_piece": "piece_financiere",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "Attestation sanctions operateurs russes",
+            "type_piece": "attestation",
+            "obligatoire": true,
+            "source_brute": "Attestation sur l'honneur relative aux sanctions"
+          }
+        ]
+      },
+      "conflits": [
+        {
+          "champ": "ccag",
+          "valeur_source": "Non mentionne",
+          "valeur_consolidee": null,
+          "motif_conflit": "Reference technique 'M_3530' utilisee comme identifiant principal. CCAG non explicitement mentionne dans l'extrait du RC (probablement CCAG Prestations Intellectuelles).",
+          "gravite": "mineur",
+          "statut": "non_resolu",
+          "preuve": "Absence de mention CCAG dans RC lu"
+        }
+      ],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "excellente",
+        "commentaire": "Toutes les metadonnees essentielles extraites avec precision. Structure des lots clairement identifiee."
+      },
+      "source_extrait": {
+        "fichier": "260424 - RC PRESTATIONS INFORMATIQUES .txt",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Procedure M_3530 Pouvoir adjudicateur : GCS UniHA – 83 Boulevard Marius Vivier Merle – 69003 LYON"
+      }
+    },
+    {
+      "reference": "HADPSM260413",
+      "reference_source": "HADPSM260413",
+      "reference_consolidee": "HADPSM260413",
+      "identification_confiance": "eleve",
+      "titre": "Tierce maintenance applicative et evolutive, maintenance corrective et preventive pour des applications gerees au sein de la DPSM",
+      "acheteur": {
+        "nom": "BRGM",
+        "structure_juridique": "Bureau de Recherche en Geologie Miniere (EPIC)",
+        "categorie_normee": "EPIC",
+        "service_interne": "DPSM (Departement Prevention et Securite Miniere)",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "3 Avenue Claude Guillemin",
+        "code_postal": "45060",
+        "ville": "Orléans Cedex 02",
+        "pays": "France",
+        "source_brute": "3 Avenue Claude Guillemin, Orléans 45060 Cedex 02"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-05T12:00:00+02:00",
+        "valeur_brute": "05/06/2026 a 12h00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "05/06/2026 a 12h00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "marches-publics.info",
+        "url": "https://www.marches-publics.info",
+        "source_brute": "https://www.marches-publics.info/"
+      },
+      "type_marche": {
+        "source": "Accord-cadre a bons de commande sans minimum et avec maximum mono-attributaire de services",
+        "consolide": "accord-cadre mono-attributaire",
+        "categorie_normee": "accord_cadre_bc"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert (Article R2124-2 1° - Code de la commande publique)",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "1 an ferme + 3 reconductions tacites de 1 an = 48 mois maximum",
+        "source_brute": "48 mois – 1 an ferme + 1 an x3 (reconductions tacites)"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Montant non publie",
+          "source_brute": "Sans minimum et avec maximum (valeur non precisee)",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non publie dans le RC",
+          "source_brute": "Non publie",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Sans minimum, avec maximum (valeur non precisee dans l'extrait)",
+          "source_brute": "avec maximum",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": 0,
+          "devise": "EUR",
+          "precision": "Sans minimum",
+          "source_brute": "Sans minimum",
+          "nature": "minimum"
+        },
+        "nature_marche": "accord_cadre_bc"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Lot unique - La consultation n'est pas decomposee en lots"
+      },
+      "ccag": {
+        "mentionne": true,
+        "source_brute": "CCAG Techniques de l'information et de la communication (TIC) du 30 mars 2021 (mentionne en bibliographie page 8/8)",
+        "principal": "CCAG TIC",
+        "categorie_normee": "non_precise",
+        "mode_determination": "mention_bibliographie",
+        "niveau_preuve": "verifie",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Couts",
+          "ponderation": "40%",
+          "commentaire": "Total de la simulation definie grace au DQE",
+          "source_brute": "1. Couts (40%) - Total de la simulation definie grace au DQE"
+        },
+        {
+          "critere": "Comprehension du contexte et du besoin",
+          "ponderation": "25%",
+          "commentaire": "Qualite de la proposition, methodologie, exemples de realisations similaires, propositions d'indicateurs de suivi",
+          "source_brute": "2. Comprehension du contexte et du besoin par le candidat (25%) - Qualite de la proposition, methodologie, exemples de realisations, indicateurs de suivi"
+        },
+        {
+          "critere": "Competences et experiences des intervenants",
+          "ponderation": "25%",
+          "commentaire": "Presentation de l'equipe, competences techniques, politique RH du candidat",
+          "source_brute": "3. Competences et experiences des intervenants pressentis (25%) - Presentation equipe, competences techniques, politique RH"
+        },
+        {
+          "critere": "Demarche environnementale et sociale",
+          "ponderation": "10%",
+          "commentaire": "Pratiques eco-responsables, engagements en faveur de l'insertion professionnelle et de l'emploi local",
+          "source_brute": "4. Demarche environnementale et sociale (10%) - Pratiques eco-responsables, engagements insertion professionnelle et emploi local"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Actes d'engagement",
+            "type_piece": "acte_engagement",
+            "obligatoire": true,
+            "source_brute": "Actes d'engagement"
+          },
+          {
+            "nom": "CCTP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques Particulieres"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Administratives Particulieres"
+          },
+          {
+            "nom": "BPU/DQE",
+            "type_piece": "piece_financiere",
+            "obligatoire": true,
+            "source_brute": "Bordereau des Prix Unitaires / Detail Quantitatif Estimatif"
+          },
+          {
+            "nom": "Scenarios annexe 1 et 2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Scenarios (annexe 1 et 2)"
+          },
+          {
+            "nom": "Formulaire conflit d'interets",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "Formulaire conflit d'interets"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "bonne",
+        "commentaire": "CCAG identifie implicitement. Montants non publies mais structure claire. Criteres de selection extraits."
+      },
+      "source_extrait": {
+        "fichier": "AWS-MPI-1816545-RC.txt",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Consultation n° HADPSM260413 - Date limite de remise des plis 05/06/2026 a 12h00"
+      }
+    },
+    {
+      "reference": "2026-22",
+      "reference_source": "2026-22",
+      "reference_consolidee": "2026-22",
+      "identification_confiance": "eleve",
+      "titre": "Assistance a maitrise d'œuvre : prestations d'expertise, de developpements informatiques et d'assistance technique",
+      "acheteur": {
+        "nom": "Institut Français du Cheval et de l'Equitation",
+        "structure_juridique": "Etablissement public national a caractere administratif (EPA)",
+        "categorie_normee": "EPA",
+        "service_interne": "Departement des services informatiques",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "Route de Troche – BP 6",
+        "code_postal": "19231",
+        "ville": "Arnac-Pompadour Cedex",
+        "pays": "France",
+        "source_brute": "Route de Troche – BP 6, 19231 Arnac-Pompadour Cedex"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-04T12:00:00+02:00",
+        "valeur_brute": "Jeudi 4 juin 2026 a 12 heures",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "Jeudi 4 juin 2026 a 12 heures"
+      },
+      "plateforme_remise_offres": {
+        "nom": "PLACE",
+        "url": "https://www.marches-publics.gouv.fr",
+        "source_brute": "https://www.marches-publics.gouv.fr"
+      },
+      "type_marche": {
+        "source": "Accord-cadre mono/multi-attributaire a marches subsequents sans minimum et avec maximum",
+        "consolide": "accord-cadre mixte",
+        "categorie_normee": "accord_cadre_mixte"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert dans le cadre d'une procedure europeenne (art. R2124-1, R2124-2, R2162-1 a R2162-14 du Code de la commande publique)",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "2 ans initiale + 2 reconductions d'1 an = 4 ans maximum",
+        "source_brute": "2 ans initiale + 2 reconductions expresse d'un an"
+      },
+      "montants": {
+        "global": {
+          "valeur": 2000000,
+          "devise": "EUR",
+          "precision": "Maximum global 2 000 000 EUR HT",
+          "source_brute": "maximum de 2 000 000,00 EUR HT pour la duree du marche",
+          "nature": "global"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non ventile par lot - pas d'estimation distincte du maximum",
+          "source_brute": "Non specifie",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": 2000000,
+          "devise": "EUR",
+          "precision": "Plafond global 2 000 000 EUR HT",
+          "source_brute": "maximum de 2 000 000,00 EUR HT",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": 0,
+          "devise": "EUR",
+          "precision": "Sans minimum",
+          "source_brute": "sans minimum",
+          "nature": "minimum"
+        },
+        "nature_marche": "accord_cadre_mixte"
+      },
+      "allotissement": {
+        "statut": "alloti",
+        "nombre_lots": 6,
+        "source_brute": "Le present appel d'offres est compose de 6 lots"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "CCAG non explicitement mentionne. Type mixte AMO/TMA suggere",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": "Combinaison CCAG PI (lot 1 AMO) et CCAG TIC (lots 2-6 TMA) probable"
+      },
+      "lots": [
+        {
+          "lot_numero": "1",
+          "lot_titre": "Expertise, developpement et support technique en architecture logicielle et securite",
+          "lot_objet": "AMO - Architecture et securite",
+          "description_technique_succincte": "Architecture logicielle et securite - Support technique expert",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique (organisation, methodologie, pilotage)",
+              "ponderation": "40%",
+              "commentaire": "40 points sur 100",
+              "source_brute": "Qualite technique: 40 points"
+            },
+            {
+              "critere": "Competences et experiences des intervenants",
+              "ponderation": "20%",
+              "commentaire": "20 points",
+              "source_brute": "Competences: 20 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type AMO suggere CCAG Prestations Intellectuelles",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lot 1 AMO = CCAG PI"
+          }
+        },
+        {
+          "lot_numero": "2",
+          "lot_titre": "TMA des applications sous technologies Java",
+          "lot_objet": "TMA Java",
+          "description_technique_succincte": "Tierce Maintenance Applicative applications Java",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique",
+              "ponderation": "60%",
+              "commentaire": "60 points",
+              "source_brute": "Qualite technique: 60 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type TMA suggere CCAG TIC",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lots TMA = CCAG TIC"
+          }
+        },
+        {
+          "lot_numero": "3",
+          "lot_titre": "TMA des applications mobiles Unity",
+          "lot_objet": "TMA Mobile Unity",
+          "description_technique_succincte": "Tierce Maintenance Applicative applications mobiles Unity",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique",
+              "ponderation": "60%",
+              "commentaire": "60 points",
+              "source_brute": "Qualite technique: 60 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type TMA suggere CCAG TIC",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lots TMA = CCAG TIC"
+          }
+        },
+        {
+          "lot_numero": "4",
+          "lot_titre": "TMA des applications sous technologies PHP/Symfony",
+          "lot_objet": "TMA PHP/Symfony",
+          "description_technique_succincte": "Tierce Maintenance Applicative applications PHP/Symfony",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique",
+              "ponderation": "60%",
+              "commentaire": "60 points",
+              "source_brute": "Qualite technique: 60 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type TMA suggere CCAG TIC",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lots TMA = CCAG TIC"
+          }
+        },
+        {
+          "lot_numero": "5",
+          "lot_titre": "TMA des applications mobiles React Native",
+          "lot_objet": "TMA Mobile React Native",
+          "description_technique_succincte": "Tierce Maintenance Applicative applications mobiles React Native",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique",
+              "ponderation": "60%",
+              "commentaire": "60 points",
+              "source_brute": "Qualite technique: 60 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type TMA suggere CCAG TIC",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lots TMA = CCAG TIC"
+          }
+        },
+        {
+          "lot_numero": "6",
+          "lot_titre": "TMA des modeles d'edition realises avec Hamonie Communication Suite (SEFAS)",
+          "lot_objet": "TMA SEFAS",
+          "description_technique_succincte": "Tierce Maintenance Applicative modeles edition SEFAS Hamonie Communication Suite",
+          "montants": {
+            "global": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "estime": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "maximum": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Non ventile par lot",
+              "source_brute": "Non ventile"
+            },
+            "minimum": {
+              "valeur": 0,
+              "devise": "EUR",
+              "precision": "Sans minimum",
+              "source_brute": "Sans minimum"
+            }
+          },
+          "criteres_selection": [
+            {
+              "critere": "Qualite technique",
+              "ponderation": "60%",
+              "commentaire": "60 points",
+              "source_brute": "Qualite technique: 60 points"
+            },
+            {
+              "critere": "Prix",
+              "ponderation": "40%",
+              "commentaire": "40 points",
+              "source_brute": "Prix: 40 points"
+            }
+          ],
+          "ccag": {
+            "mentionne": false,
+            "principal": null,
+            "source_brute": "Type TMA suggere CCAG TIC",
+            "niveau_preuve": "deduit",
+            "hypothese": "Lots TMA = CCAG TIC"
+          }
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Acte d'engagement (ATTRI) et annexe financiere BPU/DQE",
+            "type_piece": "acte_engagement",
+            "obligatoire": true,
+            "source_brute": "Acte d'engagement"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Administratives Particulieres"
+          },
+          {
+            "nom": "CCTP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques Particulieres"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "formulaire",
+            "obligatoire": false,
+            "source_brute": "DC4 sous-traitance"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC1 candidature"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC2 declaration candidat"
+          }
+        ]
+      },
+      "conflits": [
+        {
+          "champ": "ccag",
+          "valeur_source": "Non mentionne",
+          "valeur_consolidee": null,
+          "motif_conflit": "CCAG non explicitement mentionne dans l'extrait. Type mixte AMO/TMA suggere une combinaison CCAG PI (lot 1) et CCAG TIC (lots 2-6) mais non confirme.",
+          "gravite": "mineur",
+          "statut": "non_resolu",
+          "preuve": "Absence mention CCAG dans RC, presence mixte AMO/TMA"
+        }
+      ],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "excellente",
+        "commentaire": "Structure 6 lots clairement identifiee. Montant et delais precis."
+      },
+      "source_extrait": {
+        "fichier": "RC N° 2026-22.txt",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "N°2026-22 - Assistance a maitrise d'œuvre : prestations d'expertise, de developpements informatiques et d'assistance technique"
+      }
+    },
+    {
+      "reference": "2026MDAF0063",
+      "reference_source": "2026MDAF0063",
+      "reference_consolidee": "2026MDAF0063",
+      "identification_confiance": "eleve",
+      "titre": "Marche de prestations de maintenance d'assistance et d'infogerance du parc informatique, reseau et telecom de l'EPPGHV",
+      "acheteur": {
+        "nom": "Etablissement Public du Parc et de la Grande Halle de la Villette",
+        "structure_juridique": "Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV) - EPIC",
+        "categorie_normee": "etablissement_public",
+        "service_interne": "Direction administrative et financiere",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "211 avenue Jean-Jaurès",
+        "code_postal": "75935",
+        "ville": "Paris cedex 19",
+        "pays": "France",
+        "source_brute": "211 avenue Jean-Jaurès, 75935 Paris cedex 19"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-01T14:00:00+02:00",
+        "valeur_brute": "01/06/2026 a 14h00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "01/06/2026 a 14h00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "PLACE",
+        "url": "https://www.marches-publics.gouv.fr/?page=Entreprise.EntrepriseAdvancedSearch&AllCons&id=2971523&orgAcronyme=f5j",
+        "source_brute": "PLACE - profil acheteur EPPGHV"
+      },
+      "type_marche": {
+        "source": "Marche composite : prix global forfaitaire + accord-cadre a bons de commande mono-attributaire",
+        "consolide": "marche composite",
+        "categorie_normee": "marche_composite"
+      },
+      "procedure": {
+        "source": "Procedure d'appel d'offres ouverte passee en application des articles L2124-1, L2124-2 et R2161-2 a R2161-5 du Code de la commande publique",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "Offre de base : 1 an reconductible 3 fois (4 ans max). Variante exigee : 48 mois ferme.",
+        "source_brute": "1 an reconductible 3 fois OU 48 mois ferme (variante exigee)"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Pas de montant global explicite - structure composite avec composantes separees",
+          "source_brute": "Non specifie - structure forfaitaire + AC",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non estime - voir composantes du marche composite",
+          "source_brute": "Non estime - structure composite",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non applicable - structure composite avec max partiel sur AC uniquement",
+          "source_brute": "Non applicable",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": 0,
+          "devise": "EUR",
+          "precision": "Sans montant minimum",
+          "source_brute": "Sans montant minimum",
+          "nature": "minimum"
+        },
+        "nature_marche": "marche_composite"
+      },
+      "composite_market": {
+        "composite_type": "forfaitaire_plus_ac_bc",
+        "components": [
+          {
+            "component_id": "forfaitaire",
+            "component_type": "forfaitaire",
+            "description": "Prix global forfaitaire pour partie des prestations",
+            "amount": {
+              "valeur": null,
+              "devise": "EUR",
+              "precision": "Montant forfaitaire non explicitement quantifie dans RC",
+              "source_brute": "Non quantifie explicitement - estime a ~660 000 EUR d'apres rapport",
+              "nature": "global"
+            }
+          },
+          {
+            "component_id": "accord_cadre",
+            "component_type": "accord_cadre",
+            "description": "Accord-cadre a bons de commande mono-attributaire",
+            "amount": {
+              "valeur": 160000,
+              "devise": "EUR",
+              "precision": "Plafond AC bons de commande",
+              "source_brute": "montant maximum de 160 000 EUR HT pour toute la duree du marche",
+              "nature": "plafond"
+            }
+          }
+        ],
+        "global_amount": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non determine - composantes non totalement quantifiees",
+          "source_brute": "Non determine"
+        },
+        "component_amounts_validated": false
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Le marche n'est pas alloti en raison de l'impossibilite d'identifier des prestations distinctes"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "CCAG TIC non explicitement cite mais deduit du type de prestation (infogerance, maintenance reseau)",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "deduit_type_marche",
+        "niveau_preuve": "deduit",
+        "hypothese": "Infogerance et maintenance reseau = CCAG TIC"
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Valeur technique de l'offre",
+          "ponderation": "60%",
+          "commentaire": "Organisation et méthodologie 15% | Moyens matériels et techniques 10% | Constitution équipe dédiée et qualifications 35%",
+          "source_brute": "Critère 1 – Valeur technique de l'offre 60% - Organisation et méthodologie 15%, Moyens matériels et techniques 10%, Constitution équipe dédiée et qualifications 35%",
+          "sous_criteres": [
+            {
+              "critere": "Organisation et méthodologie pour l'exécution des prestations",
+              "ponderation": "15%"
+            },
+            {
+              "critere": "Moyens matériels et techniques",
+              "ponderation": "10%"
+            },
+            {
+              "critere": "Constitution de l'équipe dédiée, son dimensionnement et ses qualifications",
+              "ponderation": "35%"
+            }
+          ]
+        },
+        {
+          "critere": "Valeur financière de l'offre",
+          "ponderation": "40%",
+          "commentaire": "Prix HT sur base DPGF 30% | Prix HT sur base DQE 10%",
+          "source_brute": "Critère 2 – Valeur financière de l'offre 40% - Prix HT sur base DPGF 30%, Prix HT sur base DQE 10%",
+          "sous_criteres": [
+            {
+              "critere": "Prix HT analysé sur la base du montant de la DPGF",
+              "ponderation": "30%"
+            },
+            {
+              "critere": "Prix HT analysé sur la base du montant du DQE",
+              "ponderation": "10%"
+            }
+          ]
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Reglement de consultation (RC)",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "RC et annexe questionnaire diversite-egalite"
+          },
+          {
+            "nom": "Acte d'engagement offre de base et variante",
+            "type_piece": "acte_engagement",
+            "obligatoire": true,
+            "source_brute": "Acte d'engagement 'offre de base' et 'variante'"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Administratives Particulieres"
+          },
+          {
+            "nom": "CCTP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques Particulieres"
+          },
+          {
+            "nom": "Cadre de memoire technique (CMT)",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Cadre de memoire technique"
+          },
+          {
+            "nom": "DPGF",
+            "type_piece": "piece_financiere",
+            "obligatoire": true,
+            "source_brute": "Decomposition des Prix Globale et Forfaitaire"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "piece_financiere",
+            "obligatoire": true,
+            "source_brute": "Bordereau des Prix Unitaires"
+          }
+        ]
+      },
+      "conflits": [
+        {
+          "champ": "montant_forfaitaire",
+          "valeur_source": "Non publie",
+          "valeur_consolidee": null,
+          "motif_conflit": "Structure du montant ambigue : marche composite avec partie forfaitaire non explicitement quantifiee dans RC. Seule la partie AC max (160 000 EUR HT) est documentee.",
+          "gravite": "significatif",
+          "statut": "non_resolu",
+          "preuve": "RC mentionne seulement 160 000 EUR HT pour AC, pas de montant forfaitaire"
+        },
+        {
+          "champ": "ccag",
+          "valeur_source": "Non mentionne",
+          "valeur_consolidee": null,
+          "motif_conflit": "CCAG TIC non explicitement cite mais deduit du type de prestation (infogerance, maintenance reseau).",
+          "gravite": "mineur",
+          "statut": "deduit",
+          "preuve": "Type prestation infogerance = CCAG TIC implicite"
+        }
+      ],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "moyenne",
+        "commentaire": "Montant composite mal explicité - forfaitaire non quantifie. CCAG déduit."
+      },
+      "source_extrait": {
+        "fichier": "RC_Assistance et infogerance.txt",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Marche n° 2026MDAF0063 - Marche de prestations de maintenance d'assistance et d'infogerance du parc informatique, reseau et telecom de l'EPPGHV"
+      }
+    },
+    {
+      "reference": "2026/DARC/N°03",
+      "reference_source": "2026/DARC/N°03",
+      "reference_consolidee": "2026/DARC/N°03",
+      "identification_confiance": "eleve",
+      "titre": "Marche pour la maintenance applicative, corrective et evolutive du site internet Culturethèque (et toutes ses fonctionnalites) et pour l'hebergement",
+      "acheteur": {
+        "nom": "Institut Français",
+        "structure_juridique": "Etablissement public a caractere administratif",
+        "categorie_normee": "EPA",
+        "service_interne": "Direction des systemes d'information",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": "40 rue de la Folie-Régnault",
+        "code_postal": "75011",
+        "ville": "Paris",
+        "pays": "France",
+        "source_brute": "40 rue de la Folie-Régnault, 75011 Paris"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-08T12:00:00+02:00",
+        "valeur_brute": "Lundi 8 juin 2026 a 12:00:00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "Lundi 8 juin 2026 a 12:00:00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "e-marchespublics.com",
+        "url": "http://institutfrancais.e-marchespublics.com",
+        "source_brute": "http://institutfrancais.e-marchespublics.com"
+      },
+      "type_marche": {
+        "source": "Services - Maintenance applicative et hebergement web",
+        "consolide": "services informatiques",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Appel d'offre ouvert conformement aux articles L2124-2, R2123-1, R2124-2 et R2161-2 a R2161-5 du Code de la commande publique",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "Duree non explicitement mentionnee. Dates estimees : notification fin juillet 2026, debut octobre 2026/janvier 2027, fin octobre 2030/janvier 2031.",
+        "source_brute": "Notification fin juillet 2026, debut octobre 2026/janvier 2027, fin octobre 2030/janvier 2031"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Montant non publie dans l'extrait",
+          "source_brute": "Non publie",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non publie dans l'extrait du RC",
+          "source_brute": "Non publie",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non publie dans l'extrait du RC",
+          "source_brute": "Non publie",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "Non precise",
+          "source_brute": "Non precise",
+          "nature": "minimum"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Le present marche n'est pas alloti conformement a l'article L2113-10 du CCP"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "CCAG TIC non explicitement cite mais deduit du type de prestation (maintenance applicative, hebergement web)",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "deduit_type_marche",
+        "niveau_preuve": "deduit",
+        "hypothese": "Maintenance applicative et hebergement web = CCAG TIC"
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Critere technique et methodologique",
+          "ponderation": "60 points",
+          "commentaire": "Domaine d'action (10 pts) | Moyens humains (25 pts) - profils qualifiés Opquast valorisés | Moyens techniques (25 pts) - méthodologie gestion projet et reprise existant",
+          "source_brute": "Critere technique et methodologique 60 points - Domaine d'action 10pts, Moyens humains 25pts, Moyens techniques 25pts",
+          "sous_criteres": [
+            {
+              "critere": "Domaine d'action",
+              "ponderation": "10 points",
+              "commentaire": "Capacite globale du candidat à repondre aux besoins du marché, connaissance du secteur culturel et réseau culturel français à l'étranger"
+            },
+            {
+              "critere": "Moyens humains",
+              "ponderation": "25 points",
+              "commentaire": "Profils, experience, expertise, stabilité des équipes - qualification Opquast valorisée"
+            },
+            {
+              "critere": "Moyens techniques",
+              "ponderation": "25 points",
+              "commentaire": "Méthodologie de gestion de projet TMA et évolutions, calendrier et méthodologie de reprise de l'existant"
+            }
+          ]
+        },
+        {
+          "critere": "Critere prix",
+          "ponderation": "30 points",
+          "commentaire": "Notation DPGF 20 points (meilleur prix = 20 pts, autres au prorata) | Notation BPU 10 points (meilleur prix = 10 pts, autres au prorata)",
+          "source_brute": "Critere prix 30 points - Notation DPGF 20 points, Notation BPU 10 points - méthode de calcul au prorata",
+          "sous_criteres": [
+            {
+              "critere": "Notation de la DPGF",
+              "ponderation": "20 points",
+              "commentaire": "Attribution automatique des 20 points à l'offre la mieux-disante, autres au prorata selon formule (prix le plus bas / prix candidat) x 20"
+            },
+            {
+              "critere": "Notation du BPU",
+              "ponderation": "10 points",
+              "commentaire": "Apprécié à partir du montant total DQE - attribution automatique des 10 points à l'offre la mieux-disante, autres au prorata"
+            }
+          ],
+          "note_speciale": "Hors UE : montants taxes dues (autoliquidation TVA) additionnés au prix pour refléter coût effectif"
+        },
+        {
+          "critere": "Critere social et environnemental",
+          "ponderation": "10 points",
+          "commentaire": "Politique sociale et environnementale du candidat - actions concrètes, certifications et labels pour égalité femmes-hommes, transition écologique et numérique responsable",
+          "source_brute": "Critere social et environnemental 10 points - politique sociale et environnementale, actions égalité femmes-hommes, transition écologique, numérique responsable"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "Acte d'engagement (AE) et annexes financieres",
+            "type_piece": "acte_engagement",
+            "obligatoire": true,
+            "source_brute": "Acte d'engagement (AE) et annexes financieres (DPGF, BPU)"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Administratives Particulieres"
+          },
+          {
+            "nom": "CCTP et annexes",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques Particulieres et annexes"
+          },
+          {
+            "nom": "Reglement de consultation (RC)",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "RC"
+          },
+          {
+            "nom": "Documents DC2 et DC4",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC2 et DC4"
+          }
+        ]
+      },
+      "conflits": [
+        {
+          "champ": "montant",
+          "valeur_source": "Non publie",
+          "valeur_consolidee": null,
+          "motif_conflit": "Montant non publie dans l'extrait du RC.",
+          "gravite": "significatif",
+          "statut": "non_resolu",
+          "preuve": "Absence totale de mention de montant dans RC lu"
+        },
+        {
+          "champ": "duree",
+          "valeur_source": "Non explicitement quantifiee",
+          "valeur_consolidee": null,
+          "motif_conflit": "Duree non explicitement quantifiee (reference aux dates estimees uniquement).",
+          "gravite": "mineur",
+          "statut": "non_resolu",
+          "preuve": "Dates estimees mentionnees mais pas duree explicite en mois/annees"
+        },
+        {
+          "champ": "ccag",
+          "valeur_source": "Non mentionne",
+          "valeur_consolidee": null,
+          "motif_conflit": "CCAG TIC non explicitement cite mais deduit du type de prestation (maintenance applicative, hebergement web).",
+          "gravite": "mineur",
+          "statut": "deduit",
+          "preuve": "Type prestation TMA + hebergement = CCAG TIC implicite"
+        }
+      ],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "moyenne",
+        "commentaire": "Montant et duree non extraits du RC. Deadline et identification correctes. Criteres de selection extraits."
+      },
+      "source_extrait": {
+        "fichier": "Règlement de consultation.txt",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Marche N° 2026 / DARC/ N°03 - Marche pour la maintenance applicative, corrective et evolutive du site internet Culturethèque et pour l'hebergement"
+      }
+    },
+    {
+      "reference": "2026A0239",
+      "reference_source": "2026A0239",
+      "reference_consolidee": "2026A0239",
+      "identification_confiance": "moyen",
+      "titre": "Prestations de support, infogérance et supervision pour les Services Numériques Éducatifs, environnements de travail, Data Centers, Infrastructures, Réseaux, Pare-Feux et Téléphonie de la Région Grand Est",
+      "acheteur": {
+        "nom": "Région Grand Est",
+        "structure_juridique": "Collectivité territoriale - Région",
+        "categorie_normee": "collectivite_territoriale",
+        "identification_confiance": "moyen"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "Région Grand Est"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-18T12:00:00+02:00",
+        "valeur_brute": "18/06/2026 à 12:00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "18 JUIN 2026 A 12H00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "marchespublics.grandest.fr",
+        "url": "https://marchespublics.grandest.fr",
+        "source_brute": "https://marchespublics.grandest.fr"
+      },
+      "type_marche": {
+        "source": "Services - Prestations de support, infogérance et supervision",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "non précisé"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CARACTERISTIQUES PRINCIPALES DU MARCHE 2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CARACTERISTIQUES PRINCIPALES DU MARCHE 2"
+          },
+          {
+            "nom": "1 FORME DU MARCHE Le marché à conclure est un acco",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "1 FORME DU MARCHE Le marché à conclure est un acco"
+          },
+          {
+            "nom": "cadre soumis aux dispositions des articles L.2125",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "cadre soumis aux dispositions des articles L.2125"
+          },
+          {
+            "nom": "R.2142",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "R.2142"
+          },
+          {
+            "nom": "R.2162",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "R.2162"
+          },
+          {
+            "nom": "1 et s. Il sera exécuté au fur et à mesure de l’ém",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "1 et s. Il sera exécuté au fur et à mesure de l’ém"
+          },
+          {
+            "nom": "13 et suivants du Code de la Commande publique. L’",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "13 et suivants du Code de la Commande publique. L’"
+          },
+          {
+            "nom": "cadre sera conclu sans montant minimum et avec un ",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "cadre sera conclu sans montant minimum et avec un "
+          },
+          {
+            "nom": "1). 2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "1). 2"
+          },
+          {
+            "nom": "2 VAL",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "2 VAL"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "bonne",
+        "commentaire": "Données corrigées depuis 1. 2026A0239_RC.pdf"
+      },
+      "source_extrait": {
+        "fichier": "1. 2026A0239_RC.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "de la consultation, est passé selon une procédure d’appel d’offres ouvert régie par les articles L.2124-1, L.2124-2, R.2124-1 et 2, R.2161-2 et suivants du Code de la Commande publique. 1-2 RESERVATIO"
+      }
+    },
+    {
+      "reference": "DAF_2026_000243",
+      "reference_source": "DAF_2026_000243",
+      "reference_consolidee": "DAF_2026_000243",
+      "identification_confiance": "moyen",
+      "titre": "Portails HISI V2 - Développement, maintenance applicative et infogérance",
+      "acheteur": {
+        "nom": "Banque de France",
+        "structure_juridique": "Établissement public national - Institution nationale indépendante",
+        "categorie_normee": "etablissement_public"
+      },
+      "lieu": {
+        "adresse": "08-1196 Service des Achats Informatiques",
+        "code_postal": "75049",
+        "ville": "Paris",
+        "pays": "France",
+        "source_brute": "Banque de France, 75049 PARIS Cedex 01"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-15T12:00:00+02:00",
+        "valeur_brute": "15/06/2026 à 12H00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "15/06/2026 à 12H00, heure de Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "Safetender - Profil acheteur Banque de France",
+        "url": "https://achats-banquedefrance.safetender.com",
+        "source_brute": "https://achats-banquedefrance.safetender.com"
+      },
+      "type_marche": {
+        "source": "Accord-cadre à bons de commande avec un seul opérateur",
+        "consolide": "accord-cadre à bons de commande mono-attributaire",
+        "categorie_normee": "accord_cadre_bc"
+      },
+      "procedure": {
+        "source": "Procédure avec négociation (2 phases : candidature puis offre)",
+        "consolidee": "procédure avec négociation",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 48,
+        "unite": "mois",
+        "structure": "48 mois ferme + 4 reconductions expresses d'1 an = 8 ans maximum",
+        "source_brute": "Durée ferme 48 mois, 4 reconductions d'un an, durée max 8 ans"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": 16670000,
+          "devise": "EUR",
+          "precision": "Montant estimé sur durée totale",
+          "source_brute": "16 670 000 € HT",
+          "nature": "estimation"
+        },
+        "maximum": {
+          "valeur": 51000000,
+          "devise": "EUR",
+          "precision": "Plafond maximum du marché",
+          "source_brute": "51 000 000 € HT",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Le marché n'est pas alloti"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Références et capacités techniques",
+          "ponderation": "à définir",
+          "commentaire": "Capacité technique, certifications ISO 27001",
+          "source_brute": "Références, capacités techniques, certification ISO 27001"
+        },
+        {
+          "critere": "Engagements RSE",
+          "ponderation": "à définir",
+          "commentaire": "Engagements environnementaux et sociaux",
+          "source_brute": "Engagements RSE"
+        },
+        {
+          "critere": "Prix",
+          "ponderation": "à définir",
+          "commentaire": "Modalités de calcul de la note financière",
+          "source_brute": "Modalités de calcul de la note financière"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "RC",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "Règles de la consultation"
+          },
+          {
+            "nom": "CCA",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Conditions Générales d'Achat"
+          },
+          {
+            "nom": "CCPDP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Particulières de Déontologie et de Propriété"
+          },
+          {
+            "nom": "CCT",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "Bordereau offre financière",
+            "type_piece": "financiere",
+            "obligatoire": true,
+            "source_brute": "Bordereau d'offre financière"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "excellente",
+        "commentaire": "Données enrichies depuis AE20260004_PORTAILS_HISI-V2_RC_V1.0.md"
+      },
+      "source_extrait": {
+        "fichier": "public/rc",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Portails HISI - Prestations de développement et maintenance applicative"
+      },
+      "publication": {
+        "joue_reference": "327838-2026",
+        "joue_date": "13/05/2026",
+        "profil_acheteur_url": "https://achats-banquedefrance.safetender.com"
+      }
+    },
+    {
+      "reference": "B26-01107-LS",
+      "reference_source": "B26-01107-LS",
+      "reference_consolidee": "B26-01107-LS",
+      "identification_confiance": "moyen",
+      "titre": "Tierce Maintenance Applicative (TMA) des Logiciels Systèmes Énergétiques du CEA-Liten",
+      "acheteur": {
+        "nom": "CEA - Commissariat à l'Énergie Atomique et aux Énergies Alternatives - Liten",
+        "structure_juridique": "Établissement public à caractère industriel et commercial (EPIC)",
+        "categorie_normee": "EPIC"
+      },
+      "lieu": {
+        "adresse": "17 avenue des Martyrs",
+        "ville": "Grenoble",
+        "code_postal": "38054",
+        "pays": "France",
+        "source_brute": "CEA Centre de Grenoble, 17 avenue des Martyrs, 38054 GRENOBLE Cedex 9"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-10T16:00:00+02:00",
+        "valeur_brute": "10/06/2026 à 16h00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "10 juin 2026 avant 16 heures"
+      },
+      "plateforme_remise_offres": {
+        "nom": "PLACE",
+        "url": "https://www.marches-publics.gouv.fr",
+        "source_brute": "PLACE"
+      },
+      "type_marche": {
+        "source": "Marché à tranches",
+        "consolide": "marché à tranches",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert formalisé",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 24,
+        "unite": "mois",
+        "structure": "Tranche ferme 2 ans (16/08/2026 - 16/08/2028) + 3 tranches optionnelles jusqu'au 16/08/2030",
+        "source_brute": "Tranche ferme 2 ans + tranches optionnelles"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "non précisé"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Prix",
+          "ponderation": "50%",
+          "commentaire": "Critère prix",
+          "source_brute": "Prix : 50%"
+        },
+        {
+          "critere": "Méthodologie d'exécution",
+          "ponderation": "30%",
+          "commentaire": "Méthodologie d'exécution des prestations",
+          "source_brute": "Méthodologie d'exécution des prestations : 30%"
+        },
+        {
+          "critere": "Organisation et moyens humains",
+          "ponderation": "20%",
+          "commentaire": "Organisation et moyens humains proposés",
+          "source_brute": "Organisation et moyens humains proposés : 20%"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "RC",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "Règlement de consultation"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2/DUME",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC2 ou DUME"
+          },
+          {
+            "nom": "Offre technique",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Offre technique (organisation, méthodes, réversibilité)"
+          },
+          {
+            "nom": "Offre commerciale",
+            "type_piece": "financiere",
+            "obligatoire": true,
+            "source_brute": "Annexe financière (Excel + PDF)"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "bonne",
+        "commentaire": "Données enrichies depuis B26-01107-LS_RC.md"
+      },
+      "source_extrait": {
+        "fichier": "public/rc",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Prestations de Tierce Maintenance Applicative (TMA) des Logiciels Systèmes Energétiques du CEA-Liten"
+      },
+      "variantes": {
+        "acceptees": true,
+        "commentaire": "Variantes de durée autorisées"
+      }
+    },
+    {
+      "reference": "MS26084",
+      "reference_source": "MS26084",
+      "reference_consolidee": "MS26084",
+      "identification_confiance": "moyen",
+      "titre": "Missions d'infogérance de systèmes d'information des collectivités adhérentes au Conseil numérique du SYANE",
+      "acheteur": {
+        "nom": "SYANE - Syndicat des énergies et de l'aménagement numérique de la Haute-Savoie",
+        "structure_juridique": "Syndicat mixte",
+        "categorie_normee": "etablissement_public"
+      },
+      "lieu": {
+        "adresse": "Non précisé",
+        "code_postal": null,
+        "ville": "Haute-Savoie",
+        "pays": "France",
+        "source_brute": "Haute-Savoie - territoire du syndicat"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-11T12:00:00+02:00",
+        "valeur_brute": "11/06/2026 à 12h00",
+        "fuseau_horaire": "Europe/Paris",
+        "source_brute": "Jeudi 11 juin 2026 à 12h00"
+      },
+      "plateforme_remise_offres": {
+        "nom": "marches-publics.info",
+        "url": "https://www.marches-publics.info",
+        "source_brute": "www.marches-publics.info"
+      },
+      "type_marche": {
+        "source": "Accord-cadre à bons de commande mono-attributaire",
+        "consolide": "accord-cadre à bons de commande",
+        "categorie_normee": "accord_cadre_bc"
+      },
+      "procedure": {
+        "source": "Procédure avec négociation en deux phases",
+        "consolidee": "procédure avec négociation",
+        "regime": "droit_commun",
+        "niveau_preuve": "verifie"
+      },
+      "duree": {
+        "valeur": 12,
+        "unite": "mois",
+        "structure": "1 an reconductible 3 fois (4 ans maximum)",
+        "source_brute": "un an reconductible trois fois"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": 5000000,
+          "devise": "EUR",
+          "precision": "Plafond maximum 5 000 000 € HT",
+          "source_brute": "montant maximum de 5 000 000 € HT",
+          "nature": "plafond"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0,
+        "source_brute": "Marché non alloti"
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [
+        {
+          "critere": "Valeur technique",
+          "ponderation": "60%",
+          "commentaire": "Qualité technique de l'offre",
+          "source_brute": "jugement des offres sur valeur technique 60%"
+        },
+        {
+          "critere": "Prix",
+          "ponderation": "40%",
+          "commentaire": "Critère prix",
+          "source_brute": "prix 40%"
+        }
+      ],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "RC",
+            "type_piece": "reglement",
+            "obligatoire": true,
+            "source_brute": "Règlement de consultation"
+          },
+          {
+            "nom": "CCTP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Techniques"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "cahier_clauses",
+            "obligatoire": true,
+            "source_brute": "Cahier des Clauses Administratives"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "formulaire",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "Mémoire technique",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "Mémoire technique (max 35 pages)"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "verifie",
+        "niveau_confiance": "eleve",
+        "qualite_extraction": "bonne",
+        "commentaire": "Données enrichies depuis RC-PHASE-CANDIDATURES.md"
+      },
+      "source_extrait": {
+        "fichier": "public/rc",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "Missions d'infogérance de systèmes d'information"
+      }
+    },
+    {
+      "reference": "2026-04",
+      "reference_source": "2026-04",
+      "reference_consolidee": "2026-04",
+      "identification_confiance": "moyen",
+      "titre": "PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL",
+      "acheteur": {
+        "nom": "....................................................................... 5 4.2 Contenu ..............",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-17T12:00:00+02:00",
+        "valeur_brute": "2026-06-17",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "DU MARCHE ...................................................................................................................... 3 ARTICLE 3 - CONDITIONS DE LA CONSULTATION ...........................",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "accord-cadre",
+        "consolidee": "accord-cadre",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCTP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCTP"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "CCAG",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAG"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "DPGF",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DPGF"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "bonne",
+        "commentaire": "Titre corrigé automatiquement (auto)"
+      },
+      "source_extrait": {
+        "fichier": "RC candidature -2026-04.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "DU MARCHE ...................................................................................................................... 3 ARTICLE 3 - CONDITIONS DE LA CONSULTATION ..........................."
+      }
+    },
+    {
+      "reference": "2600006",
+      "reference_source": "2600006",
+      "reference_consolidee": "2600006",
+      "identification_confiance": "moyen",
+      "titre": "Services informatiques : conseil, développement de logiciels, Internet et appui SPL APPROV’HALLES - 2600006 - SPL - IT Réseau Cloud Sécurité - RC",
+      "acheteur": {
+        "nom": "....................................................................................................",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-24T12:00:00+02:00",
+        "valeur_brute": "2026-06-24",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "DU MARCHE .......................................................................................................................... 4 2.1 Objet du marché .............................................",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Procédure adaptée",
+        "consolidee": "Procédure adaptée",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCTP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCTP"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "DPGF",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DPGF"
+          },
+          {
+            "nom": "AE",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "AE"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "bonne",
+        "commentaire": "Titre corrigé automatiquement (auto)"
+      },
+      "source_extrait": {
+        "fichier": "2600006 - SPL -  IT Réseau Cloud Sécurité - RC .pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "DU MARCHE .......................................................................................................................... 4 2.1 Objet du marché ............................................."
+      }
+    },
+    {
+      "reference": "260424",
+      "reference_source": "260424",
+      "reference_consolidee": "260424",
+      "identification_confiance": "moyen",
+      "titre": "Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA Procédu",
+      "acheteur": {
+        "nom": "à l’adresse mentionnée en page de garde. Ce mode de transmission est obligatoire pour l’ensemble des",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-04T12:00:00+02:00",
+        "valeur_brute": "2026-06-04",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "du marché : Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA Procédure : Appel d’offres ouvert (articles L.2124-2, R.2124-2, R.2161-2",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Accord-cadre",
+        "consolidee": "Accord-cadre",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "CCAG",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAG"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "bonne",
+        "commentaire": "Titre corrigé automatiquement (auto)"
+      },
+      "source_extrait": {
+        "fichier": "260424 - RC PRESTATIONS INFORMATIQUES .pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "du marché : Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA Procédure : Appel d’offres ouvert (articles L.2124-2, R.2124-2, R.2161-2"
+      }
+    },
+    {
+      "reference": "26910A",
+      "reference_source": "26910A",
+      "reference_consolidee": "26910A",
+      "identification_confiance": "moyen",
+      "titre": "DU CONTRAT ■ Acheteur : L’Euro-Métropole de Metz EMM - DGA STEN - DIR SI - SYSTEMES D'INFORMATION Représentant : François GROSDIDIER Président Adresse : Metz Métropole 1 place du Parlement de Metz CS3",
+      "acheteur": {
+        "nom": "L’Euro-Métropole de Metz EMM - DGA STEN - DIR SI - SYSTEMES D'INFORMATION Représentant : François GR",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-08T12:00:00+02:00",
+        "valeur_brute": "2026-06-08",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "DU CONTRAT ■ Acheteur : L’Euro-Métropole de Metz EMM - DGA STEN - DIR SI - SYSTEMES D'INFORMATION Représentant : François GROSDIDIER Président Adresse : Metz Métropole 1 place du Parlement de Metz CS3",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert",
+        "consolidee": "Appel d'offres ouvert",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCTP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCTP"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "CCAG",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAG"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "moyenne",
+        "commentaire": "Re-traité reprocess_v2 depuis 26910A RC.pdf"
+      },
+      "source_extrait": {
+        "fichier": "26910A RC.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "DU CONTRAT ■ Acheteur : L’Euro-Métropole de Metz EMM - DGA STEN - DIR SI - SYSTEMES D'INFORMATION Représentant : François GROSDIDIER Président Adresse : Metz Métropole 1 place du Parlement de Metz CS3"
+      }
+    },
+    {
+      "reference": "26A0133001",
+      "reference_source": "26A0133001",
+      "reference_consolidee": "26A0133001",
+      "identification_confiance": "moyen",
+      "titre": "Accompagnement à l’extension de l’ITSM de la DSI Lieu d’exécution : Région Auvergne Rhône-Alpes 2",
+      "acheteur": {
+        "nom": ") Contact service chargé de la passation Conseil régional Auvergne-Rhône-Alpes pi_tic.achats@auvergn",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-16T12:00:00+02:00",
+        "valeur_brute": "2026-06-16",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "du marché : Accompagnement à l’extension de l’ITSM de la DSI Procédure de passation : Appel d'offres ouvert Date et heures limites de réception des offres : mardi 16 juin 2026 à 12H00- délai de rigueu",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "Appel d'offres ouvert",
+        "consolidee": "Appel d'offres ouvert",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "bonne",
+        "commentaire": "Titre corrigé automatiquement (auto)"
+      },
+      "source_extrait": {
+        "fichier": "26A0133001_ RC.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "du marché : Accompagnement à l’extension de l’ITSM de la DSI Procédure de passation : Appel d'offres ouvert Date et heures limites de réception des offres : mardi 16 juin 2026 à 12H00- délai de rigueu"
+      }
+    },
+    {
+      "reference": "2026-CHATBOT",
+      "reference_source": "2026-CHATBOT",
+      "reference_consolidee": "2026-CHATBOT",
+      "identification_confiance": "moyen",
+      "titre": "Comporte pas de prestations supplémentaires éventuelles",
+      "acheteur": {
+        "nom": "PUBLIC 2 CONTENU DU DOSSIER DE CONSULTATION 2.1 Contenu des documents de la consultation 2.2 Demande",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2016-04-27T12:00:00+02:00",
+        "valeur_brute": "2016-04-27",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "du marché 3.2 Allotissement 3.3 Forme du marché 3.4 Procédure 3.5 Durée du marché 3.6 Variantes 3.7 Prestations supplémentaires éventuelles 3.8 Modalités essentielles de financement et de paiement 3.9",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "appel d'offres ouvert",
+        "consolidee": "appel d'offres ouvert",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCTP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCTP"
+          },
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "DC1",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC1"
+          },
+          {
+            "nom": "DC2",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC2"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "AE",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "AE"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "bonne",
+        "commentaire": "Titre corrigé automatiquement (auto)"
+      },
+      "source_extrait": {
+        "fichier": "RC chatbot.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "du marché 3.2 Allotissement 3.3 Forme du marché 3.4 Procédure 3.5 Durée du marché 3.6 Variantes 3.7 Prestations supplémentaires éventuelles 3.8 Modalités essentielles de financement et de paiement 3.9"
+      }
+    },
+    {
+      "reference": "2026-0206-WEB",
+      "reference_source": "2026-0206-WEB",
+      "reference_consolidee": "2026-0206-WEB",
+      "identification_confiance": "moyen",
+      "titre": "du contrat Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée Acheteur Département de la Vendée Type de contrat Accord-cadre à bons de commande avec mi",
+      "acheteur": {
+        "nom": "Département de la Vendée 40 rue du Maréchal Foch 85923 LA ROCHE-SUR-YON Cedex 9 Dossier suivi par :",
+        "structure_juridique": "non précisé",
+        "categorie_normee": "non_precise"
+      },
+      "lieu": {
+        "adresse": null,
+        "code_postal": null,
+        "ville": null,
+        "pays": "France",
+        "source_brute": "non précisé"
+      },
+      "date_limite_remise_offres": {
+        "valeur_iso": "2026-06-12T12:00:00+02:00",
+        "valeur_brute": "2026-06-12",
+        "fuseau_horaire": "Europe/Paris"
+      },
+      "plateforme_remise_offres": {
+        "nom": "non précisé",
+        "url": null
+      },
+      "type_marche": {
+        "source": "du contrat Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée Acheteur Département de la Vendée Type de contrat Accord-cadre à bons de commande avec mi",
+        "consolide": "services",
+        "categorie_normee": "services"
+      },
+      "procedure": {
+        "source": "ACCORD-CADRE",
+        "consolidee": "ACCORD-CADRE",
+        "regime": "droit_commun"
+      },
+      "duree": {
+        "valeur": null,
+        "unite": "mois",
+        "structure": "non précisé"
+      },
+      "montants": {
+        "global": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "estime": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "maximum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "minimum": {
+          "valeur": null,
+          "devise": "EUR",
+          "precision": "non précisé",
+          "source_brute": "non précisé",
+          "nature": "non_precise"
+        },
+        "nature_marche": "services"
+      },
+      "allotissement": {
+        "statut": "non_alloti",
+        "nombre_lots": 0
+      },
+      "ccag": {
+        "mentionne": false,
+        "source_brute": "non précisé",
+        "principal": null,
+        "categorie_normee": "non_precise",
+        "mode_determination": "non_precise",
+        "niveau_preuve": "absent",
+        "hypothese": null
+      },
+      "lots": [],
+      "criteres_selection": [],
+      "dce": {
+        "pieces_constitutives": [
+          {
+            "nom": "CCAP",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAP"
+          },
+          {
+            "nom": "CCAG",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "CCAG"
+          },
+          {
+            "nom": "DC4",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "DC4"
+          },
+          {
+            "nom": "BPU",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "BPU"
+          },
+          {
+            "nom": "RC",
+            "type_piece": "technique",
+            "obligatoire": true,
+            "source_brute": "RC"
+          }
+        ]
+      },
+      "conflits": [],
+      "controle": {
+        "statut_verification": "partiellement_verifie",
+        "niveau_confiance": "moyen",
+        "qualite_extraction": "moyenne",
+        "commentaire": "Re-traité reprocess_v2 depuis RC_20260206_WEB.pdf"
+      },
+      "source_extrait": {
+        "fichier": "RC_20260206_WEB.pdf",
+        "page": 1,
+        "section": "Page de garde",
+        "citation_brute": "du contrat Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée Acheteur Département de la Vendée Type de contrat Accord-cadre à bons de commande avec mi"
+      }
+    }
+  ]
+}

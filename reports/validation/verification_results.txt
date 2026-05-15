@@ -1,0 +1,85 @@
+======================================================================
+VÉRIFICATION QUALITÉ - AJOUTS ORPHELINS
+======================================================================
+
+[1] STATISTIQUES GÉNÉRALES
+Total lignes CSV:              72
+Lignes existantes:             53
+Nouvelles lignes:              19
+
+[2] COUVERTURE FICHIERS HTML
+Fichiers HTML dans html_ao/:   50
+Fichiers référencés CSV:       51
+Fichiers non intégrés:         0
+
+[3] NOUVEAUX MARCHÉS AJOUTÉS (19 entrées)
+----------------------------------------------------------------------
+Référence                 Plateforme           Fichier                  
+----------------------------------------------------------------------
+MO-9594452                Marchés Online       ao-9594452-1.html        
+MO-9597280                Marchés Online       ao-9597280-1.html        
+2998043?orgAcronyme=f2h   Standard             2998043?orgAcronyme=f2h  
+2990888?orgAcronyme=d3f   Standard             2990888?orgAcronyme=d3f  
+MO-9595379                Marchés Online       ao-9595379-1.html        
+MO-9596025                Marchés Online       ao-9596025-2.html        
+2956468?orgAcronyme=g7h   Standard             2956468?orgAcronyme=g7h  
+MO-9596814                Marchés Online       ao-9596814-1.html        
+MO-9599869                Marchés Online       ao-9599869-1.html        
+2986378?orgAcronyme=f2h   Standard             2986378?orgAcronyme=f2h  
+MO-9597894                Marchés Online       ao-9597894-1.html        
+MO-9599071                Marchés Online       ao-9599071-1.html        
+MO-9596601                Marchés Online       ao-9596601-1.html        
+MO-9598475                Marchés Online       ao-9598475-1.html        
+MO-9595420                Marchés Online       ao-9595420-1.html        
+2997383?orgAcronyme=s2d   Standard             2997383?orgAcronyme=s2d  
+2987833?orgAcronyme=f2h   Standard             2987833?orgAcronyme=f2h  
+MO-9596821                Marchés Online       ao-9596821-1.html        
+2992873?orgAcronyme=d4t   Standard             2992873?orgAcronyme=d4t  
+
+[4] UNICITÉ DES RÉFÉRENCES
+Références uniques:            71
+Doublons détectés:             1
+  ⚠ 13joue003085442026: 2x - 13joue003085442026-2026-fourniture-solutions-infrastructure.html, 13joue003085442026.html
+
+[5] FORMAT RÉFÉRENCES MARCHÉS ONLINE
+Nouveaux MO:                   12
+Format MO-XXXX correct:        12/12
+
+[6] CHAMPS CRITIQUES MANQUANTS (nouvelles entrées)
+✓ Référence                 0/19 (0%)
+✓ Intitulé synthétique      0/19 (0%)
+⚠ Acheteur_auto             19/19 (100%)
+✓ source_type               0/19 (0%)
+
+[7] DOUBLONS LOGIQUES (titres similaires)
+Titres similaires avec ref différentes: 8
+
+  Titre: prestationsdassistancetechniquedexpertis...
+    - 37ao2618155226052026 (matched)
+    - 3boamp2639725 (unmatched)
+    - 370726260520267275 (unmatched)
+
+  Titre: infogérancedusystèmedinformationdelinsea...
+    - AO-2617-2505 (unmatched)
+    - ao-9589316-1 (matched)
+
+  Titre: refontesiteinternetacadémiefrançaisehébe...
+    - 3boamp2643374 (matched)
+    - 37af2026020306202672 (unmatched)
+
+[8] CONTRÔLE 'review_needed'
+Avec review_needed=oui:        19/19
+Justifié (champs vides):       19/19
+
+[9] CAS SPÉCIAUX
+Fichiers 13joue* ajoutés:      0
+Fichiers 3boamp* ajoutés:      0
+PLACE numérique:               0
+
+======================================================================
+CONCLUSION
+======================================================================
+⚠ VÉRIFICATION VALIDÉE AVEC ANOMALIES MINEURES:
+  - 1 doublons de références
+  - 8 doublons logiques
+======================================================================

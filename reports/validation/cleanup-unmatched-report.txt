@@ -1,0 +1,32 @@
+RAPPORT DE NETTOYAGE - Lignes sans fichier HTML
+======================================================================
+
+Fichiers HTML: 50
+Lignes CSV initiales: 72
+Lignes retirées: 22
+Lignes finales: 50
+
+LIGNES RETIRÉES:
+----------------------------------------------------------------------
+- 2026-180: AMO pour le renouvellement du marché d’infogérance de l’infrastructure informatique et des SI de l’EPMO‑VGE
+- AO-2618-2579: SOC managé et protection des identités
+- 3boamp2639725: Prestations d’assistance technique, d’expertise et de conseil concernant infrastructures, services applicatifs et urbanisation du SI de la CNAF
+- 13joue002723472026: Fourniture, mise en œuvre d’un SOC managé et protection des identités (version JOUE de l’AO SOC Grenoble)
+- DAF_2025_001001: Prestations d’assistance et d’expertise pour migration et déploiement des SI vers le cloud au profit du Centre Spécialisé Cloud du MINARM (référence interne DAF).
+- 13joue002929142026: Accompagnement à la convergence des systèmes d'information de scolarité du Conservatoire national des arts et métiers – Cnam - Paris
+- AO-2617-2505: Infogérance du système d’information de l’INSEAMM
+- 3boamp2642071 (2ᵉ occurrence): Doublon – même objet : assistance en ingénierie de coordination de projets data / expertise data Région Nouvelle‑Aquitaine
+- 37ao26154015290520267275: Cadrage, la conception, le développement, le maintien en conditions opérationnelles et de sécurité et l'assistance pour les applications composant le système d'information du Casier Judiciaire
+- AO-2619-0506: Maintenance, assistance et infogérance du parc informatique, réseau et télécom de l’EPPGHV
+- 37af202602030620267275: Refonte site internet Académie Française hébergement maintenance
+- 3boamp2644226: Assistance maîtrise d'œuvre expertise développements informatiques IFCE
+- 13joue003094352026: TMA TME Système d'Information DPSM BRGM
+- 13joue003133982026: Développement maintenance application gestion visas
+- 3boamp2645992: Assistance maîtrise d'ouvrage refonte écosystème numérique Paris Musées
+- 13joue003085442026: Fourniture de solutions d'infrastructure informatique (matériels, logiciels et prestations associées)
+- 370726260520267275: Prestations d’assistance technique, d’expertise et de conseil sur infrastructures et services applicatifs (réf. 37/0726/26052026/7275)
+- 37202609080720267293: Avis de préinformation – mise à disposition, adaptation et maintenance d’un SI financier pour la gestion budgétaire et comptable de la HAS
+- 372600004150520267277: Conception ergonomique, graphique, technique et fonctionnelle, développement, hébergement et maintenance du site web d’une ville
+- 24HA0007: Prestations d’aide à la passation de marchés publics
+- 2026-0733: Prestations de codage Pharo / SDL3 / Bloc, complétion de bibliothèques graphiques et widgets pour outils Pharo (haute technicité)
+- 2026-667: Développement, mise en œuvre et maintien en condition opérationnelle (MOE) de la solution “1001 Parcours” (dev, MCO, support, astreintes, licences)

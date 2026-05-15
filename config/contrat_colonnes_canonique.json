@@ -1,0 +1,179 @@
+{
+  "version": "1.0.0",
+  "date_validite": "2026-05-14",
+  "description": "Contrat canonique des colonnes CSV pour le pipeline AO-DCE. Toute modification doit être explicite et versionnée.",
+  
+  "csv_metier": {
+    "nom_fichier": "AO-metier-consolide-v{version}.csv",
+    "description": "Vue compacte pour lecture et correction humaine dans Google Sheets",
+    "strict": true,
+    "colonnes": [
+      {
+        "nom": "reference",
+        "type": "string",
+        "obligatoire": true,
+        "description": "Référence unique du marché"
+      },
+      {
+        "nom": "titre",
+        "type": "string",
+        "obligatoire": true,
+        "description": "Intitulé du marché"
+      },
+      {
+        "nom": "acheteur",
+        "type": "string",
+        "obligatoire": true,
+        "description": "Nom de l'acheteur public"
+      },
+      {
+        "nom": "type_acheteur",
+        "type": "enum",
+        "valeurs": ["etat", "collectivite_territoriale", "etablissement_public", "inconnu"],
+        "obligatoire": true,
+        "description": "Type d'acheteur (état, collectivité, EP, inconnu)"
+      },
+      {
+        "nom": "type_marche",
+        "type": "enum",
+        "valeurs": ["services", "fournitures", "travaux", ""],
+        "obligatoire": false,
+        "description": "Nature du marché (services, fournitures, travaux)"
+      },
+      {
+        "nom": "procedure_source",
+        "type": "string",
+        "obligatoire": true,
+        "description": "Valeur de procédure lue dans la source HTML"
+      },
+      {
+        "nom": "procedure_consolidee",
+        "type": "enum",
+        "valeurs": ["MAPA_SOUS_SEUIL", "JOUE_PROUVE", "FORMALISEE_SANS_PREUVE_JOUE", "FORMALISEE_NEGOCIEE", "FORMALISEE_REQUISE", "INDETERMINE"],
+        "obligatoire": true,
+        "description": "Qualification finale de la procédure après consolidation"
+      },
+      {
+        "nom": "procedure_regime",
+        "type": "enum",
+        "valeurs": ["marches_ordinaires", "defense_securite"],
+        "obligatoire": true,
+        "description": "Régime juridique applicable"
+      },
+      {
+        "nom": "montant_estime",
+        "type": "string",
+        "obligatoire": false,
+        "description": "Montant estimé du marché (texte brut)"
+      },
+      {
+        "nom": "date_limite_remise_offres",
+        "type": "datetime",
+        "obligatoire": false,
+        "description": "Date limite de remise des offres"
+      },
+      {
+        "nom": "url_marche",
+        "type": "url",
+        "obligatoire": false,
+        "description": "URL publique du marché"
+      },
+      {
+        "nom": "fichier_source_html",
+        "type": "string",
+        "obligatoire": true,
+        "description": "Nom du fichier HTML source"
+      },
+      {
+        "nom": "conflit_coherence",
+        "type": "enum",
+        "valeurs": ["oui", "non"],
+        "obligatoire": true,
+        "description": "Indication de conflit entre source et consolidation"
+      },
+      {
+        "nom": "motif_conflit",
+        "type": "string",
+        "obligatoire": false,
+        "description": "Explication factuelle du conflit détecté"
+      }
+    ]
+  },
+  
+  "csv_audit": {
+    "nom_fichier": "AO-audit-complet-v{version}.csv",
+    "description": "Vue complète avec preuves, calculs et traçabilité technique",
+    "strict": false,
+    "note": "Le contrat d'audit est extensible mais les colonnes définies doivent rester stables",
+    "colonnes_obligatoires": [
+      "reference",
+      "fonction_publique",
+      "procedure_type",
+      "famille_procedure_deduite",
+      "typologie_marche_verifiee",
+      "seuil_formalise_applicable",
+      "plateforme_source",
+      "duree",
+      "renouvellements",
+      "localisation",
+      "cpv_principal",
+      "cpv_secondaires",
+      "ccag_type",
+      "categorie_regime",
+      "preuve_regime",
+      "preuve_typologie",
+      "preuve_joue_detectee",
+      "source_preuve_joue",
+      "code_couleur_procedure",
+      "niveau_procedure_deduit",
+      "audit_verdict",
+      "audit_contamination_effective",
+      "audit_risque",
+      "audit_zones_annexes",
+      "audit_notes",
+      "source_procedure_evidence",
+      "seuil_applicable_ht",
+      "montant_estime_ht_parsed",
+      "ratio_montant_sur_seuil",
+      "priorite_juridique",
+      "niveau_confiance",
+      "procedure_verdict",
+      "verdict_final",
+      "notes_consolidation"
+    ],
+    "colonnes_optionnelles": [
+      "verification_requise",
+      "raisons_verification",
+      "notes_verification",
+      "qualite_preuve_procedure",
+      "conflit_detecte",
+      "type_conflit",
+      "justification_juridique_courte",
+      "url_provenance"
+    ]
+  },
+  
+  "politique_evolution": {
+    "regles": [
+      "Toute modification du contrat doit entraîner une montée de version majeure (X.0.0) ou mineure (x.Y.0)",
+      "L'ajout d'une colonne au CSV métier nécessite une validation explicite et une mise à jour du contrat",
+      "La suppression d'une colonne du CSV métier est interdite sans migration de données validée",
+      "Le réordonnancement des colonnes doit respecter strictement l'ordre canonique",
+      "Les colonnes inconnues dans une nouvelle génération doivent être signalées et ignorées",
+      "Les colonnes manquantes doivent être créées automatiquement avec valeur vide"
+    ],
+    "alertes": {
+      "colonne_inconnue_metier": "ERREUR",
+      "colonne_manquante_metier": "AVERTISSEMENT_AUTO_CORRIGE",
+      "colonne_inconnue_audit": "AVERTISSEMENT",
+      "ordre_incorrect": "AVERTISSEMENT_AUTO_CORRIGE",
+      "type_incompatible": "ERREUR_BLOQUANTE"
+    }
+  },
+  
+  "metadonnees": {
+    "auteur": "Pipeline AO-DCE",
+    "validation": "2026-05-14",
+    "usage": "Ce fichier est la source de vérité structurelle pour tous les exports CSV du pipeline"
+  }
+}

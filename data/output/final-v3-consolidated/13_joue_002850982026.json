@@ -1,0 +1,141 @@
+{
+  "record_id": "13/joue/002850982026",
+  "source_trace": {
+    "source_file": "13joue002850982026-2026-accord-cadre-bons.html",
+    "source_platform": "FRANCE_MARCHES",
+    "source_url": "https://www.francemarches.com/appel-offre/13joue002850982026-2026-accord-cadre-bons",
+    "input_reference": "13/joue/002850982026"
+  },
+  "final_fields": {
+    "reference": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "title": {
+      "value": "Accord-cadre à bons de commande pour le maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Préservé depuis extraction déterministe (Intitulé synthétique)"
+    },
+    "buyer_final": {
+      "value": "VILLE de PARIS - DFA - SDA",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Préservé depuis extraction déterministe (Acheteur_auto)"
+    },
+    "buyer_type": {
+      "value": "collectivite_territoriale",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "Inféré depuis nom acheteur : VILLE de PARIS - DFA - SDA"
+    },
+    "fonction_publique": {
+      "value": "territoriale",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "Déduit depuis buyer_type=collectivite_territoriale"
+    },
+    "fonction_publique_detail": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "procedure_label": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "procedure_family": {
+      "value": "accord_cadre",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Détecté dans signal HTML procédure : Procédure formalisée <div class=\"avisSideb | /favicon.ico\"> Appel d offre : Acco"
+    },
+    "formalisation_type": {
+      "value": "formalise",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "procédure formalisée détectée dans HTML"
+    },
+    "contract_nature": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "ccag_type": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "cpv_main": {
+      "value": "72250000",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Code CPV extrait du HTML source"
+    },
+    "cpv_list": {
+      "value": [
+        "72250000",
+        "79999100",
+        "72311100",
+        "79995200",
+        "60181000",
+        "45510000",
+        "79952000",
+        "22112000",
+        "30237380",
+        "22111000"
+      ],
+      "status": "found",
+      "confidence": "high",
+      "justification": "10 CPV extraits du HTML"
+    },
+    "location_final": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "deadline_final": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "duration_initial": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "renewals": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "estimated_amount": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    }
+  },
+  "control": {
+    "manual_review_required": true,
+    "review_reasons": [
+      "Erreur LLM: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=60)"
+    ],
+    "quality_flags": [
+      "llm_error",
+      "missing_deadline",
+      "url_from_canonical"
+    ]
+  }
+}

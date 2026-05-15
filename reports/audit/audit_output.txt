@@ -1,0 +1,55 @@
+====================================================================================================
+RAPPORT D'AUDIT ETL - AO-DCE Pipeline v2
+Fichier audité: AO-pipeline-v2-clean.csv
+Date d'audit: 2026-05-11T23:59:11.776730
+Auditeur: Senior ETL Data Auditor
+====================================================================================================
+
+📊 DONNÉES DE BASE
+   Fichiers HTML dans html_ao/: 50
+   Lignes CSV (hors en-tête): 50
+   Colonnes CSV: 30
+
+🔍 VÉRIFICATION 1: Correspondance CSV ↔ HTML
+   Match sources uniques: 50
+   ✓ Tous les match_source correspondent à des fichiers HTML existants
+   ✓ Pas de doublon match_source (1 ligne = 1 fichier HTML)
+   ✓ Tous les fichiers HTML ont une ligne CSV correspondante
+
+🔍 VÉRIFICATION 2: Unicité des références
+   Total références: 50
+   Références uniques: 50
+   ✓ Toutes les références sont uniques
+
+🔍 VÉRIFICATION 3: Classification match_status
+   matched: 31 (62.0%)
+   new: 19 (38.0%)
+
+🔍 VÉRIFICATION 4: Champs critiques
+   Références vides: 0
+   Titres vides: 0
+   Acheteur_auto vide: 2/50 (4.0%)
+   source_type vide: 31
+
+🔍 VÉRIFICATION 5: Cas Marchés Online (MO-*)
+   Total lignes MO: 12
+   ✓ Toutes les références MO sont cohérentes avec les match_source
+
+📋 DÉTAIL: Lignes sans Acheteur_auto (2)
+   - MO-9596601                     | ao-9596601-1.html         | new | MARCHES_ONLINE
+   - MO-9598475                     | ao-9598475-1.html         | new | MARCHES_ONLINE
+
+====================================================================================================
+RÉCAPITULATIF DE L'AUDIT
+====================================================================================================
+
+⚠️  ANOMALIES DÉTECTÉES:
+   - 2 acheteurs non extraits
+
+🎯 CONCLUSION:
+   FICHIER PARTIELLEMENT COHÉRENT
+   Structure: ✓ Correcte (50 lignes = 50 fichiers)
+   Références: ✓ Uniques
+   Acheteurs: ⚠ 2 non extraits (acceptable)
+
+====================================================================================================

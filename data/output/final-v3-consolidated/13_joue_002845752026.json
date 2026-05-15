@@ -1,0 +1,135 @@
+{
+  "record_id": "13/joue/002845752026",
+  "source_trace": {
+    "source_file": "13joue002845752026-2026-marche-prestations-maintenance.html",
+    "source_platform": "FRANCE_MARCHES",
+    "source_url": "https://www.francemarches.com/appel-offre/13joue002845752026-2026-marche-prestations-maintenance",
+    "input_reference": "13/joue/002845752026"
+  },
+  "final_fields": {
+    "reference": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "title": {
+      "value": "MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Préservé depuis extraction déterministe (Intitulé synthétique)"
+    },
+    "buyer_final": {
+      "value": "EPPGHV",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Préservé depuis extraction déterministe (Acheteur_auto)"
+    },
+    "buyer_type": {
+      "value": "etat",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "Inféré depuis nom acheteur : EPPGHV"
+    },
+    "fonction_publique": {
+      "value": "etat",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "Déduit depuis buyer_type=etat"
+    },
+    "fonction_publique_detail": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "procedure_label": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "procedure_family": {
+      "value": "accord_cadre",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Détecté dans signal HTML procédure : Procédure formalisée <div class=\"avisSideb | target=\"_blank\" href=\"https://www.f"
+    },
+    "formalisation_type": {
+      "value": "formalise",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "procédure formalisée détectée dans HTML"
+    },
+    "contract_nature": {
+      "value": "services",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Extrait de html_nature : class=\"label\" data-labels-key=\"field|name|BT-23-Procedure\">N"
+    },
+    "ccag_type": {
+      "value": "tic",
+      "status": "inferred",
+      "confidence": "medium",
+      "justification": "Inféré depuis titre/nature : MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOG"
+    },
+    "cpv_main": {
+      "value": "72500000",
+      "status": "found",
+      "confidence": "high",
+      "justification": "Code CPV extrait du HTML source"
+    },
+    "cpv_list": {
+      "value": [
+        "72500000",
+        "72610000",
+        "72611000",
+        "72600000"
+      ],
+      "status": "found",
+      "confidence": "high",
+      "justification": "4 CPV extraits du HTML"
+    },
+    "location_final": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "deadline_final": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "duration_initial": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "renewals": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    },
+    "estimated_amount": {
+      "value": null,
+      "status": "missing",
+      "confidence": "low",
+      "justification": ""
+    }
+  },
+  "control": {
+    "manual_review_required": true,
+    "review_reasons": [
+      "Erreur LLM: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=60)"
+    ],
+    "quality_flags": [
+      "llm_error",
+      "missing_deadline",
+      "url_from_canonical"
+    ]
+  }
+}
