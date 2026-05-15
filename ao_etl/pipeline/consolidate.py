@@ -698,6 +698,15 @@ def _consolidate_row(
     if market_url and (not existing_url or existing_url == "-"):
         row["URL source HTTPS"] = market_url
         existing_url = market_url
+    
+    # Scraper l'URL pour enrichir les données si nécessaire (données manquantes)
+    try:
+        from ao_etl.scraper.url_scraper import enrich_row_with_url_content
+        row = enrich_row_with_url_content(row)
+        if row.get("_url_scraped_content"):
+            log.info("Row enrichie avec contenu URL scrappé: %s", source_file)
+    except Exception as e:
+        log.debug("Scraping URL non disponible: %s", e)
 
     def _attach_market_url(rec: ConsolidatedRecord, url_src: str = "") -> None:
         """Injecte market_url dans source_trace et trace sa provenance.

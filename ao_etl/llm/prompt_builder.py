@@ -229,6 +229,9 @@ def build_resolved_hints(row: dict, html_signals: Dict[str, str], source_file: s
         "html_deadline": html_signals.get("deadline", ""),
         "html_duration": html_signals.get("duration", ""),
         "html_amount": html_signals.get("amount", ""),
+        
+        # ── Contenu scrappé depuis l'URL (priorité 4 - si disponible) ──
+        "url_scraped_content": row.get("_url_scraped_content", ""),
     }
 
 
@@ -258,15 +261,22 @@ PRIORITÉ DES SOURCES (décroissante)
 P1 — Champs csv_* : valeurs extraites de façon déterministe. À préserver sauf contradiction forte dans le HTML.
 P2 — extraction_notes : signaux de l'extracteur Python. Fiables si présents.
 P3 — Signaux html_* : extraits ciblés du HTML source.
-P4 — source_url : Si une URL valide est présente dans source_url, tu peux l'utiliser pour compléter les données manquantes (estimation, durée, localisation, etc.) en analysant le contenu de la page si nécessaire.
-P5 — Inférence contrôlée par règle fermée (voir taxonomies ci-dessous).
+P4 — url_scraped_content : Contenu HTML scrappé directement depuis l'URL source. TRÈS FIABLE - utilise-le prioritairement pour compléter les données manquantes (estimation, durée, localisation, date limite).
+P5 — source_url : URL publique du marché. Sert de référence mais ne peut pas être visitée directement.
+P6 — Inférence contrôlée par règle fermée (voir taxonomies ci-dessous).
 
-UTILISATION DE L'URL SOURCE:
-- Si source_url contient une URL valide (HTTPS) et que des champs csv_* sont vides ou "missing", utilise cette URL pour compléter les informations manquantes.
-- Pour France Marchés: https://www.francemarches.com/appel-offre/{slug}
-- Pour Marchés Online: https://www.marchesonline.com/...
-- Pour BOAMP: https://www.boamp.fr/avis/detail/{id}
-- Pour TED/JOUE: https://ted.europa.eu/udl?uri=TED:NOTICE:{numero}-{annee}:TEXT:FR
+UTILISATION DU CONTENU SCRAPPÉ (url_scraped_content):
+- Si url_scraped_content contient du texte (non vide), c'est le contenu réel de la page web.
+- Recherche dans ce contenu les informations manquantes:
+  * Estimation/Valeur: cherche "budget", "montant", "valeur estimée", "prix", chiffres suivis de "EUR/€"
+  * Date limite: cherche "date limite", "réception des offres", "clôture", patterns JJ/MM/AAAA
+  * Localisation: cherche "lieu", "adresse", "ville", "département", "région"
+  * Durée: cherche "durée", "mois", "année(s)", "période"
+- Ces données sont FIABLES car elles viennent directement du site officiel.
+
+UTILISATION DE L'URL SOURCE (source_url):
+- Identifie la plateforme (francemarches, marchesonline, boamp, ted)
+- Sert de référence pour vérifier la cohérence des données
 
 ════════════════════════════════════════════
 TAXONOMIES FERMÉES (valeurs autorisées uniquement)
