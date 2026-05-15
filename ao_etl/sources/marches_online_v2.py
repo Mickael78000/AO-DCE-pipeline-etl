@@ -184,35 +184,46 @@ class MarchesOnlineExtractor(BaseExtractor):
         return ""
     
     def _extract_estimation(self, soup, text: str) -> str:
-        """Extrait l'estimation du marché."""
-        # Pattern 1: Estimation globale
-        m = re.search(
-            r"Estimation\s*(?:globale)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        """Extrait l'estimation du marché (texte + HTML)."""
+        html = self.context.html
         
-        # Pattern 2: Valeur totale
-        m = re.search(
-            r"Valeur\s*(?:totale|estim[ée]e)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        # === Patterns dans le texte ===
+        text_patterns = [
+            (r"Estimation\s*(?:globale)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 40),
+            (r"Valeur\s*(?:totale|estim[ée]e|globale)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 40),
+            (r"Budget\s*(?:total|maximum)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 35),
+            (r"Montant\s*(?:maximum|maxi)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 35),
+            (r"Prix\s*(?:maximum|plafond)?\s*[:\-]?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 30),
+        ]
         
-        # Chercher dans les lots
+        for pattern, score in text_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
+        
+        # === Chercher dans les lots ===
         lots = re.findall(
             r"Lot\s*\d+.*?(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€)",
             text,
             re.I,
         )
         if lots:
-            # Somme des lots si possible
             total = sum(int(l.replace(' ', '').replace(',', '').split('.')[0]) for l in lots)
             return f"{total} EUR"
+        
+        # === Patterns HTML (valeurs cachées) ===
+        html_patterns = [
+            (r'data-estimation[=\"\']\s*(\d[\d\s,]*)', 40),
+            (r'class=["\'][^"\']*amount[^"\']*["\'][^>]*>(\d[\d\s,.]*)', 35),
+            (r'<span[^>]*class=[^>]*price[^>]*>(\d[\d\s,.]*)', 30),
+        ]
+        
+        for pattern, score in html_patterns:
+            m = re.search(pattern, html, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
         
         return ""
     
@@ -239,12 +250,26 @@ class MarchesOnlineExtractor(BaseExtractor):
         return ""
     
     def _build_url(self) -> str:
-        """Construit l'URL Marchés Online depuis le nom de fichier."""
+        """Construit ou extrait l'URL Marchés Online."""
+        html = self.context.html
+        
+        # 1. Chercher balise canonical
+        m = re.search(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)["\']', html, re.I)
+        if m:
+            url = m.group(1)
+            if 'marchesonline' in url or 'infopro' in url:
+                return url
+        
+        # 2. Chercher URL dans les meta ou scripts
+        m = re.search(r'["\'](https?://[^"\']*marchesonline\.com[^"\']*)["\']', html, re.I)
+        if m:
+            return m.group(1)
+        
+        # 3. Fallback: construire depuis le nom de fichier
         name = self.filename()
-        # Pattern: ao-XXXXX-X.html
         m = re.match(r"ao-(\d+)-\d+", name, re.I)
         if m:
             ref = m.group(1)
-            # URL type: https://www.marchesonline.com/appel-offre/ao-XXXXX-1
             return f"https://www.marchesonline.com/appel-offre/ao-{ref}-1"
+        
         return ""

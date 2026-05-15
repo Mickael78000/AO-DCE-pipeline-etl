@@ -222,29 +222,48 @@ class FranceMarchesExtractor(BaseExtractor):
         return location
     
     def _estimation(self, text: str) -> str:
-        """Extrait l'estimation du marché."""
-        # Pattern 1: Valeur estimée du marché / Montant
-        m = re.search(
-            r"Valeur estim[ée]e(?:\s*totale)?\s*du\s*march[ée]\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        """Extrait l'estimation du marché (texte + HTML brut)."""
+        html = self.context.html
         
-        # Pattern 2: Montant total / Total
-        m = re.search(
-            r"Montant total\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        # === Patterns dans le texte nettoyé ===
+        text_patterns = [
+            # Valeur estimée
+            (r"Valeur estim[ée]e(?:\s*totale)?\s*du\s*march[ée]\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 40),
+            # Budget
+            (r"Budget\s*(?:prévisionnel|alloué|total)?\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 35),
+            # Plafond
+            (r"Plafond\s*(?:de dépenses)?\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 35),
+            # Montant total
+            (r"Montant total\s*(?:TTC|HT)?\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 30),
+            # Prix
+            (r"Prix\s*(?:maximum|maxi|plafond)?\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 30),
+            # Estimation
+            (r"Estimation\s*(?:économique|financière|globale)?\s*:?\s*(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€|euros?)", 40),
+        ]
         
-        # Pattern 3: Juste le nombre avec EUR/€
-        m = re.search(r"(\d[\d\s,]*(?:\.\d+)?)\s*(?:EUR|€)", text, re.I)
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '')} EUR"
+        for pattern, score in text_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
+        
+        # === Patterns dans le HTML brut (pour attraper les valeurs cachées) ===
+        html_patterns = [
+            # weborama montant
+            (r'amount\s*[\"\']?\s*[:=]\s*[\"\']?\s*(\d[\d\s,]*)(?:\s*EUR|€)?', 45),
+            # data-estimation
+            (r'data-estimation[=\"\']\s*(\d[\d\s,]*)', 40),
+            # valeur dans span
+            (r'<span[^>]*>(\d[\d\s,.]*(?:\.\d+)?)\s*(?:EUR|€|euros?)</span>', 30),
+            # valeur dans div
+            (r'<div[^>]*class=[^>]*(?:amount|price|valeur|montant)[^>]*>(\d[\d\s,.]*)', 30),
+        ]
+        
+        for pattern, score in html_patterns:
+            m = re.search(pattern, html, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
         
         return ""
     
@@ -267,11 +286,36 @@ class FranceMarchesExtractor(BaseExtractor):
         return ""
     
     def _build_url(self) -> str:
-        """Construit l'URL France Marchés depuis le nom de fichier."""
+        """Construit ou extrait l'URL France Marchés."""
+        html = self.context.html
+        
+        # 1. Chercher balise canonical dans le HTML
+        m = re.search(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)["\']', html, re.I)
+        if m:
+            url = m.group(1)
+            if url.startswith('http'):
+                return url
+        
+        # 2. Chercher URL dans weboramaItemTag JSON
+        m = re.search(r'url\u0022\s*:\u0022([^\u0022]+)\u0022', html, re.I)
+        if m:
+            url = self._decode_unicode_escapes(m.group(1))
+            if url.startswith('http'):
+                return url
+        
+        # 3. Chercher dans meta refresh ou autres
+        m = re.search(r'<meta[^>]+url=([^"\'\s;]+)', html, re.I)
+        if m:
+            url = m.group(1)
+            if url.startswith('http'):
+                return url
+        
+        # 4. Fallback: construire depuis le nom de fichier
         name = self.filename()
         if name.endswith(".html"):
             slug = name[:-5]
             return f"https://www.francemarches.com/appel-offre/{slug}"
+        
         return ""
     
     def _guess_reference_from_filename(self) -> str:

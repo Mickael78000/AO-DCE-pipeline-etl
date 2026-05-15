@@ -123,28 +123,6 @@ class JoueExtractor(BaseExtractor):
         
         return name.replace('.html', '')
     
-    def _extract_location(self, text: str) -> str:
-        """Extrait la localisation."""
-        # Lieu d'exécution
-        m = re.search(
-            r"Lieu\s+d['']?ex[ée]cution\s*:\s*([^.\n,]{3,100}(?:,\s*[^.\n]{3,50})?)",
-            text,
-            re.I
-        )
-        if m:
-            return normalize_text(m.group(1))
-        
-        # Ville + CP
-        ville_m = re.search(r"Ville\s*:\s*([^.\n]{3,50})", text, re.I)
-        cp_m = re.search(r"Code\s+postal\s*:\s*(\d{5})", text, re.I)
-        if ville_m:
-            ville = normalize_text(ville_m.group(1))
-            if cp_m:
-                return f"{ville} ({cp_m.group(1)})"
-            return ville
-        
-        return ""
-    
     def _extract_deadline(self, text: str) -> str:
         """Extrait la date limite de réception des offres."""
         # Pattern: Date limite de réception des offres ou des candidatures
@@ -162,33 +140,38 @@ class JoueExtractor(BaseExtractor):
         return ""
     
     def _extract_estimation(self, text: str) -> str:
-        """Extrait l'estimation du marché."""
-        # Pattern 1: Valeur totale du marché
-        m = re.search(
-            r"Valeur\s+totale\s+du\s+march[ée]\s*:\s*(\d[\d\s,.]*)\s*(?:EUR|€)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '').replace('.', '')} EUR"
+        """Extrait l'estimation du marché (JOUE/TED)."""
+        html = self.context.html
         
-        # Pattern 2: Prix à payer
-        m = re.search(
-            r"Prix\s+[àa]\s+payer\s*:\s*(\d[\d\s,.]*)\s*(?:EUR|€)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '').replace('.', '')} EUR"
+        # === Patterns dans le texte ===
+        text_patterns = [
+            (r"Valeur\s+totale\s+du\s+march[ée]\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 40),
+            (r"Prix\s+[àa]\s+payer\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 35),
+            (r"Budget\s*(?:maximum|maxi)?\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 35),
+            (r"Estimation\s+(?:totale|globale)?\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 35),
+            (r"Montant\s*(?:total|global)?\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 35),
+            (r"Prix\s*(?:plafond|maximum)?\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 30),
+            (r"Valeur\s*du\s*march[ée]\s*[:\-]?\s*(\d[\d\s,.]*)\s*(?:EUR|€)", 40),
+        ]
         
-        # Pattern 3: Budget maximum
-        m = re.search(
-            r"Budget\s+maximum\s*:\s*(\d[\d\s,.]*)\s*(?:EUR|€)",
-            text,
-            re.I,
-        )
-        if m:
-            return f"{m.group(1).replace(' ', '').replace(',', '').replace('.', '')} EUR"
+        for pattern, score in text_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
+        
+        # === Patterns HTML spécifiques TED ===
+        html_patterns = [
+            (r'VALUE\s*[:=]\s*["\']?(\d[\d\s,.]*)\s*(?:EUR|€)?["\']?', 40),
+            (r'class=["\'][^"\']*valorisation[^"\']*["\'][^>]*>(\d[\d\s,.]*)', 35),
+            (r'<span[^>]*class=[^>]*value[^>]*>(\d[\d\s,.]*)', 30),
+        ]
+        
+        for pattern, score in html_patterns:
+            m = re.search(pattern, html, re.I)
+            if m:
+                val = m.group(1).replace(' ', '').replace(',', '').replace('.', '')
+                return f"{val} EUR"
         
         return ""
     
@@ -206,16 +189,82 @@ class JoueExtractor(BaseExtractor):
         return ""
     
     def _build_url(self, reference: str) -> str:
-        """Construit l'URL JOUE/TED depuis la référence."""
+        """Construit ou extrait l'URL JOUE/TED."""
+        html = self.context.html
+        
+        # 1. Chercher URL TED directement dans le HTML
+        m = re.search(r'(https?://ted\.europa\.eu/[^"\'\s<>]+)', html, re.I)
+        if m:
+            return m.group(1)
+        
+        # 2. Chercher référence TED format
+        m = re.search(r'NOTICE[:\-]?(\d{8,12})[-:]?(\d{4})', html, re.I)
+        if m:
+            numero = m.group(1)
+            annee = m.group(2)
+            return f"https://ted.europa.eu/udl?uri=TED:NOTICE:{numero}-{annee}:TEXT:FR"
+        
+        # 3. Construire depuis la référence 13/joue/XXXXXXXX
         if reference and reference.startswith("13/joue/"):
-            # URL TED: https://ted.europa.eu/udl?uri=TED:NOTICE:[numero]-[annee]:TEXT:FR
-            # Extraction du numéro depuis 13/joue/XXXXXXXX
             parts = reference.split('/')
             if len(parts) >= 3:
                 numero = parts[-1]
-                # L'année est dans les 2 derniers chiffres du numéro JOUE
                 if len(numero) >= 10:
-                    annee = numero[4:6]  # Position 4-5 pour l'année (ex: 26 pour 2026)
+                    # Format: 2026/S 123-456789 -> 26-123456
+                    annee = numero[:2] if numero.startswith('20') else numero[2:4]
                     return f"https://ted.europa.eu/udl?uri=TED:NOTICE:{numero}-20{annee}:TEXT:FR"
+        
+        # 4. Fallback: URL générique TED
+        return "https://ted.europa.eu/"
+    
+    def _extract_location(self, text: str) -> str:
+        """Extrait la localisation (amélioré)."""
+        # Lieu d'exécution principal
+        m = re.search(
+            r"Lieu\s+d['']?ex[ée]cution\s*[:\-]?\s*([^.\n,]{3,100}(?:,\s*[^.\n]{3,50})?)",
+            text,
+            re.I
+        )
+        if m:
+            return normalize_text(m.group(1))
+        
+        # Lieu de performance
+        m = re.search(
+            r"Lieu\s+de\s+performance\s*[:\-]?\s*([^.\n,]{3,100})",
+            text,
+            re.I
+        )
+        if m:
+            return normalize_text(m.group(1))
+        
+        # Adresse de l'autorité
+        m = re.search(
+            r"Adresse\s*[:\-]?\s*([^.\n,]{3,100}(?:,\s*[^.\n]{3,50})?)",
+            text,
+            re.I
+        )
+        if m:
+            return normalize_text(m.group(1))
+        
+        # Ville + CP
+        ville_m = re.search(r"Ville\s*[:\-]?\s*([^.\n]{3,50})", text, re.I)
+        cp_m = re.search(r"Code\s+postal\s*[:\-]?\s*(\d{5})", text, re.I)
+        pays_m = re.search(r"Pays\s*[:\-]?\s*([^.\n]{3,30})", text, re.I)
+        
+        parts = []
+        if ville_m:
+            parts.append(normalize_text(ville_m.group(1)))
+        if cp_m:
+            parts.append(cp_m.group(1))
+        if pays_m:
+            parts.append(normalize_text(pays_m.group(1)))
+        
+        if parts:
+            return " / ".join(parts)
+        
+        # NUTS/Regions
+        nuts_m = re.search(r"NUTS\s*[:\-]?\s*([^.\n]{3,50})", text, re.I)
+        if nuts_m:
+            return normalize_text(nuts_m.group(1))
         
         return ""

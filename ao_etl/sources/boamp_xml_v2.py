@@ -81,13 +81,29 @@ class BoampExtractor(BaseExtractor):
         return normalize_text(m.group(1)) if m else ""
 
     def _money_after_label(self, text: str, label: str) -> str:
-        """Extrait une valeur monétaire après un label."""
+        """Extrait une valeur monétaire après un label (plusieurs patterns)."""
+        # Pattern 1: Label sur sa ligne puis valeur puis devise
         pattern = re.compile(rf"{re.escape(label)}\s*\n+([\d.,\s]+)\s*\n+(Euro|EUR)", re.I)
         m = pattern.search(text)
         if m:
             value = normalize_text(m.group(1))
             currency = normalize_text(m.group(2))
             return f"{value} {currency}"
+        
+        # Pattern 2: Label: valeur EUR (sur même ligne)
+        pattern2 = re.compile(rf"{re.escape(label)}\s*[:\-]?\s*([\d.,\s]+)\s*(?:EUR|€|Euros?)", re.I)
+        m = pattern2.search(text)
+        if m:
+            value = normalize_text(m.group(1))
+            return f"{value} EUR"
+        
+        # Pattern 3: Juste chercher la valeur + EUR après le label (flexible)
+        pattern3 = re.compile(rf"{re.escape(label)}.*?([\d]{{1,3}}(?:\s*[\d]{{3}}){{1,4}}(?:[,.]\d+)?)\s*(?:EUR|€)", re.I | re.S)
+        m = pattern3.search(text)
+        if m:
+            value = m.group(1).replace(' ', '').replace(',', '.')
+            return f"{value} EUR"
+        
         return ""
 
     def _duration(self, text: str) -> str:
