@@ -89,6 +89,11 @@ class JoueExtractor(BaseExtractor):
         result.estimation = self._extract_estimation(text)
         result.duration = self._extract_duration(text)
         
+        # 4.5 Type de procédure, nature du marché, fonction publique
+        result.raw['procedure_type'] = self._procedure_type(text)
+        result.raw['contract_nature'] = self._contract_nature(text)
+        result.raw['fonction_publique'] = self._fonction_publique(text, result.buyer)
+        
         # 5. URL source (JOUE/TED)
         result.raw['url_source'] = self._build_url(result.reference)
         
@@ -263,8 +268,103 @@ class JoueExtractor(BaseExtractor):
             return " / ".join(parts)
         
         # NUTS/Regions
-        nuts_m = re.search(r"NUTS\s*[:\-]?\s*([^.\n]{3,50})", text, re.I)
+        nuts_m = re.search(r"NUTS\s*[:\-]?\s*([^\.\n]{3,50})", text, re.I)
         if nuts_m:
             return normalize_text(nuts_m.group(1))
         
         return ""
+    
+    def _procedure_type(self, text: str) -> str:
+        """Extrait le type de procédure depuis le texte ou les métadonnées JSON."""
+        # 1. Chercher dans les métadonnées weborama (JSON embarqué avec échappement Unicode)
+        # \u0022 = " (guillemet) dans le fichier HTML
+        weborama_match = re.search(r'\\u0022type_procedure\\u0022\s*:\s*\\u0022(.*?)\\u0022', text)
+        if weborama_match:
+            val = weborama_match.group(1)
+            # Décoder les caractères Unicode (\u00e9 -> é)
+            try:
+                val = val.encode().decode('unicode_escape')
+            except:
+                pass
+            return normalize_text(val)
+        
+        # 2. Chercher dans le texte avec des patterns classiques
+        patterns = [
+            r"Type de proc[ée]dure\s*[:\-\n]\s*([^\n]+)",
+            r"Proc[ée]dure\s*[:\-\n]\s*([^\n]+)",
+            r"(Appel d'offres ouvert|Proc[ée]dure n[ée]goci[ée]e|March[ée] n[ée]goci[ée]|Dialogue comp[ée]titif)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.IGNORECASE)
+            if m:
+                return normalize_text(m.group(1))
+        return ""
+    
+    def _contract_nature(self, text: str) -> str:
+        """Extrait la nature du marché depuis le texte ou les métadonnées JSON."""
+        # 1. Chercher dans les métadonnées weborama (JSON embarqué avec échappement Unicode)
+        # \u0022 = " (guillemet) dans le fichier HTML
+        weborama_match = re.search(r'\\u0022type_marche\\u0022\s*:\s*\\u0022(.*?)\\u0022', text)
+        if weborama_match:
+            nature = weborama_match.group(1)
+            # Décoder les caractères Unicode (\u00e9 -> é)
+            try:
+                nature = nature.encode().decode('unicode_escape')
+            except:
+                pass
+            nature = normalize_text(nature)
+            if "service" in nature.lower():
+                return "Services"
+            elif "fourniture" in nature.lower():
+                return "Fournitures"
+            elif "travail" in nature.lower():
+                return "Travaux"
+            return nature
+        
+        # 2. Chercher dans le texte avec des patterns classiques
+        patterns = [
+            r"Nature du march[ée]\s*[:\-\n]\s*([^\n]+)",
+            r"Type de march[ée]\s*[:\-\n]\s*([^\n]+)",
+            r"(Services|Fournitures|Travaux|Prestations intellectuelles)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.IGNORECASE)
+            if m:
+                nature = normalize_text(m.group(1))
+                if "service" in nature.lower() or "intellectuel" in nature.lower():
+                    return "Services"
+                elif "fourniture" in nature.lower():
+                    return "Fournitures"
+                elif "travail" in nature.lower() or "travaux" in nature.lower():
+                    return "Travaux"
+                return nature
+        return ""
+    
+    def _fonction_publique(self, text: str, buyer: str) -> str:
+        """Détecte la fonction publique."""
+        forme_match = re.search(r"Forme juridique.*?acheteur\s*[:\-\n]\s*([^\n]+)", text, re.IGNORECASE)
+        activite_match = re.search(r"Activit[ée].*?principale\s*[:\-\n]\s*([^\n]+)", text, re.IGNORECASE)
+        
+        forme = forme_match.group(1).strip() if forme_match else ""
+        activite = activite_match.group(1).strip() if activite_match else ""
+        buyer_str = buyer or ""
+        
+        if any(x in activite.lower() for x in ["santé", "hospital", "soin"]) or \
+           any(x in buyer_str.lower() for x in ["chu ", "chru", "hôpital", "hopital"]):
+            return "hospitaliere"
+        elif any(x in forme.lower() for x in ["organisme de droit public", "établissement public", "ministère", "état"]):
+            return "etat"
+        elif any(x in forme.lower() for x in ["collectivité", "territoriale"]):
+            return "territoriale"
+        elif any(x in buyer_str.lower() for x in ["ministère", "dgfip"]):
+            return "etat"
+
+        # Fallback sur texte
+        if "santé" in text.lower() or "hospitalier" in text.lower():
+            return "hospitaliere"
+        elif "collectivité" in text.lower():
+            return "territoriale"
+        elif "ministère" in text.lower() or "état" in text.lower():
+            return "etat"
+
+        return "-"

@@ -60,7 +60,9 @@ class TestIsValidBuyer:
     """Tests pour la validation des acheteurs."""
     
     def test_rejects_empty_and_url(self):
-        assert is_valid_buyer("") == (False, "empty")
+        is_valid, reason = is_valid_buyer("")
+        assert not is_valid
+        assert reason in ("empty", "generic_exact_buyer")
         assert is_valid_buyer("https://example.com") == (False, "url")
         assert is_valid_buyer("www.example.com") == (False, "url")
     

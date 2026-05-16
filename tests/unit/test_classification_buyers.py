@@ -28,6 +28,7 @@ from ao_etl.classification.buyers import (
     report_buyer_classification_quality,
     run_buyer_classification,
 )
+from ao_etl.llm.backend import LLMDisabledError
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -252,27 +253,19 @@ class TestOrchestration:
         assert stats["qa"]["bad_count"] == 0
         assert Path(stats["output_csv"]).is_file()
 
-    def test_rule_plus_llm_pipeline(self, tmp_dir):
+    def test_rule_plus_llm_pipeline_blocked(self, tmp_dir):
         rows = [
             {"reference": "REF-001", "titre": "T", "acheteur": "Acme Corp",
              "type_acheteur": "inconnu", "fonction_publique": "inconnue"},
         ]
         p = tmp_dir / "input.csv"
         _write_csv(p, rows)
-
-        db = {"acme corp": {
-            "type_acheteur": "entreprise_privee",
-            "fonction_publique": "hors_fonction_publique",
-            "commentaire": "test",
-            "urls": [],
-        }}
         config = BuyerClassificationConfig(
-            enabled=True, run_llm=True, acheteur_db=db,
+            enabled=True, run_llm=True,
             output_csv=tmp_dir / "final.csv",
         )
-        stats = run_buyer_classification(p, config)
-        assert stats["llm_stats"]["ta_llm"] == 1
-        assert stats["qa"]["unknowns_ta"] == 0
+        with pytest.raises(LLMDisabledError):
+            run_buyer_classification(p, config)
 
     def test_canonical_output_naming(self, sample_csv, tmp_dir):
         config = BuyerClassificationConfig(enabled=True)
@@ -280,7 +273,7 @@ class TestOrchestration:
         out = Path(stats["output_csv"])
         assert out.name == "input-classified-rule.csv"  # stem=input, no LLM
 
-    def test_canonical_naming_with_llm(self, tmp_dir):
+    def test_canonical_naming_with_llm_blocked(self, tmp_dir):
         rows = [
             {"reference": "R", "titre": "T", "acheteur": "X",
              "type_acheteur": "inconnu", "fonction_publique": "inconnue"},
@@ -291,9 +284,8 @@ class TestOrchestration:
             enabled=True, run_llm=True,
             acheteur_db={"x": {"type_acheteur": "etat", "fonction_publique": "etat"}},
         )
-        stats = run_buyer_classification(p, config)
-        out = Path(stats["output_csv"])
-        assert out.name == "my-data-classified.csv"
+        with pytest.raises(LLMDisabledError):
+            run_buyer_classification(p, config)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -316,7 +308,7 @@ class TestFinalSchema:
         assert "fonction_publique" in cols
         assert "verification_requise" not in cols or True  # optionnel (absent si pas de consolidation)
 
-    def test_final_csv_no_internal_columns_with_llm(self, tmp_dir):
+    def test_final_csv_no_internal_columns_with_llm_blocked(self, tmp_dir):
         rows = [
             {"reference": "R", "titre": "T", "acheteur": "Acme",
              "type_acheteur": "inconnu", "fonction_publique": "inconnue",
@@ -329,11 +321,5 @@ class TestFinalSchema:
             enabled=True, run_llm=True,
             acheteur_db={"acme": {"type_acheteur": "etat", "fonction_publique": "etat"}},
         )
-        stats = run_buyer_classification(p, config)
-        final = Path(stats["output_csv"])
-        with open(final, newline="", encoding="utf-8") as f:
-            cols = set(csv.DictReader(f).fieldnames)
-        for col in _COLUMNS_TO_STRIP:
-            assert col not in cols, f"Colonne interne '{col}' encore présente dans le CSV final"
-        assert "type_acheteur" in cols
-        assert "fonction_publique" in cols
+        with pytest.raises(LLMDisabledError):
+            run_buyer_classification(p, config)

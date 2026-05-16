@@ -234,13 +234,20 @@ def run_enrich_descriptif_phase(
             result.errors.append(error_msg)
     
     # S'assurer que toutes les lignes ont les mêmes clés
-    all_keys = set(fieldnames)
+    # Garder l'ordre original: colonnes existantes d'abord, puis nouvelles colonnes
+    all_new_keys = set()
     for row in rows:
-        all_keys.update(row.keys())
+        all_new_keys.update(row.keys())
     
-    # Écrire le CSV enrichi avec toutes les colonnes
+    # Construire la liste finale des colonnes: d'abord fieldnames original, puis les nouvelles
+    final_fieldnames = list(fieldnames)
+    for key in all_new_keys:
+        if key not in final_fieldnames:
+            final_fieldnames.append(key)
+    
+    # Écrire le CSV enrichi avec toutes les colonnes dans l'ordre original
     with open(output_csv, 'w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=sorted(all_keys))
+        writer = csv.DictWriter(f, fieldnames=final_fieldnames)
         writer.writeheader()
         writer.writerows(rows)
     

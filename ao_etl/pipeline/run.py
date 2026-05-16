@@ -45,6 +45,19 @@ from ao_etl.classification import (
 from .enrich_descriptif_phase import (
     EnrichDescriptifConfig, run_enrich_descriptif_phase, print_enrich_descriptif_summary
 )
+from .enrich_txt_phase import (
+    EnrichTxtConfig, run_enrich_txt_phase, print_enrich_txt_summary
+)
+from .enrich_llm_phase import (
+    EnrichLLMConfig, run_enrich_llm_phase, print_enrich_llm_summary
+)
+from ao_etl.llm.backend import LLMDisabledError
+from .normalize_final_phase import (
+    NormalizeConfig, run_normalize_phase, print_normalize_summary
+)
+from .enrich_url_phase import (
+    EnrichUrlConfig, run_enrich_url_phase, print_enrich_url_summary
+)
 from .enrich_juridique import (
     EnrichJuridiqueConfig, run_enrich_juridique, print_enrich_summary
 )
@@ -75,6 +88,14 @@ class PipelineResult:
     classification_stats: Optional[Dict] = None
     enrich_descriptif_csv: Optional[Path] = None
     enrich_descriptif_stats: Optional[Dict] = None
+    enrich_txt_csv: Optional[Path] = None
+    enrich_txt_stats: Optional[Dict] = None
+    enrich_llm_csv: Optional[Path] = None
+    enrich_llm_stats: Optional[Dict] = None
+    normalize_csv: Optional[Path] = None
+    normalize_stats: Optional[Dict] = None
+    url_csv: Optional[Path] = None
+    url_stats: Optional[Dict] = None
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
     excel_output: Optional[Path] = None
@@ -90,6 +111,10 @@ def run_pipeline(
     consolidation_config: Optional[ConsolidationConfig] = None,
     buyer_classification_config: Optional[BuyerClassificationConfig] = None,
     enrich_descriptif_config: Optional[EnrichDescriptifConfig] = None,
+    enrich_txt_config: Optional[EnrichTxtConfig] = None,
+    enrich_llm_config: Optional[EnrichLLMConfig] = None,
+    normalize_config: Optional[NormalizeConfig] = None,
+    url_config: Optional[EnrichUrlConfig] = None,
     enrich_juridique_config: Optional[EnrichJuridiqueConfig] = None,
     excel_export_config: Optional[ExcelExportConfig] = None,
 ) -> PipelineResult:
@@ -256,21 +281,145 @@ def run_pipeline(
         print_export_summary(report)
     
     # =====================================================================
-    # PHASE 7 (optionnelle): ENRICH_DESCRIPTIF
+    # PHASE 7 (optionnelle): ENRICH_TXT - Enrichissement depuis fichiers .txt
+    # =====================================================================
+    enrich_txt_csv: Optional[Path] = None
+    enrich_txt_stats: Optional[Dict] = None
+    
+    if enrich_txt_config and enrich_txt_config.enabled:
+        log.info("[7] ENRICH_TXT - Enrichissement depuis les fichiers .txt")
+        try:
+            _enrich_txt_output = (
+                enrich_txt_config.output_csv
+                or output_csv.parent / "final-v4-complete-enriched.csv"
+            )
+            
+            enrich_txt_stats = run_enrich_txt_phase(
+                input_csv=output_csv,
+                html_dir=html_dir,
+                output_csv=_enrich_txt_output,
+            )
+            enrich_txt_csv = _enrich_txt_output
+            
+            if verbose:
+                print_enrich_txt_summary(enrich_txt_stats)
+                
+        except Exception as e:
+            log.error("Phase 7 (enrich txt) échouée (pipeline non bloqué): %s", e)
+    
+    # Déterminer le CSV d'entrée pour les phases suivantes
+    _next_input_csv = enrich_txt_csv or output_csv
+    
+    # =====================================================================
+    # PHASE 7b (optionnelle): ENRICH_LLM - Complément via LLM
+    # =====================================================================
+    enrich_llm_csv: Optional[Path] = None
+    enrich_llm_stats: Optional[Dict] = None
+    
+    if enrich_llm_config and enrich_llm_config.enabled:
+        log.info("[7b] ENRICH_LLM - Complément des informations manquantes via LLM")
+        try:
+            _enrich_llm_output = (
+                enrich_llm_config.output_csv
+                or output_csv.parent / "final-v4-enriched.csv"
+            )
+            
+            enrich_llm_stats = run_enrich_llm_phase(
+                input_csv=_next_input_csv,
+                html_dir=html_dir,
+                output_csv=_enrich_llm_output,
+                config=enrich_llm_config,
+            )
+            enrich_llm_csv = _enrich_llm_output
+            
+            if verbose:
+                print_enrich_llm_summary(enrich_llm_stats)
+
+        except LLMDisabledError:
+            raise
+        except Exception as e:
+            log.error("Phase 7b (enrich LLM) échouée (pipeline non bloqué): %s", e)
+    
+    # Mettre à jour le prochain input
+    if enrich_llm_csv:
+        _next_input_csv = enrich_llm_csv
+    
+    # =====================================================================
+    # PHASE 7c (optionnelle): NORMALIZE - Mapping canonique final
+    # =====================================================================
+    normalize_csv: Optional[Path] = None
+    normalize_stats: Optional[Dict] = None
+    
+    if normalize_config and normalize_config.enabled:
+        log.info("[7c] NORMALIZE - Mapping canonique des champs")
+        try:
+            _normalize_output = (
+                normalize_config.output_csv
+                or output_csv.parent / "final-v4-normalized.csv"
+            )
+            
+            normalize_stats = run_normalize_phase(
+                input_csv=_next_input_csv,
+                output_csv=_normalize_output,
+            )
+            normalize_csv = _normalize_output
+            
+            if verbose:
+                print_normalize_summary(normalize_stats)
+                
+        except Exception as e:
+            log.error("Phase 7c (normalize) échouée (pipeline non bloqué): %s", e)
+    
+    # Mettre à jour le prochain input
+    if normalize_csv:
+        _next_input_csv = normalize_csv
+    
+    # =====================================================================
+    # PHASE 7d (optionnelle): ENRICH_URL - Reconstruction des URLs
+    # =====================================================================
+    url_csv: Optional[Path] = None
+    url_stats: Optional[Dict] = None
+    
+    if url_config and url_config.enabled:
+        log.info("[7d] ENRICH_URL - Reconstruction des URLs depuis match_source")
+        try:
+            _url_output = (
+                url_config.output_csv
+                or output_csv.parent / "final-v4-with-urls.csv"
+            )
+            
+            url_stats = run_enrich_url_phase(
+                input_csv=_next_input_csv,
+                output_csv=_url_output,
+            )
+            url_csv = _url_output
+            
+            if verbose:
+                print_enrich_url_summary(url_stats)
+                
+        except Exception as e:
+            log.error("Phase 7d (enrich URL) échouée (pipeline non bloqué): %s", e)
+    
+    # Mettre à jour le prochain input
+    if url_csv:
+        _next_input_csv = url_csv
+    
+    # =====================================================================
+    # PHASE 7e (optionnelle, legacy): ENRICH_DESCRIPTIF (HTML parsing)
     # =====================================================================
     enrich_descriptif_csv: Optional[Path] = None
     enrich_descriptif_stats: Optional[Dict] = None
     
     if enrich_descriptif_config and enrich_descriptif_config.enabled:
-        log.info("[7] ENRICH_DESCRIPTIF - Enrichissement depuis les descriptifs texte")
+        log.info("[7e] ENRICH_DESCRIPTIF (legacy) - Enrichissement depuis HTML")
         try:
             _enrich_output = (
                 enrich_descriptif_config.output_csv
-                or output_csv.parent / "final-v4-enriched.csv"
+                or output_csv.parent / "final-v4-enriched-legacy.csv"
             )
             
             enrich_descriptif_stats = run_enrich_descriptif_phase(
-                input_csv=output_csv,
+                input_csv=_next_input_csv,
                 html_dir=html_dir,
                 output_csv=_enrich_output,
             )
@@ -280,10 +429,7 @@ def run_pipeline(
                 print_enrich_descriptif_summary(enrich_descriptif_stats)
                 
         except Exception as e:
-            log.error("Phase 7 (enrich) échouée (pipeline non bloqué): %s", e)
-    
-    # Déterminer le CSV d'entrée pour les phases suivantes
-    _next_input_csv = enrich_descriptif_csv or output_csv
+            log.error("Phase 7e (enrich descriptif) échouée (pipeline non bloqué): %s", e)
     
     # =====================================================================
     # PHASE 8 (optionnelle): CONSOLIDATE
@@ -312,6 +458,8 @@ def run_pipeline(
             if verbose:
                 print_consolidation_summary(consolidation_stats)
 
+        except LLMDisabledError:
+            raise
         except EnvironmentError as e:
             log.error("Phase 8 annulée - configuration LLM manquante: %s", e)
         except Exception as e:
@@ -419,6 +567,14 @@ def run_pipeline(
         classification_stats=classification_stats,
         enrich_descriptif_csv=enrich_descriptif_csv,
         enrich_descriptif_stats=enrich_descriptif_stats,
+        enrich_txt_csv=enrich_txt_csv,
+        enrich_txt_stats=enrich_txt_stats,
+        enrich_llm_csv=enrich_llm_csv,
+        enrich_llm_stats=enrich_llm_stats,
+        normalize_csv=normalize_csv,
+        normalize_stats=normalize_stats,
+        url_csv=url_csv,
+        url_stats=url_stats,
         juridique_csv=juridique_csv,
         juridique_stats=juridique_stats,
         excel_output=excel_output,

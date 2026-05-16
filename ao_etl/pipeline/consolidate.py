@@ -31,10 +31,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from ao_etl.llm.backend import LLMBackend, build_backend
-from ao_etl.llm.prompt_builder import (
-    build_user_prompt, get_system_prompt, extract_html_signals, _v
-)
+from ao_etl.llm.backend import LLMBackend, LLMDisabledError, build_backend
 from ao_etl.models.consolidated import (
     ConsolidatedField,
     ConsolidatedRecord,
@@ -669,7 +666,7 @@ def _consolidate_row(
     row: dict,
     html_dir: Path,
     backend: LLMBackend,
-    system_prompt: str,
+    system_prompt: str = "",
     dry_run: bool = False,
 ) -> ConsolidatedRecord:
     """Consolide une ligne CSV via le LLM + post-traitement Python.
@@ -754,290 +751,11 @@ def _consolidate_row(
         _attach_market_url(record, url_source_type)
         return record
 
-    user_prompt = build_user_prompt(row, html_content, source_file)
-
-    last_error: Optional[Exception] = None
-    for attempt in range(_MAX_RETRIES + 1):
-        try:
-            result_dict = backend.call_json(system_prompt, user_prompt)
-            record = _parse_llm_response(result_dict, source_file)
-            _apply_deterministic_fields(row, record)
-            _infer_fields_from_hints(row, record, html_signals)
-            _attach_market_url(record, url_source_type)
-            return record
-        except Exception as e:
-            last_error = e
-            log.warning("Tentative %d/%d échouée pour %s: %s",
-                        attempt + 1, _MAX_RETRIES + 1, source_file, e)
-            if attempt < _MAX_RETRIES:
-                time.sleep(_RETRY_DELAY_S)
-
-    log.error("Consolidation échouée pour %s après %d tentatives: %s",
-              source_file, _MAX_RETRIES + 1, last_error)
-    record = _make_error_record(row, source_file, last_error)
-    _apply_deterministic_fields(row, record)
-    _infer_fields_from_hints(row, record, html_signals)
-    _attach_market_url(record, url_source_type)
-    return record
-
-
-# =============================================================================
-# Écriture CSV métier lisible — Vue analytique pour contrôle manuel
-# =============================================================================
-
-# Schéma de sortie métier : une seule colonne par information, noms français clairs
-# Traçabilité dans des colonnes de provenance séparées, pas de suffixes techniques visibles
-
-# ─────────────────────────────────────────────────────────────────────────────
-# SCHÉMA CSV MÉTIER FINAL — 22 colonnes exactes
-# Sortie destinée à l'analyste métier, sans colonnes techniques de pipeline
-# ─────────────────────────────────────────────────────────────────────────────
-
-_BUSINESS_FIELDNAMES = [
-    # ── Identification (5) ──
-    "reference",                    # Identifiant du marché
-    "titre",                        # Intitulé synthétique
-    "acheteur",                     # Nom de l'acheteur
-    "type_acheteur",                # Type (état, collectivité, établissement_public...)
-    "fonction_publique",            # État / territoriale / hospitalière
-
-    # ── Procédure et cadre (3) ──
-    "procedure_type",               # MAPA | negociee | formalisee
-    "type_marche",                  # Services | fournitures | travaux
-    "ccag_type",                    # TIC | prestations_intellectuelles | services | ...
-
-    # ── Classification (3) ──
-    "cpv_principal",                # Code CPV principal
-    "cpv_secondaires",              # Codes CPV additionnels (séparés par |)
-    "localisation",                 # Lieu d'exécution
-
-    # ── Calendrier et budget (4) ──
-    "date_limite_remise_offres",    # JJ/MM/AAAA — donnée obligatoire
-    "duree",                        # Durée initiale
-    "renouvellements",              # Reconductions
-    "montant_estime",               # Estimation avec devise
-
-    # ── Source et traçabilité (4) ──
-    "url_marche",                   # URL publique vérifiable
-    "url_provenance",               # source_url | canonical | fallback_francemarches | fallback_place | missing
-    "fichier_source_html",          # Nom du fichier HTML d'origine
-    "plateforme_source",            # FRANCE_MARCHES | MARCHES_ONLINE | PLACE_NUMERIC | BOAMP_XML
-
-    # ── Contrôle qualité (3) ──
-    "verification_requise",         # true | false
-    "raisons_verification",         # Liste des problèmes détectés
-    "notes_verification",           # Champ libre pour notes manuelles
-]
-
-
-def _format_field_value(field: ConsolidatedField) -> str:
-    """Formate la valeur d'un champ consolidé pour le CSV métier."""
-    if field.value is None:
-        return ""
-    if isinstance(field.value, list):
-        return "|".join(str(x) for x in field.value)
-    return str(field.value)
-
-
-def _format_provenance(field: ConsolidatedField, fallback: str = "Non déterminé") -> str:
-    """Construit la description de provenance pour un champ.
-
-    Format: "Source [confiance] - justification"
-    Exemple: "Extraction déterministe [high] - Préservé depuis extraction CSV"
-    """
-    if field.status == "missing" or field.value is None:
-        return "Manquant"
-
-    source_map = {
-        "found": "Extraction source",
-        "inferred": "Inféré",
-        "missing": "Manquant",
-    }
-    source = source_map.get(field.status, field.status)
-    confidence = field.confidence or "low"
-    justif = field.justification or fallback
-
-    return f"{source} [{confidence}] - {justif}"
-
-
-def _get_procedure_type(record: ConsolidatedRecord) -> str:
-    """Déduit le type de procédure métier : MAPA | negociee | formalisee."""
-    pf = record.procedure_family.value
-    ft = record.formalisation_type.value
-
-    if pf == "mapa":
-        return "MAPA"
-    if pf in ("procedure_negociee", "negociee"):
-        return "negociee"
-    if ft == "adapte":
-        return "MAPA"
-    if ft == "formalise":
-        return "formalisee"
-    if pf and pf != "inconnue":
-        # Autres procédures formalisées par défaut
-        return "formalisee"
-    return "inconnu"
-
-
-def _get_url_provenance(record: ConsolidatedRecord) -> str:
-    """Détermine la provenance de l'URL marché.
-
-    Returns:
-        source_url | canonical | fallback_francemarches | fallback_place | missing
-    """
-    flags = record.control.quality_flags
-    if "missing_market_url" in flags:
-        return "missing"
-
-    url = record.source_trace.source_url or ""
-    # La provenance exacte nécessiterait de tracer l'origine, on infère des flags
-    if "url_fallback_francemarches" in flags:
-        return "fallback_francemarches"
-    if "url_fallback_place" in flags:
-        return "fallback_place"
-    if "url_from_canonical" in flags:
-        return "canonical"
-    if "url_from_source" in flags:
-        return "source_url"
-
-    # Défaut : si URL présente sans flag spécifique
-    if url:
-        return "source_url"
-    return "missing"
-
-
-def _detect_critical_issues(record: ConsolidatedRecord, row: dict) -> tuple[bool, list[str]]:
-    """Détecte les anomalies critiques nécessitant une revue manuelle forcée.
-
-    Retourne (verification_requise, liste_des_raisons).
-    """
-    issues: list[str] = []
-
-    # Référence manquante ou tronquée
-    ref = row.get("reference", "")
-    if not ref or ref in ("None", "null", ""):
-        issues.append("reference_manquante")
-    elif "/" not in str(ref) and len(str(ref)) < 5:
-        # Probablement tronquée ou en notation scientifique
-        issues.append("reference_tronquee")
-
-    # Titre manquant
-    if not row.get("titre"):
-        issues.append("titre_manquant")
-
-    # Acheteur manquant
-    if not row.get("acheteur"):
-        issues.append("acheteur_manquant")
-
-    # Fonction publique non déterminée
-    fp = row.get("fonction_publique", "")
-    if fp in ("inconnue", "inconnu", "", None):
-        issues.append("fonction_publique_inconnue")
-
-    # CCAG manquant (critique pour la catégorisation)
-    if not row.get("ccag_type"):
-        issues.append("ccag_type_manquant")
-
-    # Date limite manquante (critique pour les délais de réponse)
-    if not row.get("date_limite_remise_offres"):
-        issues.append("date_limite_manquante")
-
-    # Plateforme source manquante (problème de traçabilité)
-    if not row.get("plateforme_source"):
-        issues.append("plateforme_source_manquante")
-
-    # URL marché manquante
-    if not row.get("url_marche"):
-        issues.append("url_marche_manquante")
-
-    # Anomalies signalées dans les flags de qualité
-    flags = record.control.quality_flags
-    if "missing_deadline" in flags and not row.get("date_limite_remise_offres"):
-        if "date_limite_manquante" not in issues:
-            issues.append("date_limite_manquante")
-
-    return len(issues) > 0, issues
-
-
-def _record_to_business_row(record: ConsolidatedRecord) -> dict:
-    """Sérialise un ConsolidatedRecord en ligne CSV métier finale (22 colonnes exactes).
-
-    Schéma strict sans colonnes techniques :
-    - Une seule colonne par donnée métier
-    - Pas de suffixes _status, _confidence, _source
-    - Noms de colonnes alignés avec l'exigence métier
-    - Détection automatique des anomalies critiques
-    """
-    row: dict = {}
-
-    # ── Identification (5) ──
-    # Force l'utilisation de record_id si reference.value est null (évite notation scientifique Excel)
-    raw_ref = record.reference.value if record.reference.value else (record.record_id or "")
-    # Sanitize la référence pour éviter les problèmes de parsing CSV
-    row["reference"] = str(raw_ref).replace("\n", " ").replace("\r", " ") if raw_ref else ""
-
-    row["titre"] = _format_field_value(record.title)
-    row["acheteur"] = _format_field_value(record.buyer_final)
-    row["type_acheteur"] = _format_field_value(record.buyer_type)
-    row["fonction_publique"] = _format_field_value(record.fonction_publique)
-
-    # ── Procédure et cadre (3) ──
-    row["procedure_type"] = _get_procedure_type(record)
-    row["type_marche"] = _format_field_value(record.contract_nature)
-    row["ccag_type"] = _format_field_value(record.ccag_type)
-
-    # ── Classification (3) ──
-    row["cpv_principal"] = _format_field_value(record.cpv_main)
-    row["cpv_secondaires"] = _format_field_value(record.cpv_list)
-    row["localisation"] = _format_field_value(record.location_final)
-
-    # ── Calendrier et budget (4) ──
-    row["date_limite_remise_offres"] = _format_field_value(record.deadline_final)
-    row["duree"] = _format_field_value(record.duration_initial)
-    row["renouvellements"] = _format_field_value(record.renewals)
-    row["montant_estime"] = _format_field_value(record.estimated_amount)
-
-    # ── Source et traçabilité (4) ──
-    row["url_marche"] = record.source_trace.source_url or ""
-    row["url_provenance"] = _get_url_provenance(record)
-    row["fichier_source_html"] = record.source_trace.source_file or ""
-    row["plateforme_source"] = record.source_trace.source_platform or ""
-
-    # ── Détection automatique des anomalies ──
-    auto_verify, auto_issues = _detect_critical_issues(record, row)
-
-    # Fusion avec les raisons existantes du record
-    all_reasons = list(record.control.review_reasons)
-    if auto_issues:
-        all_reasons.extend(auto_issues)
-
-    # Déterminer la valeur finale de verification_requise
-    # Priorité : anomalie détectée automatiquement OU flag existant
-    needs_verification = auto_verify or record.control.manual_review_required
-
-    # ── Contrôle qualité (3) ──
-    row["verification_requise"] = "true" if needs_verification else "false"
-    row["raisons_verification"] = " | ".join(sorted(set(all_reasons))) if all_reasons else ""
-    row["notes_verification"] = ""  # Champ libre pour l'analyste métier
-
-    return row
-
-
-def _write_consolidated_csv(
-    records: List[ConsolidatedRecord],
-    output_path: Path,
-) -> None:
-    """Écrit le CSV de sortie métier (une colonne métier par information)."""
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Utilise le nouveau schéma métier avec noms français et colonnes de provenance
-    fieldnames = _BUSINESS_FIELDNAMES
-
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
-        writer.writeheader()
-        for record in records:
-            writer.writerow(_record_to_business_row(record))
+    # GARDE-FOU LLM — aucun appel modèle autorisé
+    raise LLMDisabledError(
+        "APPEL LLM INTERDIT — _consolidate_row() ne peut pas appeler le backend. "
+        "Pipeline en mode déterministe. Pour réactiver : voir ao_etl/llm/backend.py."
+    )
 
 
 # =============================================================================
@@ -1068,11 +786,14 @@ def run_consolidation(
         return {"total": 0, "ok": 0, "error": 0, "review": 0, "skipped": 0}
 
     if not config.dry_run:
-        backend = config.build_backend()
-    else:
-        backend = None  # non utilisé en dry_run
-
-    system_prompt = get_system_prompt()
+        raise LLMDisabledError(
+            "APPEL LLM INTERDIT — run_consolidation() nécessite un backend LLM. "
+            "Pipeline en mode déterministe. Utilisez dry_run=True ou désactivez "
+            "la phase 7 (config.enabled=False). "
+            "Pour réactiver : voir ao_etl/llm/backend.py (LLMDisabledError)."
+        )
+    backend = None  # non utilisé en dry_run
+    system_prompt = ""  # non utilisé en mode déterministe
 
     with open(input_csv, newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))

@@ -168,12 +168,12 @@ def remap_legacy_columns(row: dict) -> dict:
     if fp_src:
         if re.search(r"\bGCS\b|\bUNIHA\b|\bUniHA\b|\bGCS-UNIHA\b|\bUNIHA-GCS\b",
                      acheteur_src, re.IGNORECASE):
-            new_row["Fonction publique"] = "Hospitalière"
+            new_row["Fonction publique"] = "hospitaliere"
         elif re.search(r"\bI\.?F\.?C\.?E\.?\b|\bInstitut [Ff]ran[cç]ais du [Cc]heval\b",
                        acheteur_src, re.IGNORECASE):
-            new_row["Fonction publique"] = "Etat"
+            new_row["Fonction publique"] = "etat"
         elif re.search(r"\bCNAF\b|\bCNAM\b|\bCNAV\b", acheteur_src, re.IGNORECASE):
-            new_row["Fonction publique"] = "Etat"
+            new_row["Fonction publique"] = "etat"
 
     duree_prev = row.get("Durée prévisionnelle", "")
     if duree_prev and not new_row.get("Durée initiale du marché"):

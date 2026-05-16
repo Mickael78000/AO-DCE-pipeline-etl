@@ -15,6 +15,7 @@ from datetime import datetime
 
 from .reconcile import ReconciliationResult, ReconciliationStatus
 from ao_etl.models.market import MarketData
+from ao_etl.normalize_fields import validate_and_fix_row
 
 
 @dataclass
@@ -61,9 +62,9 @@ def marketdata_to_csv_row(data: MarketData,
     row = {
         'Référence': data.reference or discovered_file.reference_derived or '-',
         'Intitulé synthétique': data.title or '-',
-        'Type d\'AO': '-',
-        'Type': '-',
-        'Fonction publique': '-',
+        'Type d\'AO': data.procedure_type or '-',
+        'Type': data.contract_nature or '-',
+        'Fonction publique': data.fonction_publique or '-',
         'Acheteur_auto': data.buyer or '-',
         'Acheteur_manual': '',
         'Acheteur_clean': data.buyer or '-',
@@ -228,7 +229,11 @@ def merge(result: ReconciliationResult,
     
     # 3. Ajouter les lignes CSV préservées (sans fichier)
     merge_result.final_rows.extend(csv_rows_preserved)
-    
+
+    # 4. Validation finale des colonnes contractuelles sur toutes les lignes
+    for row in merge_result.final_rows:
+        validate_and_fix_row(row)
+
     return merge_result
 
 

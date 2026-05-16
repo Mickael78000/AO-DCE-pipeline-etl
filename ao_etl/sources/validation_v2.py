@@ -56,10 +56,6 @@ _BUYER_EXACT_BLACKLIST = {
     "etablissements et organismes de l'enseignement supérieur, de la recherche et de l'innovation",
     "ted esender",
     "ted esender : avenue-web systèmes",
-    "organisation qui fournit des informations complémentaires",
-    "organisation chargée des procédures de recours",
-    "organisation qui fournit des précisions concernant l'introduction des recours",
-    "organisme qui fournit des informations complémentaires",
     # Génériques
     "acheteur",
     "organisme",
@@ -75,7 +71,7 @@ _BUYER_EXACT_BLACKLIST = {
     "non identifié",
     "acheteur non identifié",
     "organisme non identifié",
-    "ville de ...",
+    "ville de",
 }
 
 _BUYER_CONTAINS_BLACKLIST = (
@@ -151,15 +147,16 @@ def is_valid_buyer(value: str | None) -> tuple[bool, str | None]:
     Returns:
         (is_valid, reason_if_invalid)
     """
+    raw_key = (value or "").strip().casefold()
     text = normalize_text(value)
     key = normalized_key(text)
-    
-    if not text:
-        return False, "empty"
+
     if looks_like_url(text):
         return False, "url"
-    if key in _BUYER_EXACT_BLACKLIST:
+    if key in _BUYER_EXACT_BLACKLIST or raw_key in _BUYER_EXACT_BLACKLIST:
         return False, "generic_exact_buyer"
+    if not text:
+        return False, "empty"
     for bad in _BUYER_CONTAINS_BLACKLIST:
         if bad in key:
             return False, "generic_contains_buyer"

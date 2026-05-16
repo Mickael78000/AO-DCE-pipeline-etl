@@ -31,7 +31,25 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, FrozenSet, List, Optional
 
+from ao_etl.llm.backend import LLMDisabledError
+
 log = logging.getLogger(__name__)
+
+# Valeurs autorisées dans la colonne finale 'Fonction publique' du CSV
+_FP_EXPORT_ALLOWED = frozenset(["etat", "territoriale", "hospitaliere"])
+
+
+def _normalize_fp_for_export(rows: list) -> None:
+    """Normalise la colonne 'fonction_publique' avant export CSV final.
+
+    Toute valeur hors domaine strict (hors_fonction_publique, inconnue,
+    toute valeur absente ou non reconnue) est remplacee par '-'.
+    Opertion in-place sur la liste de dicts.
+    """
+    for row in rows:
+        fp = row.get("fonction_publique", "")
+        if fp not in _FP_EXPORT_ALLOWED:
+            row["fonction_publique"] = "-"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # CONTRATS : VOCABULAIRE AUTORISÉ (source unique de vérité)
@@ -772,8 +790,15 @@ def run_buyer_classification(
         ClassificationInputError: CSV absent ou schéma invalide.
         FileExistsError: fichier de sortie existant et overwrite=False.
     """
+    # Garde-fou LLM — run_llm est interdit en mode déterministe
+    if config.run_llm:
+        raise LLMDisabledError(
+            "APPEL LLM INTERDIT — run_buyer_classification() avec run_llm=True est interdit. "
+            "Politique LLM OFF. Pour réactiver : voir ao_etl/llm/backend.py (LLMDisabledError)."
+        )
+
     consolidated_csv = Path(consolidated_csv)
-    log.info("run_buyer_classification: entrée=%s, llm=%s", consolidated_csv, config.run_llm)
+    log.info("run_buyer_classification: entrée=%s", consolidated_csv)
 
     # Valider l'entrée une seule fois au niveau orchestrateur
     _validate_input_csv(consolidated_csv)
@@ -792,22 +817,19 @@ def run_buyer_classification(
     # Phase 8a : règles
     rule_stats = classify_buyers_rule_based(consolidated_csv, rule_csv, overwrite=ow)
 
-    # Phase 8b : LLM (optionnel)
+    # Phase 8b : LLM désactivé — le CSV rules est directement le CSV final
     llm_stats: Dict[str, Any] = {}
-    if config.run_llm and config.acheteur_db:
-        llm_stats = classify_buyers_llm_enrichment(rule_csv, final_csv, config.acheteur_db, overwrite=ow)
-    else:
-        # Pas de LLM → le CSV rules est le CSV final
-        final_csv = rule_csv
+    final_csv = rule_csv
 
     # Phase 8c : rapport QA (lit le CSV avec colonnes internes)
     qa = report_buyer_classification_quality(final_csv, report_md, bad_csv, overwrite=ow)
 
-    # Phase 8d : nettoyage — supprimer les colonnes internes du CSV final
+    # Phase 8d : nettoyage — normaliser fonction_publique + supprimer colonnes internes
     with open(final_csv, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         raw_fieldnames = list(reader.fieldnames)
         final_rows = list(reader)
+    _normalize_fp_for_export(final_rows)
     clean_fieldnames = _strip_internal_columns(final_rows, raw_fieldnames)
     with open(final_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=clean_fieldnames)

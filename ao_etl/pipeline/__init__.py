@@ -13,9 +13,16 @@ from .consolidate import ConsolidationConfig
 from ao_etl.classification import BuyerClassificationConfig
 from .enrich_juridique import EnrichJuridiqueConfig
 from .excel_export import ExcelExportConfig
+from .enrich_txt_phase import EnrichTxtConfig
+from .enrich_llm_phase import EnrichLLMConfig
+from .normalize_final_phase import NormalizeConfig
+from .enrich_url_phase import EnrichUrlConfig
+from .enrich_descriptif_phase import EnrichDescriptifConfig
 
 __all__ = [
     'run_pipeline', 'PipelineResult',
     'ConsolidationConfig', 'BuyerClassificationConfig',
     'EnrichJuridiqueConfig', 'ExcelExportConfig',
+    'EnrichTxtConfig', 'EnrichLLMConfig', 'EnrichDescriptifConfig',
+    'NormalizeConfig', 'EnrichUrlConfig',
 ]

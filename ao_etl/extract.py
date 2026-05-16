@@ -204,13 +204,14 @@ def extraire_type(text: str) -> str:
 
 def extraire_fonction_publique(acheteur: str, text: str) -> str:
     """
-    Etat / Territoriale / Hospitalière.
-    Ordre : Hospitalière d'abord pour éviter faux positifs sur 'CH'.
+    Extrait et normalise la fonction publique vers la taxonomie stricte :
+    etat | territoriale | hospitaliere | -
+    Ordre : hospitaliere d'abord pour éviter faux positifs sur 'CH'.
     """
     RULES = [
         (r"\b[Cc]entre [Hh]ospitalier\b|\bhospitalier\b|\b[Hh][oô]pital\b"
-         r"|\bGCS\b|\bUNIHA\b|\bUniHA\b|\bGCS-UNIHA\b|\bCASPV\b",
-         "Hospitalière"),
+         r"|\bCHU\b|\bCHR\b|\bGCS\b|\bUNIHA\b|\bUniHA\b|\bGCS-UNIHA\b|\bCASPV\b",
+         "hospitaliere"),
         (r"\b[Mm]inist[eè]re\b|\bDGFiP\b|\bDGFIP\b|\bDNum\b|\bDNUM\b"
          r"|\bAIFE\b|\bBRGM\b|\b[Aa]cad[eé]mie [Ff]ran[cç]aise\b|\bESCP\b"
          r"|\b[Ii]nstitut [Ff]ran[cç]ais\b|\b[Cc]onservatoire national\b"
@@ -222,17 +223,17 @@ def extraire_fonction_publique(acheteur: str, text: str) -> str:
          r"|\bUNICANCER\b|\bAutorit[eé] publique centrale\b"
          r"|\bCNAF\b|\bCNAM\b|\bCNAV\b|\bCNIL\b|\bANSSI\b|\bANSS\b"
          r"|\bI\.?F\.?C\.?E\.?\b|\bInstitut [Ff]ran[cç]ais du [Cc]heval\b",
-         "Etat"),
+         "etat"),
         (r"\b[Vv]ille\b|\b[Cc]ommune\b|\b[Cc]onseil [Dd][eé]partemental\b"
          r"|\b[Rr][eé]gion\b|\bterritorial\b|\bintercommunal\b"
          r"|\bSICIO\b|\bCASVP\b|\bEPPGHV\b|\bParlement [Ww]allon\b",
-         "Territoriale"),
+         "territoriale"),
     ]
     combined = acheteur + " " + text[:4000]
     for pattern, label in RULES:
         if re.search(pattern, combined, re.IGNORECASE):
             return label
-    return ""
+    return "-"
 
 
 def extraire_date_limite(text: str) -> str:
