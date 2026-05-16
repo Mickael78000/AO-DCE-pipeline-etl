@@ -49,3 +49,12 @@ logs/
 # Data temporaire
 data/intermediate/
 data/raw/html/*.tmp
+
+# Données générées par le pipeline (sorties, non versionnées)
+data/output/
+data/raw/html/*_descriptif.txt
+
+# Scripts de test/vérification LLM (hors politique projet)
+test_consolidation_llm.py
+verifier_llm_url.py
+scripts/classify_with_llm.py
