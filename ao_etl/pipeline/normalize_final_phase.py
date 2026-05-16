@@ -18,6 +18,21 @@ from ao_etl.normalize_fields import validate_and_fix_row
 
 log = logging.getLogger(__name__)
 
+# Mapping des colonnes françaises vers le schéma canonique attendu par
+# classify_buyers et excel_export. Ordre de priorité : première valeur non vide.
+_COLUMN_ALIASES: list[tuple[str, list[str]]] = [
+    ("reference",                   ["Référence"]),
+    ("titre",                       ["Intitulé synthétique"]),
+    ("acheteur",                    ["Acheteur_clean", "Acheteur_auto", "Acheteur_manual"]),
+    ("fonction_publique",           ["Fonction publique"]),
+    ("date_limite_remise_offres",   ["Date limite de remise des offres", "Date_limite_auto", "Date_limite_manual"]),
+    ("url_marche",                  ["URL source HTTPS"]),
+    ("plateforme_source",           ["Plateforme"]),
+]
+
+# Colonnes à initialiser à "-" si absentes après renommage
+_DEFAULT_MINUS: list[str] = ["type_acheteur"]
+
 
 @dataclass
 class NormalizeResult:
@@ -35,6 +50,36 @@ class NormalizeConfig:
     """Configuration pour la phase de normalisation."""
     enabled: bool = True
     output_csv: Optional[Path] = None
+
+
+def _apply_column_aliases(rows: list, fieldnames: list) -> list:
+    """Renomme/alias les colonnes sources vers le schéma canonique.
+
+    - Si la colonne cible est absente, la crée depuis la première source disponible.
+    - Ne supprime pas les colonnes sources (utiles pour la traçabilité).
+    - Ajoute les colonnes à valeur par défaut "-" si manquantes.
+    Retourne le fieldnames mis à jour.
+    """
+    for target, sources in _COLUMN_ALIASES:
+        if target not in fieldnames:
+            fieldnames.append(target)
+        for row in rows:
+            if not row.get(target):
+                for src in sources:
+                    val = row.get(src, "")
+                    if val and val != "-":
+                        row[target] = val
+                        break
+                else:
+                    row.setdefault(target, "-")
+
+    for col in _DEFAULT_MINUS:
+        if col not in fieldnames:
+            fieldnames.append(col)
+        for row in rows:
+            row.setdefault(col, "-")
+
+    return fieldnames
 
 
 def normalize_row(row: Dict[str, Any]) -> bool:
@@ -104,7 +149,11 @@ def run_normalize_phase(
     log.info(f"{len(rows)} lignes à normaliser")
     
     result = NormalizeResult(total_rows=len(rows))
-    
+
+    # Renommage/alias des colonnes vers le schéma canonique
+    fieldnames = list(fieldnames)  # copie mutable
+    fieldnames = _apply_column_aliases(rows, fieldnames)
+
     # Normaliser chaque ligne
     for i, row in enumerate(rows):
         try:

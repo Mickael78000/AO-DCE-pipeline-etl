@@ -17,6 +17,7 @@ from pathlib import Path
 import pytest
 
 from ao_etl.llm.backend import LLMDisabledError
+from ao_etl.pipeline.normalize_final_phase import run_normalize_phase
 from ao_etl.normalize_fields import (
     ALLOWED_FONCTION_PUBLIQUE,
     normalize_fonction_publique,
@@ -450,3 +451,50 @@ class TestNominalPipelineMiniCorpus:
                     "URL source HTTPS", "Acheteur"]
         for col in required:
             assert col in fieldnames, f"Colonne requise absente du CSV final: {col!r}"
+
+    def test_normalize_produces_canonical_columns(self, tmp_path):
+        """normalize_final_phase doit produire les colonnes canoniques minuscules
+        attendues par classify_buyers et excel_export."""
+        input_csv = tmp_path / "input.csv"
+        output_csv = tmp_path / "output.csv"
+
+        with open(input_csv, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=[
+                "Référence", "Intitulé synthétique", "Acheteur_clean",
+                "Acheteur_auto", "Fonction publique",
+                "Date limite de remise des offres", "URL source HTTPS",
+                "Plateforme", "Type d'AO", "Type",
+            ])
+            w.writeheader()
+            w.writerow({
+                "Référence": "REF-001",
+                "Intitulé synthétique": "Test marché",
+                "Acheteur_clean": "Mairie de Test",
+                "Acheteur_auto": "",
+                "Fonction publique": "territoriale",
+                "Date limite de remise des offres": "2026-06-01",
+                "URL source HTTPS": "https://example.com",
+                "Plateforme": "FRANCE_MARCHES",
+                "Type d'AO": "Ouverte",
+                "Type": "Services",
+            })
+
+        run_normalize_phase(input_csv, output_csv)
+
+        with open(output_csv, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            fieldnames = reader.fieldnames or []
+            rows = list(reader)
+
+        canonical = ["reference", "titre", "acheteur", "type_acheteur",
+                     "fonction_publique", "date_limite_remise_offres",
+                     "url_marche", "plateforme_source"]
+        for col in canonical:
+            assert col in fieldnames, f"Colonne canonique absente: {col!r}"
+
+        row = rows[0]
+        assert row["reference"] == "REF-001"
+        assert row["titre"] == "Test marché"
+        assert row["acheteur"] == "Mairie de Test"
+        assert row["fonction_publique"] == "territoriale"
+        assert row["type_acheteur"] == "-"

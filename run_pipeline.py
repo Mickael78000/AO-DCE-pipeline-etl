@@ -227,6 +227,16 @@ Exemples:
             json_dir=args.consolidate_json_dir or (output_dir / 'final-v3-consolidated'),
         )
 
+    # Phase 7c: Normalisation canonique — activée automatiquement si les phases
+    # aval (classify_buyers, excel) nécessitent le schéma canonique (colonnes minuscules).
+    from ao_etl.pipeline.normalize_final_phase import NormalizeConfig
+    normalize_config = None
+    if args.classify_buyers or args.excel or args.enrich_juridique:
+        normalize_config = NormalizeConfig(
+            enabled=True,
+            output_csv=output_dir / "final-v4-normalized.csv",
+        )
+
     # Phase 8: Classification acheteurs
     from ao_etl.classification import BuyerClassificationConfig
     buyer_classification_config = None
@@ -258,6 +268,7 @@ Exemples:
         report_path=args.report,
         verbose=not args.quiet,
         consolidation_config=consolidation_config,
+        normalize_config=normalize_config,
         buyer_classification_config=buyer_classification_config,
         enrich_juridique_config=enrich_juridique_config,
         excel_export_config=excel_export_config,
