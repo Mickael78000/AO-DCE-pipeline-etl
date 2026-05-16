@@ -42,6 +42,9 @@ from .consolidate import (
 from ao_etl.classification import (
     BuyerClassificationConfig, run_buyer_classification, print_classification_summary
 )
+from .enrich_descriptif_phase import (
+    EnrichDescriptifConfig, run_enrich_descriptif_phase, print_enrich_descriptif_summary
+)
 from .enrich_juridique import (
     EnrichJuridiqueConfig, run_enrich_juridique, print_enrich_summary
 )
@@ -70,6 +73,8 @@ class PipelineResult:
     consolidation_stats: Optional[Dict] = None
     classification_csv: Optional[Path] = None
     classification_stats: Optional[Dict] = None
+    enrich_descriptif_csv: Optional[Path] = None
+    enrich_descriptif_stats: Optional[Dict] = None
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
     excel_output: Optional[Path] = None
@@ -84,6 +89,7 @@ def run_pipeline(
     verbose: bool = True,
     consolidation_config: Optional[ConsolidationConfig] = None,
     buyer_classification_config: Optional[BuyerClassificationConfig] = None,
+    enrich_descriptif_config: Optional[EnrichDescriptifConfig] = None,
     enrich_juridique_config: Optional[EnrichJuridiqueConfig] = None,
     excel_export_config: Optional[ExcelExportConfig] = None,
 ) -> PipelineResult:
@@ -250,13 +256,43 @@ def run_pipeline(
         print_export_summary(report)
     
     # =====================================================================
-    # PHASE 7 (optionnelle): CONSOLIDATE
+    # PHASE 7 (optionnelle): ENRICH_DESCRIPTIF
+    # =====================================================================
+    enrich_descriptif_csv: Optional[Path] = None
+    enrich_descriptif_stats: Optional[Dict] = None
+    
+    if enrich_descriptif_config and enrich_descriptif_config.enabled:
+        log.info("[7] ENRICH_DESCRIPTIF - Enrichissement depuis les descriptifs texte")
+        try:
+            _enrich_output = (
+                enrich_descriptif_config.output_csv
+                or output_csv.parent / "final-v4-enriched.csv"
+            )
+            
+            enrich_descriptif_stats = run_enrich_descriptif_phase(
+                input_csv=output_csv,
+                html_dir=html_dir,
+                output_csv=_enrich_output,
+            )
+            enrich_descriptif_csv = _enrich_output
+            
+            if verbose:
+                print_enrich_descriptif_summary(enrich_descriptif_stats)
+                
+        except Exception as e:
+            log.error("Phase 7 (enrich) échouée (pipeline non bloqué): %s", e)
+    
+    # Déterminer le CSV d'entrée pour les phases suivantes
+    _next_input_csv = enrich_descriptif_csv or output_csv
+    
+    # =====================================================================
+    # PHASE 8 (optionnelle): CONSOLIDATE
     # =====================================================================
     consolidated_csv: Optional[Path] = None
     consolidation_stats: Optional[Dict] = None
 
     if consolidation_config and consolidation_config.enabled:
-        log.info("[7/7] CONSOLIDATE - Consolidation LLM des champs métier")
+        log.info("[8] CONSOLIDATE - Consolidation LLM des champs métier")
         try:
             _consolidated_output = (
                 consolidation_config.output_csv
@@ -265,7 +301,7 @@ def run_pipeline(
             _json_dir = consolidation_config.json_dir
 
             consolidation_stats = run_consolidation(
-                input_csv=output_csv,
+                input_csv=_next_input_csv,
                 html_dir=html_dir,
                 output_csv=_consolidated_output,
                 config=consolidation_config,
@@ -277,21 +313,21 @@ def run_pipeline(
                 print_consolidation_summary(consolidation_stats)
 
         except EnvironmentError as e:
-            log.error("Phase 7 annulée - configuration LLM manquante: %s", e)
+            log.error("Phase 8 annulée - configuration LLM manquante: %s", e)
         except Exception as e:
-            log.error("Phase 7 échouée (pipeline non bloqué): %s", e)
+            log.error("Phase 8 échouée (pipeline non bloqué): %s", e)
 
     # =====================================================================
-    # PHASE 8 (optionnelle): CLASSIFY_BUYERS
+    # PHASE 9 (optionnelle): CLASSIFY_BUYERS
     # =====================================================================
     classification_csv: Optional[Path] = None
     classification_stats: Optional[Dict] = None
 
-    # Déterminer le CSV d'entrée : consolidé si disponible, sinon export brut
-    _classify_input = consolidated_csv or output_csv
+    # Déterminer le CSV d'entrée : consolidé > enrichi > export brut
+    _classify_input = consolidated_csv or _next_input_csv
 
     if buyer_classification_config and buyer_classification_config.enabled:
-        log.info("[8] CLASSIFY_BUYERS - Classification des acheteurs")
+        log.info("[9] CLASSIFY_BUYERS - Classification des acheteurs")
         try:
             classification_stats = run_buyer_classification(
                 consolidated_csv=_classify_input,
@@ -306,16 +342,16 @@ def run_pipeline(
             log.error("Phase 8 échouée (pipeline non bloqué): %s", e)
 
     # =====================================================================
-    # PHASE 9 (optionnelle): ENRICH_JURIDIQUE
+    # PHASE 10 (optionnelle): ENRICH_JURIDIQUE
     # =====================================================================
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
 
-    # Déterminer le CSV d'entrée : classification si disponible, sinon consolidé ou export
-    _enrich_input = classification_csv or consolidated_csv or output_csv
+    # Déterminer le CSV d'entrée : classification > consolidé > enrichi > export
+    _enrich_input = classification_csv or consolidated_csv or _next_input_csv
 
     if enrich_juridique_config and enrich_juridique_config.enabled:
-        log.info("[9] ENRICH_JURIDIQUE - Enrichissement juridique (regex)")
+        log.info("[10] ENRICH_JURIDIQUE - Enrichissement juridique (regex)")
         try:
             _juridique_output = (
                 enrich_juridique_config.output_csv
@@ -381,6 +417,8 @@ def run_pipeline(
         consolidation_stats=consolidation_stats,
         classification_csv=classification_csv,
         classification_stats=classification_stats,
+        enrich_descriptif_csv=enrich_descriptif_csv,
+        enrich_descriptif_stats=enrich_descriptif_stats,
         juridique_csv=juridique_csv,
         juridique_stats=juridique_stats,
         excel_output=excel_output,

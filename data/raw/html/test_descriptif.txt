@@ -1,0 +1,126 @@
+Avis de marché
+Département(s) de publication :75, 77, 91, 92, 93, 94, 95
+Annonce n° 26-41450
+Section 1 - Acheteur
+1.1 Acheteur
+Nom officiel : EPPGHV
+Forme juridique de l'acheteur : Organisme de droit public
+Activité du pouvoir adjudicateur : Loisirs, culture et culte
+Section 2 - Procédure
+2.1 Procédure
+Titre : MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.
+Description : MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.
+Identifiant de la procédure : 7b50ec62-1bd6-44bc-8815-ac2efd87608c
+Identifiant interne : 2026MDAF0063
+Type de procédure : Ouverte
+La procédure est accélérée : non
+2.1.1 Objet
+Nature du marché : Services
+Nomenclature principale ( cpv ): 72500000 Services informatiques
+Nomenclature supplémentaire ( cpv ): 72610000 Services d'assistance informatique
+Nomenclature supplémentaire ( cpv ): 72611000 Services d'assistance technique informatique
+Nomenclature supplémentaire ( cpv ): 72600000 Services d'assistance et de conseils informatiques
+2.1.2 Lieu d'exécution
+Subdivision pays (NUTS) : Paris ( FR101 )
+Pays : France
+2.1.3 Valeur
+Valeur estimée hors TVA : 620,000 Euro
+Valeur maximale de l'accord-cadre : 160,000 Euro
+2.1.4 Informations générales
+Base juridique :
+Directive 2014/24/UE
+Section 5 - Lot
+5.1 Identifiant technique du lot : LOT-0001
+Titre : MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.
+Description : MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.
+Identifiant interne : 2026MDAF0063
+5.1.1 Objet
+Nature du marché : Services
+Nomenclature principale ( cpv ): 72500000 Services informatiques
+Nomenclature supplémentaire ( cpv ): 72610000 Services d'assistance informatique
+Nomenclature supplémentaire ( cpv ): 72611000 Services d'assistance technique informatique
+Nomenclature supplémentaire ( cpv ): 72600000 Services d'assistance et de conseils informatiques
+Options :
+Description des options : Offre de base : le marché est conclu pour 1 an ferme, reconduit tacitement trois (3) fois pour une durée d'un an (1) sans que sa durée totale n'excède quatre (4) ans. Offre variante exigée : le marché est conclu pour une durée ferme de 48 mois.
+5.1.2 Lieu d'exécution
+Subdivision pays (NUTS) : Paris ( FR101 )
+Pays : France
+Informations complémentaires :
+5.1.3 Durée estimée
+Durée : 4 An
+5.1.5 Valeur
+Valeur estimée hors TVA : 660,000 Euro
+Valeur maximale de l'accord-cadre : 160,000 Euro
+5.1.6 Informations générales
+Il s'agit d'un marché récurrent
+Participation réservée : La participation n'est pas réservée.
+Projet de passation de marché non financé par des fonds de l'UE
+Le marché relève de l'accord sur les marchés publics (AMP) : oui
+Le marché en question convient aussi aux petites et moyennes entreprises (PME) : oui
+5.1.11 Documents de marché
+Adresse des documents de marché :
+https://www.marches-publics.gouv.fr/entreprise
+5.1.12 Conditions du marché public
+Conditions de présentation :
+Présentation par voie électronique : Requise
+Adresse de présentation :
+https://www.marches-publics.gouv.fr/entreprise
+Langues dans lesquelles les offres ou demandes de participation peuvent être présentées : français
+Catalogue électronique : Non autorisée
+Variantes : Non autorisée
+Date limite de réception des offres :
+01/06/2026 à 14:00
+Date limite de validité de l'offre : 180 Jour
+Conditions du marché :
+Le marché doit être exécuté dans le cadre de programmes d'emplois protégés : Non
+Facturation en ligne : Requise
+La commande en ligne sera utilisée : non
+Le paiement en ligne sera utilisé : oui
+5.1.15 Techniques
+Accord-cadre :
+Accord-cadre, sans remise en concurrence
+Nombre maximal de participants : 999
+Informations sur le système d'acquisition dynamique :
+Pas de système d'acquisition dynamique
+5.1.16 Informations complémentaires, médiation et réexamen
+Organisation chargée des procédures de recours : Tribunal administratif de Paris
+Informations relatives aux délais de recours : Le référé pré contractuel peut s'effectuer avant la signature du marché public. A compter de la publication de l'avis d'attribution le délai de recours est de 31 jours
+Section 8 - Organisations
+8.1 ORG-0001
+Nom officiel : EPPGHV
+Numéro d'enregistrement : 39140695600014
+Adresse postale : 211 Avenue Jean Jaurés
+Ville : Paris
+Code postal : 75019
+Subdivision pays (NUTS) : Paris ( FR101 )
+Pays : France
+Adresse électronique :
+[email  protected]
+Téléphone : 0140037575
+Adresse internet :
+https://www.lavillette.com/
+Profil de l'acheteur :
+https://www.marches-publics.gouv.fr/entreprise
+Rôles de cette organisation :
+Acheteur
+8.1 ORG-0002
+Nom officiel : Tribunal administratif de Paris
+Numéro d'enregistrement : 1775005500013
+Adresse postale : 7 rue de Jouy
+Ville : Paris
+Code postal : 75004
+Subdivision pays (NUTS) : Paris ( FR101 )
+Pays : France
+Adresse électronique :
+[email  protected]
+Téléphone : 0144594400
+Rôles de cette organisation :
+Organisation chargée des procédures de recours
+Informations relatives à l'avis
+Identifiant/version de l'avis : d78c8350-50a2-4fea-94bd-57bc52c14a88 - 01
+Type de formulaire : Mise en concurrence
+Type d'avis : Avis de marché ou de concession - régime ordinaire
+Date d'envoi de l'avis : 23/04/2026 à 15:11
+Langues dans lesquelles l'avis en question est officiellement disponible : français
+Date d'envoi du présent avis à la publication :
+23/04/2026

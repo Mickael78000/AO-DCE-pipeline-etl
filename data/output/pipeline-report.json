@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-05-16T02:01:04.397946",
+  "version": "2.0.0",
+  "files_discovered": 63,
+  "files_by_category": {
+    "joue": 19,
+    "standard": 3,
+    "place_numeric": 7,
+    "france_marches": 4,
+    "boamp_xml": 15,
+    "marches_online": 15
+  },
+  "aliases_found": 0,
+  "files_matched": 1,
+  "new_markets": 62,
+  "orphans": 0,
+  "collisions": 0,
+  "aliases_ignored": 0,
+  "rows_preserved": 0,
+  "rows_updated": 1,
+  "rows_added": 62,
+  "total_rows": 63,
+  "validation_passed": false,
+  "unique_references": 62,
+  "duplicate_references": 1,
+  "buyer_completion_rate": 100.0,
+  "new_rows_with_issues": 0,
+  "anomalies": [
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "3/boamp/2643609",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "3/boamp/2643609",
+      "message": "Référence dupliquée (2 occurrences)"
+    }
+  ],
+  "output_csv": "data/output/final-v4-complete-enriched.csv",
+  "output_report_json": "data/output/pipeline-report.json"
+}

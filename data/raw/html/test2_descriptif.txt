@@ -1,0 +1,521 @@
+Nom et adresse officiels de l’organisme acheteur public
+UNIHA-GCS
+83 BOULEVARD MARIUS VIVIER-MERLE
+69003
+ 
+ LYON
+Texte légal de l’appel d’offre (marché public)
+Avis de marché
+Département(s) de publication :
+69
+Annonce n°
+26-43609
+Section 1 -
+Acheteur
+1.1
+Acheteur
+Nom officiel
+:
+GCS-UNIHA
+Forme juridique de l’acheteur
+:
+Organisme de droit public
+Activité du pouvoir adjudicateur
+:
+Santé
+Section 2 -
+Procédure
+2.1
+Procédure
+Titre
+:
+Prestations de services informatiques pour le développement et la maintenance des outils
+Description
+:
+Prestations de services informatiques pour le développement et la maintenance des outils
+Identifiant de la procédure
+:
+5c8aef07-4
+dc2
+-4e88-bdce-ecb33011143b
+Identifiant interne
+:
+M_3530
+Type de procédure
+:
+Ouverte
+La procédure est accélérée
+:
+non
+2.1.1
+Objet
+Nature du marché
+:
+Services
+Nomenclature principale
+(
+cpv
+):
+72200000
+Services de programmation et de conseil en logiciels
+Nomenclature supplémentaire
+(
+cpv
+):
+72261000
+Services d'assistance relative aux logiciels
+2.1.2
+Lieu d’exécution
+Adresse postale
+:
+83 boulevard Marius vivier merle
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+2.1.2
+Lieu d’exécution
+Adresse postale
+:
+83 BOULEVARD MARIUS VIVIER-MERLE
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+2.1.3
+Valeur
+Valeur maximale de l’
+accord-cadre
+:
+900,000
+Euro
+2.1.4
+Informations générales
+Base juridique
+:
+Directive 2014/24/UE
+2.1.5
+Conditions du marché public
+Conditions de présentation
+:
+Nombre maximal de lots pour lesquels un soumissionnaire peut présenter une offre
+:
+2
+Conditions du marché
+:
+Nombre maximal de lots pouvant être attribués à un soumissionnaire dans le cadre de marchés
+:
+2
+Section 5 -
+Lot
+5.1
+Identifiant technique du lot
+:
+LOT-0001
+Titre
+:
+Prestations de développement informatique Webdev, windev et autres technologies PCSOFT
+Description
+:
+Prestations de développement informatique Webdev, windev et autres technologies PCSOFT
+Identifiant interne
+:
+LOT 1
+5.1.1
+Objet
+Nature du marché
+:
+Services
+Nomenclature principale
+(
+cpv
+):
+72200000
+Services de programmation et de conseil en logiciels
+Nomenclature supplémentaire
+(
+cpv
+):
+72262000
+Services de développement de logiciels
+5.1.2
+Lieu d’exécution
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+Informations complémentaires
+:
+5.1.3
+Durée estimée
+Durée
+:
+4
+An
+5.1.5
+Valeur
+Valeur maximale de l’accord-cadre
+:
+400,000
+Euro
+5.1.6
+Informations générales
+Participation réservée
+:
+La participation n’est pas réservée.
+Projet de passation de marché non financé par des fonds de l’UE
+Le marché relève de l’accord sur les marchés publics (AMP)
+:
+oui
+Le marché en question convient aussi aux petites et moyennes entreprises (PME)
+:
+oui
+Informations complémentaires
+:
+La valeur indiquée dans le champ BT113 est technique et ne reflète pas une limitation réelle.
+5.1.10
+Critères d’attribution
+Description de la méthode à utiliser si la pondération ne peut être exprimée par des critères
+:
+Cout : 40% Technique : 60%
+5.1.11
+Documents de marché
+Adresse des documents de marché
+:
+https://www.marches-publics.gouv.fr
+5.1.12
+Conditions du marché public
+Conditions de présentation
+:
+Présentation par voie électronique
+:
+Requise
+Adresse de présentation
+:
+https://www.marches-publics.gouv.fr
+Langues dans lesquelles les offres ou demandes de participation peuvent être présentées
+:
+français
+Catalogue électronique
+:
+Non autorisée
+Variantes
+:
+Non autorisée
+Date limite de réception des offres
+:
+04/06/2026
+à 12:00
+Date limite de validité de l’offre
+:
+6
+Mois
+Conditions du marché
+:
+Le marché doit être exécuté dans le cadre de programmes d’emplois protégés
+:
+Non
+Facturation en ligne
+:
+Requise
+La commande en ligne sera utilisée
+:
+oui
+Le paiement en ligne sera utilisé
+:
+oui
+5.1.15
+Techniques
+Accord-cadre
+:
+Accord-cadre, sans remise en concurrence
+Nombre maximal de participants
+:
+9999
+Informations sur le système d’acquisition dynamique
+:
+Pas de système d’acquisition dynamique
+5.1.16
+Informations complémentaires, médiation et réexamen
+Organisation chargée des procédures de recours
+:
+TRIBUNAL ADMINISTRATIF DE LYON
+Informations relatives aux délais de recours
+:
+Référé précontractuel pouvant être exercé jusqu'à la signature du marché dans les conditions des articles L551-1 à L551-4 du code de justice administrative ; référé contractuel pouvant être exercé au plus tard le 31ème jour suivant la publication d'un avis d'attribution du contrat dans les conditions des articles L551-13 à L551-23 du code de justice administrative ; recours en contestation de validité ouvert aux candidats évincés et pouvant être exercé dans les 2 mois à compter de l'accomplissement des « mesures de publicité appropriées ».
+5.1
+Identifiant technique du lot
+:
+LOT-0002
+Titre
+:
+Prestations de développement informatique sur les technologies Open Source (PHP,SYMFONY,PYTHON) ainsi que les technologies IA et BlockChain
+Description
+:
+Prestations de développement informatique sur les technologies Open Source (PHP,SYMFONY,PYTHON) ainsi que les technologies IA et BlockChain
+Identifiant interne
+:
+LOT 2
+5.1.1
+Objet
+Nature du marché
+:
+Services
+Nomenclature principale
+(
+cpv
+):
+72200000
+Services de programmation et de conseil en logiciels
+Nomenclature supplémentaire
+(
+cpv
+):
+72262000
+Services de développement de logiciels
+5.1.2
+Lieu d’exécution
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+Informations complémentaires
+:
+5.1.3
+Durée estimée
+Durée
+:
+4
+An
+5.1.5
+Valeur
+Valeur maximale de l’accord-cadre
+:
+500,000
+Euro
+5.1.6
+Informations générales
+Participation réservée
+:
+La participation n’est pas réservée.
+Projet de passation de marché non financé par des fonds de l’UE
+Le marché relève de l’accord sur les marchés publics (AMP)
+:
+oui
+Le marché en question convient aussi aux petites et moyennes entreprises (PME)
+:
+oui
+Informations complémentaires
+:
+La valeur indiquée dans le champ BT113 est technique et ne reflète pas une limitation réelle.
+5.1.10
+Critères d’attribution
+Description de la méthode à utiliser si la pondération ne peut être exprimée par des critères
+:
+Cout : 40% Technique : 60%
+5.1.11
+Documents de marché
+Adresse des documents de marché
+:
+https://www.marches-publics.gouv.fr
+5.1.12
+Conditions du marché public
+Conditions de présentation
+:
+Présentation par voie électronique
+:
+Requise
+Adresse de présentation
+:
+https://www.marches-publics.gouv.fr
+Langues dans lesquelles les offres ou demandes de participation peuvent être présentées
+:
+français
+Catalogue électronique
+:
+Non autorisée
+Variantes
+:
+Non autorisée
+Date limite de réception des offres
+:
+04/06/2026
+à 12:00
+Date limite de validité de l’offre
+:
+6
+Mois
+Conditions du marché
+:
+Le marché doit être exécuté dans le cadre de programmes d’emplois protégés
+:
+Non
+Facturation en ligne
+:
+Requise
+La commande en ligne sera utilisée
+:
+oui
+Le paiement en ligne sera utilisé
+:
+oui
+5.1.15
+Techniques
+Accord-cadre
+:
+Accord-cadre, sans remise en concurrence
+Nombre maximal de participants
+:
+9999
+Informations sur le système d’acquisition dynamique
+:
+Pas de système d’acquisition dynamique
+5.1.16
+Informations complémentaires, médiation et réexamen
+Organisation chargée des procédures de recours
+:
+TRIBUNAL ADMINISTRATIF DE LYON
+Informations relatives aux délais de recours
+:
+Référé précontractuel pouvant être exercé jusqu'à la signature du marché dans les conditions des articles L551-1 à L551-4 du code de justice administrative ; référé contractuel pouvant être exercé au plus tard le 31ème jour suivant la publication d'un avis d'attribution du contrat dans les conditions des articles L551-13 à L551-23 du code de justice administrative ; recours en contestation de validité ouvert aux candidats évincés et pouvant être exercé dans les 2 mois à compter de l'accomplissement des « mesures de publicité appropriées ».
+Section 8 -
+Organisations
+8.1
+ORG-0001
+Nom officiel
+:
+GCS-UNIHA
+Numéro d’enregistrement
+:
+13000222300043
+Adresse postale
+:
+83 BOULEVARD MARIUS VIVIER-MERLE
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+Adresse électronique
+:
+shainez.boughanmi@uniha.org
+Téléphone
+:
+04 72 12 05 91
+Profil de l’acheteur
+:
+https://www.marches-publics.gouv.fr
+Rôles de cette organisation
+:
+Acheteur
+Centrale d’achat qui passe des marchés publics ou conclut des accords-cadres de travaux, de fournitures ou de services destinés à d’autres acheteurs
+8.1
+ORG-0002
+Nom officiel
+:
+TRIBUNAL ADMINISTRATIF DE LYON
+Numéro d’enregistrement
+:
+17690005800015
+Adresse postale
+:
+184 Rue Duguesclin
+Ville
+:
+LYON
+Code postal
+:
+69003
+Subdivision pays (NUTS)
+:
+Rhône
+(
+FRK26
+)
+Pays
+:
+France
+Adresse électronique
+:
+greffe.ta-lyon@juradm.fr
+Téléphone
+:
+04 87 63 50 00
+Rôles de cette organisation
+:
+Organisation chargée des procédures de recours
+Informations relatives à l’avis
+Identifiant/version de l’avis
+:
+ab07fa98-4783-4d42-9fb6-eba301abb83b
+-
+01
+Type de formulaire
+:
+Mise en concurrence
+Type d’avis
+:
+Avis de marché ou de concession – régime ordinaire
+Date d’envoi de l’avis
+:
+29/04/2026
+à 15:58
+Langues dans lesquelles l’avis en question est officiellement disponible
+:
+français
+Date d'envoi du présent avis à la publication :
+29/04/2026

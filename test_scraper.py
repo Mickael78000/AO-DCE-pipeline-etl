@@ -15,8 +15,8 @@ def test_scraper():
     print("=" * 60)
     print()
     
-    # Test avec une URL France Marchés
-    test_url = "https://www.francemarches.com/appel-offre/pp1e2-3001-6300-2026031-s-renouvellement-maintenance-des-solutions-dedrm"
+    # Test avec une URL TED (généralement plus accessible)
+    test_url = "https://ted.europa.eu/udl?uri=TED:NOTICE:294682-2026:TEXT:FR"
     
     print(f"URL de test: {test_url}")
     print()
