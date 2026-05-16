@@ -200,12 +200,17 @@ Exemples:
         print(f"Extracteur: {env_version}")
         print()
     
-    # Mode --full active toutes les phases
+    # Mode --full active toutes les phases SAUF consolidate (LLM interdit)
     if args.full:
-        args.consolidate = True
         args.classify_buyers = True
         args.enrich_juridique = True
         args.excel = True
+
+    # GARDE-FOU : --consolidate sans --dry-run appellerait le LLM
+    if args.consolidate and not getattr(args, 'dry_run', False):
+        print("✗ Erreur: --consolidate sans --dry-run est interdit (politique LLM OFF).")
+        print("  Utilisez --consolidate --dry-run pour simuler sans appel LLM.")
+        return 1
 
     output_dir = args.output.parent
 

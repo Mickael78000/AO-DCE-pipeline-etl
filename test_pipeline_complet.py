@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test du pipeline complet avec scraper et LLM."""
+"""Test du pipeline complet — DÉSACTIVÉ (politique LLM OFF)."""
 
 import sys
 import os
@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 from ao_etl.pipeline.run import run_pipeline
 from ao_etl.pipeline.consolidate import ConsolidationConfig
-from ao_etl.llm.backend import build_backend
+from ao_etl.llm.backend import LLMDisabledError
 
 def test_pipeline_complet():
     """Test le pipeline complet avec scraper + LLM."""
@@ -47,22 +47,12 @@ def test_pipeline_complet():
     
     # Configuration consolidation avec LLM
     print()
-    print("Configuration LLM...")
-    try:
-        backend = build_backend()
-        print(f"✓ Backend LLM: {type(backend).__name__}")
-        print(f"  Model: {backend.model}")
-    except Exception as e:
-        print(f"❌ Erreur backend LLM: {e}")
-        return
-    
-    consolidation_config = ConsolidationConfig(
-        enabled=True,
-        llm_backend=backend,
-        output_dir=Path("data/output/test-consolidation"),
-        dry_run=False,  # Vrai LLM
-        limit=3,  # Limiter à 3 marchés pour le test
+    raise LLMDisabledError(
+        "APPEL LLM INTERDIT — test_pipeline_complet.py est désactivé. "
+        "Pipeline en mode déterministe. "
+        "Pour réactiver : voir ao_etl/llm/backend.py (LLMDisabledError)."
     )
+    consolidation_config = None
     
     print(f"✓ Consolidation: enabled=True, limit=3")
     print()
