@@ -99,13 +99,6 @@ Exemples:
     )
     
     parser.add_argument(
-        '--extractor-version',
-        choices=['legacy', 'v2'],
-        default=None,
-        help="Version de l'extracteur HTML (legacy=défaut prudent, v2=nouvelle architecture). Prime sur AO_EXTRACTOR_VERSION."
-    )
-
-    parser.add_argument(
         '--consolidate',
         action='store_true',
         help="Active la phase 7 : consolidation LLM des champs métier."
@@ -198,20 +191,11 @@ Exemples:
         print(f"⚠ Avertissement: CSV d'entrée introuvable: {args.input}")
         print(f"  Le pipeline créera un nouveau CSV avec uniquement les fichiers HTML.")
     
-    # Définir la version d'extracteur via CLI (prime sur env)
-    if args.extractor_version:
-        os.environ['AO_EXTRACTOR_VERSION'] = args.extractor_version
-    
     # Exécution
     print(f"\n{'='*70}")
     print("PIPELINE ETL AO-DCE v2.0")
     print(f"{'='*70}\n")
-    
-    if not args.quiet:
-        env_version = os.environ.get('AO_EXTRACTOR_VERSION', 'legacy')
-        print(f"Extracteur: {env_version}")
-        print()
-    
+
     # Mode --full active toutes les phases SAUF consolidate (LLM interdit)
     if args.full:
         args.classify_buyers = True
