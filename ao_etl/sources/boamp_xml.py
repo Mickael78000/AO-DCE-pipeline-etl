@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from .base_v2 import BaseExtractor, ExtractionResult, FieldCandidate
-from .validation_v2 import (
+from .base import BaseExtractor, ExtractionResult, FieldCandidate
+from .validation import (
     normalize_text,
     pick_best_candidate,
     score_buyer,

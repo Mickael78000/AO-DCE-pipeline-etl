@@ -7,12 +7,12 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
-from .base_v2 import ExtractionContext, ExtractionResult
-from .boamp_xml_v2 import BoampExtractor
-from .france_marches_v2 import FranceMarchesExtractor
-from .joue_v2 import JoueExtractor
-from .marches_online_v2 import MarchesOnlineExtractor
-from .place_numeric_v2 import PlaceNumericExtractor
+from .base import ExtractionContext, ExtractionResult
+from .boamp_xml import BoampExtractor
+from .france_marches import FranceMarchesExtractor
+from .joue import JoueExtractor
+from .marches_online import MarchesOnlineExtractor
+from .place_numeric import PlaceNumericExtractor
 from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
 
 # Import de la fonction de construction d'URL (quand disponible)
@@ -126,7 +126,7 @@ def extract_for_source_v2(file_path: Path) -> MarketData:
     """
     Version V2 du routeur qui retourne MarketData (compatible pipeline legacy).
     
-    Cette fonction remplace extract_for_source() quand AO_EXTRACTOR_VERSION=v2
+    Fonction canonique d'extraction (anciennement V2).
     
     Args:
         file_path: Chemin du fichier HTML

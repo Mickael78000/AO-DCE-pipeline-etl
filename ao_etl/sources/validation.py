@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Iterable
 
-from .base_v2 import FieldCandidate, ExtractionTrace
+from .base import FieldCandidate, ExtractionTrace
 
 # =============================================================================
 # BLACKLISTS - Titres génériques à rejeter
