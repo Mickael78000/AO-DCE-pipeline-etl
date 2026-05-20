@@ -8,9 +8,6 @@ Exemples:
     python run_pipeline.py
     python run_pipeline.py --html-dir html_ao --input AO.csv --output AO-final.csv
     
-Note: Ce script nécessite le virtual environment activé.
-    Utilisez: source venv/bin/activate
-    Ou exécutez via: ./run_full_pipeline.sh
 """
 
 import argparse
@@ -29,7 +26,7 @@ except ImportError:
     # Si le module n'est pas trouvé, continuer (mode compatibilité)
     pass
 
-from ao_etl.pipeline import run_pipeline, PipelineResult, ConsolidationConfig
+from ao_etl.pipeline import run_pipeline, PipelineResult
 
 
 def main():
@@ -44,14 +41,12 @@ Séquence du pipeline:
   4. MERGE        - Fusion et mise à jour
   5. VALIDATE     - Validation qualité
   6. EXPORT       - Export CSV et rapports
-  7. [CONSOLIDATE]- Consolidation LLM (optionnel, --consolidate)
-  8. [CLASSIFY]   - Classification acheteurs (optionnel, --classify-buyers)
-  9. [ENRICH]     - Enrichissement juridique (optionnel, --enrich-juridique) [REGEX]
-  10. [EXCEL]     - Export Excel formaté (optionnel, --excel)
+  7. [CLASSIFY]   - Classification acheteurs (optionnel, --classify-buyers)
+  8. [ENRICH]     - Enrichissement juridique (optionnel, --enrich-juridique) [REGEX]
+  9. [EXCEL]      - Export Excel formaté (optionnel, --excel)
 
 Exemples:
-  python run_pipeline.py --consolidate --enrich-juridique --excel
-  python run_pipeline.py --enrich-juridique --excel-only
+  python run_pipeline.py --enrich-juridique --excel
   python run_pipeline.py --full (toutes les phases optionnelles)
         """
     )
@@ -98,49 +93,7 @@ Exemples:
         help="Mode silencieux (moins de logs)"
     )
     
-    parser.add_argument(
-        '--consolidate',
-        action='store_true',
-        help="Active la phase 7 : consolidation LLM des champs métier."
-    )
-    parser.add_argument(
-        '--consolidate-backend',
-        default='',
-        metavar='BACKEND',
-        help="Backend LLM : openai | anthropic | ollama (défaut: AO_LLM_BACKEND env)."
-    )
-    parser.add_argument(
-        '--consolidate-model',
-        default='',
-        metavar='MODEL',
-        help="Modèle LLM (défaut: AO_LLM_MODEL env ou défaut du backend)."
-    )
-    parser.add_argument(
-        '--consolidate-limit',
-        type=int,
-        default=None,
-        metavar='N',
-        help="Limite la consolidation aux N premières lignes (debug/test)."
-    )
-    parser.add_argument(
-        '--consolidate-output',
-        type=Path,
-        default=None,
-        help="CSV métier de sortie (défaut: <output_dir>/final-v3-consolidated.csv)."
-    )
-    parser.add_argument(
-        '--consolidate-json-dir',
-        type=Path,
-        default=None,
-        help="Répertoire de sortie des JSONs individuels par marché."
-    )
-    parser.add_argument(
-        '--dry-run',
-        action='store_true',
-        help="Phase 7 en simulation : préserve les champs déterministes, n'appelle pas le LLM."
-    )
-
-    # Phase 8: Classification acheteurs
+    # Phase 7: Classification acheteurs
     parser.add_argument(
         '--classify-buyers',
         action='store_true',
@@ -196,34 +149,15 @@ Exemples:
     print("PIPELINE ETL AO-DCE v2.0")
     print(f"{'='*70}\n")
 
-    # Mode --full active toutes les phases SAUF consolidate (LLM interdit)
+    # Mode --full active toutes les phases optionnelles
     if args.full:
         args.classify_buyers = True
         args.enrich_juridique = True
         args.excel = True
 
-    # GARDE-FOU : --consolidate sans --dry-run appellerait le LLM
-    if args.consolidate and not getattr(args, 'dry_run', False):
-        print("✗ Erreur: --consolidate sans --dry-run est interdit (politique LLM OFF).")
-        print("  Utilisez --consolidate --dry-run pour simuler sans appel LLM.")
-        return 1
-
     output_dir = args.output.parent
 
-    # Phase 7: Consolidation
-    consolidation_config = None
-    if args.consolidate or getattr(args, 'dry_run', False):
-        consolidation_config = ConsolidationConfig(
-            enabled=True,
-            backend=args.consolidate_backend,
-            model=args.consolidate_model,
-            limit=args.consolidate_limit,
-            dry_run=getattr(args, 'dry_run', False),
-            output_csv=args.consolidate_output,
-            json_dir=args.consolidate_json_dir or (output_dir / 'final-v3-consolidated'),
-        )
-
-    # Phase 7c: Normalisation canonique — activée automatiquement si les phases
+    # Phase 7b: Normalisation canonique — activée automatiquement si les phases
     # aval (classify_buyers, excel) nécessitent le schéma canonique (colonnes minuscules).
     from ao_etl.pipeline.normalize_final_phase import NormalizeConfig
     normalize_config = None
@@ -263,7 +197,6 @@ Exemples:
         output_csv=args.output,
         report_path=args.report,
         verbose=not args.quiet,
-        consolidation_config=consolidation_config,
         normalize_config=normalize_config,
         buyer_classification_config=buyer_classification_config,
         enrich_juridique_config=enrich_juridique_config,
@@ -276,8 +209,6 @@ Exemples:
         print(f"  Nouveaux marchés: {result.new_rows}")
         print(f"  CSV v2         : {result.output_csv}")
         print(f"  Rapport JSON   : {result.output_report}")
-        if result.consolidated_csv:
-            print(f"  CSV v3 métier  : {result.consolidated_csv}")
         if result.classification_csv:
             print(f"  CSV classifié  : {result.classification_csv}")
         if result.juridique_csv:
