@@ -37,17 +37,8 @@ from .export import (
 from ao_etl.classification import (
     BuyerClassificationConfig, run_buyer_classification, print_classification_summary
 )
-from .enrich_descriptif_phase import (
-    EnrichDescriptifConfig, run_enrich_descriptif_phase, print_enrich_descriptif_summary
-)
-from .enrich_txt_phase import (
-    EnrichTxtConfig, run_enrich_txt_phase, print_enrich_txt_summary
-)
 from .normalize_final_phase import (
     NormalizeConfig, run_normalize_phase, print_normalize_summary
-)
-from .enrich_url_phase import (
-    EnrichUrlConfig, run_enrich_url_phase, print_enrich_url_summary
 )
 from .enrich_juridique import (
     EnrichJuridiqueConfig, run_enrich_juridique, print_enrich_summary
@@ -75,14 +66,8 @@ class PipelineResult:
     validation_passed: bool
     classification_csv: Optional[Path] = None
     classification_stats: Optional[Dict] = None
-    enrich_descriptif_csv: Optional[Path] = None
-    enrich_descriptif_stats: Optional[Dict] = None
-    enrich_txt_csv: Optional[Path] = None
-    enrich_txt_stats: Optional[Dict] = None
     normalize_csv: Optional[Path] = None
     normalize_stats: Optional[Dict] = None
-    url_csv: Optional[Path] = None
-    url_stats: Optional[Dict] = None
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
     excel_output: Optional[Path] = None
@@ -96,10 +81,7 @@ def run_pipeline(
     report_path: Optional[Path] = None,
     verbose: bool = True,
     buyer_classification_config: Optional[BuyerClassificationConfig] = None,
-    enrich_descriptif_config: Optional[EnrichDescriptifConfig] = None,
-    enrich_txt_config: Optional[EnrichTxtConfig] = None,
     normalize_config: Optional[NormalizeConfig] = None,
-    url_config: Optional[EnrichUrlConfig] = None,
     enrich_juridique_config: Optional[EnrichJuridiqueConfig] = None,
     excel_export_config: Optional[ExcelExportConfig] = None,
 ) -> PipelineResult:
@@ -264,39 +246,12 @@ def run_pipeline(
     
     if verbose:
         print_export_summary(report)
-    
-    # =====================================================================
-    # PHASE 7 (optionnelle): ENRICH_TXT - Enrichissement depuis fichiers .txt
-    # =====================================================================
-    enrich_txt_csv: Optional[Path] = None
-    enrich_txt_stats: Optional[Dict] = None
-    
-    if enrich_txt_config and enrich_txt_config.enabled:
-        log.info("[7] ENRICH_TXT - Enrichissement depuis les fichiers .txt")
-        try:
-            _enrich_txt_output = (
-                enrich_txt_config.output_csv
-                or output_csv.parent / "final-v4-complete-enriched.csv"
-            )
-            
-            enrich_txt_stats = run_enrich_txt_phase(
-                input_csv=output_csv,
-                html_dir=html_dir,
-                output_csv=_enrich_txt_output,
-            )
-            enrich_txt_csv = _enrich_txt_output
-            
-            if verbose:
-                print_enrich_txt_summary(enrich_txt_stats)
-                
-        except Exception as e:
-            log.error("Phase 7 (enrich txt) échouée (pipeline non bloqué): %s", e)
-    
+
     # Déterminer le CSV d'entrée pour les phases suivantes
-    _next_input_csv = enrich_txt_csv or output_csv
-    
+    _next_input_csv = output_csv
+
     # =====================================================================
-    # PHASE 7b (optionnelle): NORMALIZE - Mapping canonique final
+    # PHASE 7 (optionnelle): NORMALIZE - Mapping canonique final
     # =====================================================================
     normalize_csv: Optional[Path] = None
     normalize_stats: Optional[Dict] = None
@@ -324,64 +279,7 @@ def run_pipeline(
     # Mettre à jour le prochain input
     if normalize_csv:
         _next_input_csv = normalize_csv
-    
-    # =====================================================================
-    # PHASE 7d (optionnelle): ENRICH_URL - Reconstruction des URLs
-    # =====================================================================
-    url_csv: Optional[Path] = None
-    url_stats: Optional[Dict] = None
-    
-    if url_config and url_config.enabled:
-        log.info("[7d] ENRICH_URL - Reconstruction des URLs depuis match_source")
-        try:
-            _url_output = (
-                url_config.output_csv
-                or output_csv.parent / "final-v4-with-urls.csv"
-            )
-            
-            url_stats = run_enrich_url_phase(
-                input_csv=_next_input_csv,
-                output_csv=_url_output,
-            )
-            url_csv = _url_output
-            
-            if verbose:
-                print_enrich_url_summary(url_stats)
-                
-        except Exception as e:
-            log.error("Phase 7d (enrich URL) échouée (pipeline non bloqué): %s", e)
-    
-    # Mettre à jour le prochain input
-    if url_csv:
-        _next_input_csv = url_csv
-    
-    # =====================================================================
-    # PHASE 7e (optionnelle, legacy): ENRICH_DESCRIPTIF (HTML parsing)
-    # =====================================================================
-    enrich_descriptif_csv: Optional[Path] = None
-    enrich_descriptif_stats: Optional[Dict] = None
-    
-    if enrich_descriptif_config and enrich_descriptif_config.enabled:
-        log.info("[7e] ENRICH_DESCRIPTIF (legacy) - Enrichissement depuis HTML")
-        try:
-            _enrich_output = (
-                enrich_descriptif_config.output_csv
-                or output_csv.parent / "final-v4-enriched-legacy.csv"
-            )
-            
-            enrich_descriptif_stats = run_enrich_descriptif_phase(
-                input_csv=_next_input_csv,
-                html_dir=html_dir,
-                output_csv=_enrich_output,
-            )
-            enrich_descriptif_csv = _enrich_output
-            
-            if verbose:
-                print_enrich_descriptif_summary(enrich_descriptif_stats)
-                
-        except Exception as e:
-            log.error("Phase 7e (enrich descriptif) échouée (pipeline non bloqué): %s", e)
-    
+
     # =====================================================================
     # PHASE 8 (optionnelle): CLASSIFY_BUYERS
     # =====================================================================
@@ -480,14 +378,8 @@ def run_pipeline(
         validation_passed=validation_result.is_valid,
         classification_csv=classification_csv,
         classification_stats=classification_stats,
-        enrich_descriptif_csv=enrich_descriptif_csv,
-        enrich_descriptif_stats=enrich_descriptif_stats,
-        enrich_txt_csv=enrich_txt_csv,
-        enrich_txt_stats=enrich_txt_stats,
         normalize_csv=normalize_csv,
         normalize_stats=normalize_stats,
-        url_csv=url_csv,
-        url_stats=url_stats,
         juridique_csv=juridique_csv,
         juridique_stats=juridique_stats,
         excel_output=excel_output,
