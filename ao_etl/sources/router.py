@@ -1,148 +1,268 @@
-"""Router de détection et d'extraction par source."""
+"""Routeur de détection de source HTML et instanciation d'extracteurs - Version 2."""
 
-import os
-import re
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Optional
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 
+from .base_v2 import ExtractionContext, ExtractionResult
+from .boamp_xml_v2 import BoampExtractor
+from .france_marches_v2 import FranceMarchesExtractor
+from .joue_v2 import JoueExtractor
+from .marches_online_v2 import MarchesOnlineExtractor
+from .place_numeric_v2 import PlaceNumericExtractor
 from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
-from ao_etl.sources.base import BaseExtractor
 
-# Détection de la version d'extracteur (legacy ou v2)
-EXTRACTOR_VERSION = os.environ.get('AO_EXTRACTOR_VERSION', 'legacy').lower()
-
-if EXTRACTOR_VERSION == 'v2':
-    # Version 2: extracteurs modernes avec pont vers MarketData
-    from ao_etl.sources.router_v2 import extract_for_source_v2 as _extract_v2
-else:
-    _extract_v2 = None
-
-# Import des extracteurs legacy (par défaut)
-from ao_etl.sources.france_marches import FranceMarchesExtractor
-from ao_etl.sources.marches_online import MarchesOnlineExtractor
-from ao_etl.sources.place_numeric import PlaceNumericExtractor
-from ao_etl.sources.boamp_xml import BoampXmlExtractor
-from ao_etl.sources.standard import StandardExtractor
+# Import de la fonction de construction d'URL (quand disponible)
+try:
+    from ao_etl.pipeline.consolidate import build_market_url
+    HAS_BUILD_MARKET_URL = True
+except ImportError:
+    HAS_BUILD_MARKET_URL = False
 
 
-def detect_source(filepath: Path, content: str) -> SourceType:
-    """Détecte le type de source d'un fichier HTML.
+def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
+    """
+    Pont de conversion: ExtractionResult (V2) → MarketData (Legacy).
     
-    La détection se fait par heuristiques sur le nom de fichier et le contenu,
-    dans l'ordre de spécificité décroissante.
+    Cette fonction permet aux extracteurs V2 de fonctionner avec le pipeline
+    legacy qui attend des objets MarketData.
     
     Args:
-        filepath: Chemin vers le fichier HTML
-        content: Contenu brut du fichier
+        result: Résultat d'extraction V2
         
     Returns:
-        Type de source détecté
+        MarketData compatible avec le pipeline legacy
     """
-    name = filepath.name.lower()
-    
-    # 1. Marchés Online: nom commence par "ao-" ou contient marchesonline.com
-    if 'marchesonline.com' in content or name.startswith('ao-'):
-        return SourceType.MARCHES_ONLINE
-    
-    # 2. PLACE numérique: nom contient orgAcronyme ou consultation_depot dans le contenu
-    if 'orgacronyme' in name or 'consultation_depot' in content:
-        return SourceType.PLACE_NUMERIC
-    
-    # 3. France Marchés: contient weboramaItemTag avec title_article
-    if 'weboramaitemtag' in content.lower() and 'title_article' in content:
-        return SourceType.FRANCE_MARCHES
-    
-    # 4. BOAMP XML: nom commence par "26-" ou contient "boamp"
-    if name.startswith('26-') or 'boamp' in name:
-        return SourceType.BOAMP_XML
-    
-    # 5. JOUE: nom commence par "13" ou contient "joue"
-    if name.startswith('13') or 'joue' in name:
-        return SourceType.BOAMP_XML  # JOUE mapped to BOAMP for legacy
-    
-    # 6. Fallback: standard
-    return SourceType.STANDARD
-
-
-def get_extractor(filepath: Path, soup: BeautifulSoup, content: str) -> BaseExtractor:
-    """Retourne l'extracteur approprié pour le fichier.
-    
-    Args:
-        filepath: Chemin vers le fichier HTML
-        soup: Instance BeautifulSoup parsée
-        content: Contenu brut du fichier
-        
-    Returns:
-        Instance de l'extracteur approprié
-    """
-    source_type = detect_source(filepath, content)
-    
-    extractors = {
-        SourceType.FRANCE_MARCHES: FranceMarchesExtractor,
-        SourceType.MARCHES_ONLINE: MarchesOnlineExtractor,
-        SourceType.PLACE_NUMERIC: PlaceNumericExtractor,
-        SourceType.BOAMP_XML: BoampXmlExtractor,
-        SourceType.STANDARD: StandardExtractor,
+    # Mapping des types de source
+    source_type_map = {
+        "PLACE_NUMERIC": SourceType.PLACE_NUMERIC,
+        "BOAMP_XML": SourceType.BOAMP_XML,
+        "FRANCE_MARCHES": SourceType.FRANCE_MARCHES,
+        "MARCHES_ONLINE": SourceType.MARCHES_ONLINE,
+        "JOUE": SourceType.BOAMP_XML,  # JOUE mapped to BOAMP for legacy compatibility
+        "STANDARD": SourceType.STANDARD,
+        "UNKNOWN": SourceType.UNKNOWN,
     }
     
-    extractor_class = extractors.get(source_type, StandardExtractor)
-    return extractor_class(filepath, soup, content)
-
-
-def extract_for_source(filepath: Path) -> MarketData:
-    """Extrait les données d'un fichier HTML en détectant automatiquement la source.
-    
-    C'est la fonction principale d'extraction qui orchestre:
-    1. Lecture du fichier
-    2. Parsing BeautifulSoup
-    3. Détection de la source
-    4. Extraction par l'extracteur approprié
-    5. Gestion des alias
-    
-    Args:
-        filepath: Chemin vers le fichier HTML
-        
-    Returns:
-        Données extraites (même partielles en cas d'erreur)
-        
-    Note:
-        Si AO_EXTRACTOR_VERSION=v2, utilise les extracteurs V2 avec pont vers MarketData.
-        Sinon, utilise les extracteurs legacy.
-    """
-    path = Path(filepath)
-    
-    # Si version V2 est configurée, utiliser le routeur V2
-    if EXTRACTOR_VERSION == 'v2' and _extract_v2 is not None:
+    # Convertir la deadline (string) en datetime si possible
+    date_limite = None
+    if result.deadline and result.deadline not in ("-", ""):
         try:
-            return _extract_v2(path)
-        except Exception as e:
-            # En cas d'erreur V2, fallback sur legacy
+            # Essayer plusieurs formats
+            for fmt in ["%d/%m/%Y %H:%M:%S", "%d/%m/%Y %H:%M", "%d/%m/%Y", "%Y-%m-%d"]:
+                try:
+                    date_limite = datetime.strptime(result.deadline.strip(), fmt)
+                    break
+                except ValueError:
+                    continue
+        except Exception:
             pass
     
-    # Version legacy (par défaut)
+    # Convertir l'estimation (string) en float si possible
+    estimation_eur = None
+    if result.estimation and result.estimation not in ("-", ""):
+        try:
+            # Extraire les chiffres (ex: "450000 EUR" → 450000)
+            import re
+            numbers = re.findall(r'\d+', result.estimation.replace(' ', '').replace(',', ''))
+            if numbers:
+                estimation_eur = float(numbers[0])
+        except Exception:
+            pass
+    
+    # Déterminer le statut
+    status = ExtractionStatus.SUCCESS if result.confidence >= 70 else ExtractionStatus.PARTIAL
+    if not result.title or not result.buyer:
+        status = ExtractionStatus.PARTIAL
+    if result.review_needed:
+        status = ExtractionStatus.PARTIAL
+    
+    # Construire l'URL source avec build_market_url (si disponible) ou fallback
+    url_source = ""
+    filename = result.raw.get('filename', '')
+    
+    if HAS_BUILD_MARKET_URL:
+        # Utiliser la fonction complète de consolidate.py
+        # Récupérer le HTML brut pour extraction canonical si disponible
+        html_content = result.raw.get('html_content', '')
+        
+        # Essayer d'abord l'URL extraite par l'extracteur
+        extracted_url = result.raw.get('url_source', '')
+        
+        market_url, url_source_type = build_market_url(
+            source_file=filename,
+            source_platform=result.source_type,
+            source_url=extracted_url if extracted_url else None,
+            html_content=html_content if html_content else None,
+        )
+        url_source = market_url or ""
+    else:
+        # Fallback: utiliser l'URL extraite par l'extracteur
+        url_source = result.raw.get('url_source', '')
+    
+    return MarketData(
+        filename=result.raw.get('filename', ''),
+        source_type=source_type_map.get(result.source_type, SourceType.UNKNOWN),
+        title=result.title,
+        reference=result.reference,
+        buyer=result.buyer,
+        cpv=result.raw.get('cpv_codes', []),
+        url_source=url_source,
+        location=result.location,
+        procedure_type=result.raw.get('procedure_type', ''),
+        contract_nature=result.raw.get('contract_nature', ''),
+        date_limite=date_limite,
+        duree_mois=result.raw.get('duration_months'),
+        estimation_eur=estimation_eur,
+        status=status,
+        extraction_notes=result.extraction_notes,
+    )
+
+
+def extract_for_source_v2(file_path: Path) -> MarketData:
+    """
+    Version V2 du routeur qui retourne MarketData (compatible pipeline legacy).
+    
+    Cette fonction remplace extract_for_source() quand AO_EXTRACTOR_VERSION=v2
+    
+    Args:
+        file_path: Chemin du fichier HTML
+        
+    Returns:
+        MarketData prêt pour le pipeline de merge
+    """
     try:
-        content = path.read_text(encoding='utf-8', errors='ignore')
-        soup = BeautifulSoup(content, 'html.parser')
-        
-        # Détection et création de l'extracteur
-        extractor = get_extractor(path, soup, content)
-        
-        # Extraction
-        data = extractor.extract()
-        
-        return data
-        
+        html = file_path.read_text(encoding='utf-8')
+        result = extract_from_html(file_path, html)
+        return extraction_result_to_market_data(result)
     except Exception as e:
-        # En cas d'erreur, retourner un MarketData minimal avec l'erreur
+        # Retourner un MarketData d'erreur
         return MarketData(
-            filename=path.name,
+            filename=file_path.name,
             source_type=SourceType.UNKNOWN,
             status=ExtractionStatus.FAILED,
-            extraction_notes=[f"ERREUR: {str(e)}"]
+            extraction_notes=[f"ERROR: {e}"],
         )
 
 
-# Import pour ExtractionStatus
-from ao_etl.models.market import ExtractionStatus
+def detect_source_type(file_path: Path, html: str, soup: BeautifulSoup) -> str:
+    """Détecte le type de source HTML.
+    
+    Args:
+        file_path: Chemin du fichier
+        html: Contenu brut HTML
+        soup: BeautifulSoup parsé
+        
+    Returns:
+        Type de source: PLACE_NUMERIC, BOAMP_XML, FRANCE_MARCHES, MARCHES_ONLINE, UNKNOWN
+    """
+    text = soup.get_text("\n", strip=True).lower()
+    name = file_path.name.lower()
+    html_lower = html.lower()
+    
+    # 1. Marchés Online: PRIORITAIRE - nom de fichier ao-XXX ou patterns spécifiques
+    # Doit être avant BOAMP car les fichiers ao- peuvent contenir "nom officiel"
+    if (name.startswith("ao-") or
+        "marchesonline" in html_lower or
+        "marchés online" in html_lower or 
+        "infopro-digital" in html_lower or
+        "title-avis" in html_lower):
+        return "MARCHES_ONLINE"
+    
+    # 2. JOUE: Journal Officiel de l'Union Européenne (PRIORITAIRE - avant BOAMP)
+    # Car les fichiers JOUE peuvent contenir "nom officiel" qui trigger BOAMP
+    if (name.startswith("13joue") or 
+        "13/joue/" in html_lower or
+        "journal officiel de l'union européenne" in text or
+        "ted.europa.eu" in html_lower):
+        return "JOUE"
+    
+    # 3. PLACE: format orgAcronyme avec "Détail de la consultation"
+    if "orgacronyme" in name or ("détail de la consultation" in text and "heure de paris" in text):
+        return "PLACE_NUMERIC"
+    
+    # 4. BOAMP: structure avec sections numérotées et labels (marches-publics.gouv.fr)
+    if ("marches-publics.gouv.fr" in html_lower or 
+        ("identifiant interne" in text and 
+         "nom officiel" in text and 
+         "section 1 -" in text)):
+        return "BOAMP_XML"
+    
+    # 5. France Marchés: texte légal structuré
+    if ("intitulé de l'appel d'offre public" in text or 
+        "nom et adresse officiels de l'organisme acheteur public" in text or
+        "weboramaitemtag" in html_lower):
+        return "FRANCE_MARCHES"
+    
+    # Fallback par patterns de nom de fichier
+    if "boamp" in name or name.startswith("3"):
+        return "BOAMP_XML"
+    
+    if "s2d" in name:
+        return "PLACE_NUMERIC"
+    
+    if "joue" in name or name.startswith("13"):
+        return "JOUE"
+    
+    return "UNKNOWN"
+
+
+def get_extractor(context: ExtractionContext):
+    """Instancie l'extracteur approprié pour le contexte.
+    
+    Args:
+        context: Contexte d'extraction avec fichier HTML
+        
+    Returns:
+        Instance de BaseExtractor
+    """
+    source_type = detect_source_type(context.file_path, context.html, context.soup)
+    
+    mapping = {
+        "PLACE_NUMERIC": PlaceNumericExtractor,
+        "BOAMP_XML": BoampExtractor,
+        "FRANCE_MARCHES": FranceMarchesExtractor,
+        "MARCHES_ONLINE": MarchesOnlineExtractor,
+        "JOUE": JoueExtractor,
+    }
+    
+    extractor_cls = mapping.get(source_type, FranceMarchesExtractor)
+    return extractor_cls(context)
+
+
+def build_context(file_path: Path, html: str) -> ExtractionContext:
+    """Construit un contexte d'extraction à partir d'un fichier.
+    
+    Args:
+        file_path: Chemin du fichier HTML
+        html: Contenu brut HTML
+        
+    Returns:
+        ExtractionContext prêt à utiliser
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    return ExtractionContext(file_path=file_path, html=html, soup=soup)
+
+
+def extract_from_html(file_path: Path, html: str):
+    """Fonction principale: extrait les données d'un fichier HTML.
+    
+    Args:
+        file_path: Chemin du fichier
+        html: Contenu brut HTML
+        
+    Returns:
+        ExtractionResult avec tous les champs extraits
+    """
+    context = build_context(file_path, html)
+    extractor = get_extractor(context)
+    result = extractor.extract()
+    
+    # Stocker le HTML brut et le nom de fichier pour build_market_url
+    result.raw['html_content'] = html
+    result.raw['filename'] = file_path.name
+    
+    return result

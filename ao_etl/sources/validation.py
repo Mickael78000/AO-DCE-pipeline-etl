@@ -1,276 +1,283 @@
-"""Utilitaires de validation et nettoyage pour l'extraction de données.
+"""Module de validation et scoring pour l'extraction de données - Version 2."""
 
-Ce module fournit des fonctions pour valider et nettoyer les données extraites,
-avec des listes noires de faux positifs connus.
-"""
+from __future__ import annotations
 
 import re
-from typing import Optional
+from typing import Iterable
+
+from .base_v2 import FieldCandidate, ExtractionTrace
 
 # =============================================================================
 # BLACKLISTS - Titres génériques à rejeter
 # =============================================================================
 
-TITLE_BLACKLIST = {
-    # Génériques - NE JAMAIS prendre comme titre final
-    "Détail de la consultation",
-    "Détail d'une consultation",
-    "Titre",
-    "Accord",
-    "Fourniture",
-    "Prestations de support",
-    "Prestations",
-    "Consultation",
-    "Marché",
-    "Appel d'offres",
-    "Appel d'offre",
-    "TMA",  # Trop générique seul
-    "Prestation",  # Singulier générique
-    # Placeholders
+_TITLE_EXACT_BLACKLIST = {
+    "titre",
+    "détail de la consultation",
+    "détail d'une consultation",
+    "accord",
+    "fourniture",
+    "prestations de support",
+    "prestations",
+    "consultation",
+    "marché",
+    "appel d'offres",
+    "appel d'offre",
+    "tma",  # Trop générique seul
+    "prestation",
     "-",
     "",
     "...",
-    "N/A",
-    "Non disponible",
-    "Non précisé",
-    # Textes d'interface UI à rejeter
-    "Aller au menu",
-    "Aller au contenu",
-    "Aller au menuAller au contenu",
+    "n/a",
+    "non disponible",
+    "non précisé",
 }
-
-# Patterns de titres trop courts ou génériques
-TITLE_REJECT_PATTERNS = [
-    r'^Prestations?\s+de\s+support$',
-    r'^Accord\s+cadre$',
-    r'^Fourniture\s*$',
-    r'^Détail\s+de',
-    r'^Titre\s*:?\s*$',
-    # Textes DUME / helper d'interface PLACE
-    r'^Je ne suis pas en charge',
-    r'^Je réponds en candidat',
-    r'^Aller au (menu|contenu)',
-    # Dates/labels de champs qui peuvent remonter comme faux titres
-    r'^Date (et heure |limite|de cl)',
-    r'^\d{2}/\d{2}/\d{4}',
-]
 
 # =============================================================================
 # BLACKLISTS - Acheteurs (catégories administratives, pas des noms)
 # =============================================================================
 
-BUYER_BLACKLIST = {
-    # Catégories administratives - NE JAMAIS prendre comme acheteur final
-    "Autres organismes",
-    "Autorité publique centrale",
-    "Autorité locale",
-    "Autorité régionale",
-    "Organisme de droit public",
-    "Services d'administration générale",
-    "Santé",
-    "Protection de l'environnement",
-    "Loisirs, culture et culte",
-    "Services publics",
-    "État",
-    "Territoriale",
-    "Hospitalière",
+_BUYER_EXACT_BLACKLIST = {
+    "autres organismes",
+    "autorité publique centrale",
+    "autorité locale",
+    "autorité régionale",
+    "organisme de droit public",
+    "services d'administration générale",
+    "santé",
+    "protection de l'environnement",
+    "loisirs, culture et culte",
+    "services publics",
+    "état",
+    "territoriale",
+    "hospitalière",
     # Rôles organisationnels (pas des noms)
-    "Entreprise publique, contrôlée par une autorité publique centrale",
-    "Etablissements et organismes de l'enseignement supérieur, de la recherche et de l'innovation",
-    "TED eSender",
-    "Organisation qui fournit des informations complémentaires",
-    "TED-OP",
-    "Organisation qui fournit les formulaires pour la réponse",
-    "Organisme qui fournit les formulaires pour la réponse",
+    "entreprise publique, contrôlée par une autorité publique centrale",
+    "etablissements et organismes de l'enseignement supérieur, de la recherche et de l'innovation",
+    "ted esender",
+    "ted esender : avenue-web systèmes",
     # Génériques
-    "Acheteur",
-    "Organisme",
-    "Organisation",
-    "Autorité",
-    "Administration",
-    "Collectivité",
+    "acheteur",
+    "organisme",
+    "organisation",
+    "autorité",
+    "administration",
+    "collectivité",
     # Placeholders
     "-",
     "",
     "...",
-    "N/A",
-    "Non identifié",
-    "Acheteur non identifié",
-    "Acheteur non clairement identifié",
-    "Acheteur non clairement identifié dans l'extrait",
-    "Acheteur non identifié dans l'extrait",
-    "Organisme non identifié",
-    "Organisme non identifié dans l'extrait",
-    "Ville de ...",
-    "Ville de ...",  # Placeholder ville
-    # URLs (signe d'erreur d'extraction)
-    "https://",
-    "http://",
-    "www.",
-    # Textes d'interface UI (navigation, listes)
-    "Retour à la liste",
-    "Aller au menu",
-    "Aller au contenu",
+    "n/a",
+    "non identifié",
+    "acheteur non identifié",
+    "organisme non identifié",
+    "ville de",
 }
 
-# Patterns pour détecter les catégories administratives
-BUYER_REJECT_PATTERNS = [
-    r'^Autres?\s+',
-    r'^Activité\s+du',
-    r'^Forme\s+juridique',
-    r'^Organisme\s+de\s+droit',
-    r'^Services?\s+d\'administration',
-    r'^Autorité\s+',
-    r'^Organisation\s+qui\s+fournit',
-    r'^Organisme\s+qui\s+fournit',
-    r'^Etablissements?\s+et\s+organismes',
-    r'^Entreprise\s+publique',
-    r'^TED\s+',
-]
+_BUYER_CONTAINS_BLACKLIST = (
+    "organisation qui fournit des informations complémentaires",
+    "organisation chargée des procédures de recours",
+    "organisation qui fournit des précisions concernant l'introduction des recours",
+    "organisme qui fournit des informations complémentaires",
+    "forme juridique de l'acheteur",
+    "activité du pouvoir adjudicateur",
+    "point de contact",
+)
+
+# =============================================================================
+# REGEX
+# =============================================================================
+
+_URL_RE = re.compile(r"https?://|www\.", re.I)
+_SPACE_RE = re.compile(r"\s+")
+_DATE_RE = re.compile(r"\b\d{2}/\d{2}/\d{4}(?:\s*(?:à)?\s*\d{2}:\d{2})?\b")
+
+
+# =============================================================================
+# FONCTIONS DE NORMALISATION
+# =============================================================================
+
+def normalize_text(value: str | None) -> str:
+    """Normalise le texte: espaces, caractères spéciaux, apostrophes typographiques."""
+    if not value:
+        return ""
+    value = value.replace("\xa0", " ").replace("­", "")
+    # Normaliser apostrophes typographiques → droites (cohérent avec legacy)
+    value = value.replace("\u2019", "'").replace("\u2018", "'")
+    value = value.replace("\u201c", '"').replace("\u201d", '"')
+    value = _SPACE_RE.sub(" ", value).strip(" \n\r\t-:;,.")
+    return value.strip()
+
+
+def normalized_key(value: str | None) -> str:
+    """Clé normalisée pour comparaison (casefold)."""
+    return normalize_text(value).casefold()
+
+
+def looks_like_url(value: str | None) -> bool:
+    """Vérifie si la valeur ressemble à une URL."""
+    return bool(_URL_RE.search(value or ""))
+
 
 # =============================================================================
 # FONCTIONS DE VALIDATION
 # =============================================================================
 
-def is_valid_title(title: Optional[str]) -> bool:
+def is_valid_title(value: str | None) -> tuple[bool, str | None]:
     """Vérifie si un titre est valide (pas un faux positif).
     
-    Args:
-        title: Titre candidat à valider
-        
     Returns:
-        True si le titre est valide, False sinon
+        (is_valid, reason_if_invalid)
     """
-    if not title:
-        return False
+    text = normalize_text(value)
+    key = normalized_key(text)
     
-    title_clean = title.strip()
+    if not text:
+        return False, "empty"
+    if key in _TITLE_EXACT_BLACKLIST:
+        return False, "generic_exact_title"
+    if len(text) < 12:
+        return False, "too_short"
+    if looks_like_url(text):
+        return False, "url"
     
-    # Rejeter les titres vides ou trop courts
-    if len(title_clean) < 10:
-        return False
-    
-    # Rejeter les titres dans la blacklist exacte
-    if title_clean in TITLE_BLACKLIST:
-        return False
-    
-    # Rejeter les titres correspondant aux patterns
-    for pattern in TITLE_REJECT_PATTERNS:
-        if re.match(pattern, title_clean, re.IGNORECASE):
-            return False
-    
-    return True
+    return True, None
 
 
-def is_valid_buyer(buyer: Optional[str]) -> bool:
+def is_valid_buyer(value: str | None) -> tuple[bool, str | None]:
     """Vérifie si un acheteur est valide (pas une catégorie administrative).
     
-    Args:
-        buyer: Nom d'acheteur candidat à valider
-        
     Returns:
-        True si l'acheteur est valide, False sinon
+        (is_valid, reason_if_invalid)
     """
-    if not buyer:
-        return False
-    
-    buyer_clean = buyer.strip()
-    
-    # Rejeter les acheteurs vides ou trop courts
-    if len(buyer_clean) < 3:
-        return False
-    
-    # Rejeter les acheteurs dans la blacklist exacte
-    if buyer_clean in BUYER_BLACKLIST:
-        return False
-    
-    # Rejeter les URLs
-    if buyer_clean.startswith(('http://', 'https://', 'www.')):
-        return False
-    
-    # Rejeter les catégories correspondant aux patterns
-    for pattern in BUYER_REJECT_PATTERNS:
-        if re.match(pattern, buyer_clean, re.IGNORECASE):
-            return False
-    
-    # Vérifier que ce n'est pas juste une catégorie entre parenthèses
-    if re.match(r'^\([^)]+\)$', buyer_clean):
-        return False
-    
-    return True
+    raw_key = (value or "").strip().casefold()
+    text = normalize_text(value)
+    key = normalized_key(text)
 
-
-def clean_text(text: Optional[str]) -> str:
-    """Nettoie le texte extrait (espaces, sauts de ligne, ponctuation).
-    
-    Args:
-        text: Texte brut à nettoyer
-        
-    Returns:
-        Texte nettoyé
-    """
+    if looks_like_url(text):
+        return False, "url"
+    if key in _BUYER_EXACT_BLACKLIST or raw_key in _BUYER_EXACT_BLACKLIST:
+        return False, "generic_exact_buyer"
     if not text:
-        return ""
+        return False, "empty"
+    for bad in _BUYER_CONTAINS_BLACKLIST:
+        if bad in key:
+            return False, "generic_contains_buyer"
+    if len(text) < 3:
+        return False, "too_short"
     
-    # Supprimer les balises HTML résiduelles
-    text = re.sub(r'<[^>]+>', '', text)
-    
-    # Normaliser les espaces
-    text = ' '.join(text.split())
-    
-    # Supprimer les espaces autour
-    text = text.strip()
-    
-    # Supprimer la ponctuation finale excessive
-    text = re.sub(r'[.]{3,}$', '...', text)
-    
-    return text
+    return True, None
 
 
-def pick_best_candidate(candidates: list[str], 
-                        validator_func,
-                        prefer_longer: bool = True) -> Optional[str]:
+# =============================================================================
+# FONCTIONS DE SCORING
+# =============================================================================
+
+def score_title(value: str) -> int:
+    """Score un titre candidat (plus haut = meilleur)."""
+    text = normalize_text(value)
+    score = 0
+    
+    if len(text) >= 20:
+        score += 20
+    if len(text) >= 40:
+        score += 10
+    if len(text) >= 60:
+        score += 5
+    
+    # Mix majuscules/minuscules = texte naturel
+    if any(c.islower() for c in text) and any(c.isupper() for c in text):
+        score += 5
+    
+    # Pénalité si contient une date (souvent titre générique)
+    if _DATE_RE.search(text):
+        score -= 10
+    
+    return score
+
+
+def score_buyer(value: str) -> int:
+    """Score un acheteur candidat (plus haut = meilleur)."""
+    text = normalize_text(value)
+    score = 0
+    
+    if len(text) >= 8:
+        score += 10
+    if len(text) >= 20:
+        score += 5
+    
+    # Tokens qui indiquent un vrai organisme
+    tokens = ("ville", "commune", "centre", "direction", "minist", "bureau", 
+              "syndicat", "région", "département", "hôpital", "centre hospitalier",
+              "agence", "établissement", "université", "collège", "lycée",
+              "brgm", "cea", "cnrs", "dgfip", "inra", "ird", "onf",
+              "chaînes", "service", "unité")
+    if any(token in text.lower() for token in tokens):
+        score += 10
+    
+    # Structure hiérarchique (ex: "AO / CEA / GRENOBLE")
+    if "/" in text:
+        score += 5
+    
+    return score
+
+
+# =============================================================================
+# SÉLECTION DU MEILLEUR CANDIDAT
+# =============================================================================
+
+def pick_best_candidate(
+    candidates: Iterable[FieldCandidate],
+    validator,
+    scorer,
+) -> tuple[str, list[ExtractionTrace]]:
     """Sélectionne le meilleur candidat parmi une liste.
     
     Args:
-        candidates: Liste de candidats à évaluer
-        validator_func: Fonction de validation (is_valid_title ou is_valid_buyer)
-        prefer_longer: Si True, privilégie les textes plus longs (moins génériques)
+        candidates: Liste de candidats
+        validator: Fonction (value) -> (bool, reason)
+        scorer: Fonction (value) -> int
         
     Returns:
-        Meilleur candidat valide, ou None si aucun n'est valide
+        (best_value, list_of_traces)
     """
-    valid_candidates = []
-    
+    traces: list[ExtractionTrace] = []
+    accepted: list[FieldCandidate] = []
+
     for candidate in candidates:
-        cleaned = clean_text(candidate)
-        if validator_func(cleaned):
-            valid_candidates.append(cleaned)
-    
-    if not valid_candidates:
-        return None
-    
-    if prefer_longer:
-        # Trier par longueur décroissante (plus long = plus spécifique)
-        valid_candidates.sort(key=len, reverse=True)
-    
-    return valid_candidates[0]
+        value = normalize_text(candidate.value)
+        ok, reason = validator(value)
+        score = scorer(value) + candidate.score
+        
+        if ok:
+            accepted.append(FieldCandidate(
+                field_name=candidate.field_name,
+                value=value,
+                rule=candidate.rule,
+                score=score,
+                meta=candidate.meta,
+            ))
+            traces.append(ExtractionTrace(
+                field_name=candidate.field_name,
+                rule=candidate.rule,
+                value=value,
+                score=score,
+                accepted=True,
+            ))
+        else:
+            traces.append(ExtractionTrace(
+                field_name=candidate.field_name,
+                rule=candidate.rule,
+                value=value,
+                score=score,
+                accepted=False,
+                reason=reason,
+            ))
 
-
-# =============================================================================
-# FONCTIONS DE TRAÇABILITÉ
-# =============================================================================
-
-def log_extraction_rule(notes: list, field: str, rule: str, value: str) -> None:
-    """Ajoute une note de traçabilité pour une règle d'extraction.
+    # Trier par score décroissant
+    accepted.sort(key=lambda c: c.score, reverse=True)
     
-    Args:
-        notes: Liste de notes à enrichir
-        field: Nom du champ (title, buyer, etc.)
-        rule: Nom de la règle appliquée
-        value: Valeur extraite
-    """
-    from datetime import datetime
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    notes.append(f"[{timestamp}] {field}: {rule} → '{value[:50]}...'" if len(value) > 50 
-                 else f"[{timestamp}] {field}: {rule} → '{value}'")
+    if not accepted:
+        return "", traces
+    
+    return accepted[0].value, traces

@@ -1,289 +1,328 @@
-"""Extracteur pour les fichiers BOAMP XML."""
+"""Extracteur pour les fichiers BOAMP XML - Version 2."""
+
+from __future__ import annotations
 
 import re
-from datetime import datetime
 
-from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
-from ao_etl.sources.base import BaseExtractor
-from ao_etl.sources.validation import (
-    is_valid_title, is_valid_buyer, clean_text,
-    pick_best_candidate, log_extraction_rule
+from .base_v2 import BaseExtractor, ExtractionResult, FieldCandidate
+from .validation_v2 import (
+    normalize_text,
+    pick_best_candidate,
+    score_buyer,
+    score_title,
+    is_valid_buyer,
+    is_valid_title,
 )
 
 
-class BoampXmlExtractor(BaseExtractor):
-    """Extracteur pour le format BOAMP (Bulletin Officiel des Annonces
-    des Marchés Publics) au format XML-like dans HTML.
+class BoampExtractor(BaseExtractor):
+    """Extracteur pour le format BOAMP XML.
     
     Caractéristiques:
-    - Structure avec spans et classes spécifiques
-    - Labels structurés (Titre, Référence, Acheteur, CPV)
-    - Nom de fichier commence souvent par "26-" ou contient "boamp"
+    - Structure avec couples label/valeur
+    - "Nom officiel", "Titre", "Identifiant interne"
+    - "Valeur estimée hors TVA", "Date limite de réception des offres"
     """
-    
-    source_type = SourceType.BOAMP_XML
-    
-    def can_extract(self) -> bool:
-        """Vérifie si c'est un fichier BOAMP."""
-        name = self.filepath.name.lower()
-        return name.startswith('26-') or 'boamp' in name
-    
-    def extract(self) -> MarketData:
-        """Extrait les données d'un fichier BOAMP."""
-        self.data.source_type = self.source_type
+    source_type = "BOAMP_XML"
+
+    def extract(self) -> ExtractionResult:
+        result = ExtractionResult(source_type=self.source_type)
+        text = self.text()
         
-        self._extract_title()
-        self._extract_reference()
-        self._extract_buyer()
-        self._extract_cpv()
+        # 1. Collecter les candidats titre
+        title_candidates = [
+            FieldCandidate("title", self._value_after_label(text, "Titre"), "label_titre", score=40),
+        ]
         
-        if self.data.is_complete():
-            self.data.status = ExtractionStatus.SUCCESS
-        elif any([self.data.title, self.data.reference]):
-            self.data.status = ExtractionStatus.PARTIAL
-        
-        return self.data
-    
-    def _extract_title(self) -> None:
-        """Extrait le titre depuis la structure BOAMP avec validation."""
-        candidates = []
-        
-        # 1. Structure label/valeur: "Titre :" + valeur
-        text_content = self.soup.get_text("\n", strip=True)
-        match = re.search(r'Titre\s*:\s*([^\n]+)', text_content, re.IGNORECASE)
-        if match:
-            candidates.append(clean_text(match.group(1)))
-        
-        # 2. span avec classe titrePrincipal
-        title_span = self.soup.find('span', class_=lambda x: x and 'titrePrincipal' in x)
-        if title_span:
-            candidates.append(clean_text(title_span.get_text()))
-        
-        # 3. Structure label span "Titre" + span valeur
-        label = self.soup.find('span', string=re.compile(r'^Titre$', re.I))
-        if label:
-            parent = label.find_parent()
-            if parent:
-                next_span = parent.find_next('span')
-                if next_span:
-                    candidates.append(clean_text(next_span.get_text()))
-        
-        # 4. "Intitulé du marché"
-        match = re.search(r'Intitul[eé] du march[ée]\s*:\s*([^\n]+)', text_content, re.IGNORECASE)
-        if match:
-            candidates.append(clean_text(match.group(1)))
-        
-        # Valider et sélectionner
-        best_title = pick_best_candidate(candidates, is_valid_title, prefer_longer=True)
-        
-        if best_title:
-            self.data.title = best_title
-            log_extraction_rule(self.data.extraction_notes, 'title',
-                              f'from_{len(candidates)}_candidates', best_title)
-        else:
-            # Dernier fallback: h1 ou title (sans validation stricte mais avec nettoyage)
-            h1 = self.soup.find('h1')
-            if h1:
-                title_text = clean_text(h1.get_text())
-                if len(title_text) > 10:  # Minimum pour éviter génériques
-                    self.data.title = title_text
-                    log_extraction_rule(self.data.extraction_notes, 'title', 'h1_fallback', title_text)
-            if not self.data.title:
-                self.data.add_note(f"title: Aucun candidat valide parmi {len(candidates)} trouvés")
-    
-    def _extract_reference(self) -> None:
-        """Extrait la référence BOAMP depuis 'Identifiant interne'."""
-        text = self.soup.get_text("\n", strip=True)
-        
-        # 1. "Identifiant interne" - PRIORITÉ MAX
-        match = re.search(r'Identifiant interne\s*:\s*([^\n<]+)', text, re.IGNORECASE)
-        if match:
-            ref = clean_text(match.group(1))
-            if ref and len(ref) < 60 and ref != '-':
-                self.data.reference = ref
-                log_extraction_rule(self.data.extraction_notes, 'reference', 'identifiant_interne', ref)
-                return
-        
-        # 2. Pattern fichier BOAMP dans le nom
-        filename_match = re.search(r'(?:26-)?(\d+)', self.filepath.name)
-        if filename_match:
-            ref = f"26-{filename_match.group(1)}"
-            self.data.reference = ref
-            log_extraction_rule(self.data.extraction_notes, 'reference', 'from_filename', ref)
-            return
-        
-        self.data.add_note("reference: Non extraite")
-    
-    def _extract_buyer(self) -> None:
-        """Extrait l'acheteur depuis 'Nom officiel' avec validation."""
-        text = self.soup.get_text("\n", strip=True)
-        candidates = []
-        
-        # 1. "Nom officiel" - PRIORITÉ HAUTE
-        match = re.search(r'Nom officiel\s*:\s*([^\n<]+)', text, re.IGNORECASE)
-        if match:
-            candidates.append(('nom_officiel', clean_text(match.group(1))))
-        
-        # 2. "Nom complet de l'acheteur"
-        match = re.search(r"Nom complet de l['']?acheteur\s*:\s*([^\n<]+)", text, re.IGNORECASE)
-        if match:
-            candidates.append(('nom_complet', clean_text(match.group(1))))
-        
-        # 3. "Acheteur public"
-        match = re.search(r'Acheteur public\s*:\s*([^\n<]+)', text, re.IGNORECASE)
-        if match:
-            candidates.append(('acheteur_public', clean_text(match.group(1))))
-        
-        # Valider et sélectionner
-        best_buyer = None
-        for source, candidate in candidates:
-            if is_valid_buyer(candidate):
-                best_buyer = candidate
-                log_extraction_rule(self.data.extraction_notes, 'buyer', source, best_buyer)
-                break
-        
-        if best_buyer:
-            self.data.buyer = best_buyer
-        else:
-            self.data.add_note(f"buyer: {len(candidates)} candidats rejetés comme faux positifs")
-    
-    def _extract_location(self) -> None:
-        """Extrait la localisation depuis Ville ou NUTS."""
-        text = self.soup.get_text("\n", strip=True)
-        candidates = []
-        
-        # 1. "Ville" + "Code postal"
-        ville_match = re.search(r'Ville\s*:\s*([^\n<,]+)', text, re.IGNORECASE)
-        cp_match = re.search(r'Code postal\s*:\s*(\d{5})', text, re.IGNORECASE)
-        if ville_match:
-            ville = clean_text(ville_match.group(1))
-            if cp_match:
-                candidates.append(('ville_cp', f"{ville} ({cp_match.group(1)})"))
-            else:
-                candidates.append(('ville', ville))
-        
-        # 2. Subdivision pays (NUTS)
-        nuts_match = re.search(r'NUTS\)\s*:\s*([^\n<]+)', text, re.IGNORECASE)
-        if nuts_match:
-            candidates.append(('nuts', clean_text(nuts_match.group(1))))
-        
-        # 3. "Lieu d'exécution"
-        lieu_match = re.search(r"Lieu d['']?ex[eé]cution\s*:\s*([^\n<]+)", text, re.IGNORECASE)
-        if lieu_match:
-            candidates.append(('lieu_execution', clean_text(lieu_match.group(1))))
-        
-        if candidates:
-            # Priorité: ville_cp > lieu > nuts
-            priority = {'ville_cp': 0, 'lieu_execution': 1, 'ville': 2, 'nuts': 3}
-            candidates.sort(key=lambda x: priority.get(x[0], 10))
-            self.data.location = candidates[0][1]
-            log_extraction_rule(self.data.extraction_notes, 'location', candidates[0][0], self.data.location)
-    
-    def _extract_deadline(self) -> None:
-        """Extrait la date limite 'Date limite de réception des offres'."""
-        text = self.soup.get_text("\n", strip=True)
-        
-        # "Date limite de réception des offres" avec heure optionnelle
-        # Supporte formats: "04/06/2026 à 17:00", "04/06/2026 @ 17:00", "04/06/2026 17:00"
-        match = re.search(
-            r'Date limite de r[ée]ception des offres\s*:\s*(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\s*(?:à|@|a)?\s*(\d{1,2}:\d{2})?',
+        # 2. Collecter les candidats acheteur (DOM-first, puis regex fallback)
+        buyer_candidates = []
+
+        # DOM-first extraction (section I.1)
+        dom_buyer = self._extract_buyer_dom()
+        if dom_buyer:
+            buyer_candidates.append(FieldCandidate("buyer", dom_buyer, "dom_nom_officiel", score=50))
+
+        # Regex fallback patterns
+        buyer_patterns = [
+            (r'Nom\s+officiel\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|\s*Adresse|\s*Code\s+postal|$)', 'regex_nom_officiel'),
+            (r'Nom\s+complet\s+de\s+l\'?acheteur\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|\s*Adresse|$)', 'regex_nom_complet'),
+            (r'Acheteur\s+public\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|$)', 'regex_acheteur_public'),
+        ]
+        for pattern, rule in buyer_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = normalize_text(m.group(1))
+                if val and len(val) > 3 and not re.match(r'^\d+(\.\d+)*$', val):
+                    buyer_candidates.append(FieldCandidate("buyer", val, rule, score=40))
+
+        # Rejeter explicitement les faux candidats (organisation d'info complémentaire)
+        org_info = self._value_after_label(
             text,
-            re.IGNORECASE
+            "Organisation qui fournit des informations complémentaires sur la procédure de passation de marché"
         )
-        if match:
-            date_str = match.group(1)
-            time_str = match.group(2) if match.group(2) else "00:00"
-            
-            for fmt in ['%d/%m/%Y', '%d-%m-%Y', '%d/%m/%y']:
-                try:
-                    dt = datetime.strptime(f"{date_str} {time_str}", f"{fmt} %H:%M")
-                    self.data.date_limite = dt
-                    log_extraction_rule(self.data.extraction_notes, 'date_limite', 
-                                      f'date_reception_{fmt}', f"{date_str} {time_str}")
-                    return
-                except ValueError:
+        if org_info:
+            buyer_candidates.append(FieldCandidate("buyer", org_info, "org_info_complementaires", score=-100))
+        
+        # 3. Champs structurés directs
+        result.reference = self._extract_reference(text)
+        result.estimation = self._money_after_label(text, "Valeur estimée hors TVA")
+        result.duration = self._duration(text)
+        result.deadline = self._deadline(text)
+        result.location = self._location(text)
+        
+        # 3.5 Type de procédure, nature du marché, fonction publique
+        result.raw['procedure_type'] = self._procedure_type(text)
+        result.raw['contract_nature'] = self._contract_nature(text)
+        result.raw['fonction_publique'] = self._fonction_publique(text, result.buyer)
+        
+        # 4. URL source (BOAMP)
+        result.raw['url_source'] = self._build_url(text)
+        
+        # 4.5 CPV codes
+        result.raw['cpv_codes'] = self._extract_cpv()
+        
+        # 4.6 Duration months
+        result.raw['duration_months'] = self._extract_duration_months()
+        
+        # 5. Sélectionner le meilleur titre
+        result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
+        for trace in traces:
+            result.add_trace(trace)
+        
+        # 5. Sélectionner le meilleur acheteur
+        result.buyer, traces = pick_best_candidate(buyer_candidates, is_valid_buyer, score_buyer)
+        for trace in traces:
+            result.add_trace(trace)
+        
+        # 6. Marquer pour révision si champs critiques manquants
+        if not result.title or not result.buyer:
+            result.review_needed = True
+        
+        return result
+
+    def _value_after_label(self, text: str, label: str) -> str:
+        """Extrait la valeur après un label avec plusieurs patterns."""
+        patterns = [
+            # Pattern 1: Label suivi de : ou - puis valeur
+            rf"{re.escape(label)}\s*[:\-]?\s*(.+?)(?:\n|</|\Z)",
+            # Pattern 2: Label sur sa ligne puis valeur sur ligne suivante
+            rf"{re.escape(label)}\s*\n+(.+?)(?:\n|</|\Z)",
+            # Pattern 3: Label dans balise, valeur dans balise suivante
+            rf">{re.escape(label)}<[^>]*>\s*(.+?)(?:\n|</|\Z)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = normalize_text(m.group(1))
+                # Rejeter les valeurs qui sont juste des numéros de section (1.1, 2.3, etc.)
+                if val and not re.match(r'^\d+(\.\d+)*$', val):
+                    return val
+        return ""
+
+    _BUYER_LABEL_BLACKLIST = frozenset([
+        "opérateur", "opérateur économique", "nom officiel",
+        "adresse", "1.1", "i.1", "pouvoir adjudicateur",
+        "autorité contractante", "entité adjudicatrice",
+    ])
+
+    def _extract_buyer_dom(self) -> str:
+        """Extrait l'acheteur via DOM-first approach (section I.1 Nom officiel).
+
+        Structure JOUE/BOAMP attendue dans le DOM :
+          <div>
+            <span class="label">Nom officiel</span>
+            <span>: </span>
+            <span class="data">VALEUR</span>
+          </div>
+        ou variante sans classes:
+          <div>
+            <span class="fr-text--bold">Nom officiel</span>
+            <span>:</span>
+            <span>VALEUR</span>
+          </div>
+        """
+        soup = self.context.soup
+
+        for label_span in soup.find_all('span'):
+            if not re.match(r'^Nom\s+officiel$', label_span.get_text(strip=True), re.I):
+                continue
+            parent = label_span.parent
+            if parent is None:
+                continue
+            # Chercher le span suivant contenant la vraie valeur
+            # (sauter le span du séparateur ":")
+            found_label = False
+            for sibling in parent.children:
+                if not hasattr(sibling, 'get_text'):
                     continue
-    
-    def _extract_duree(self) -> None:
-        """Extrait la durée du marché."""
-        text = self.soup.get_text("\n", strip=True)
+                if sibling is label_span:
+                    found_label = True
+                    continue
+                if not found_label:
+                    continue
+                sib_text = normalize_text(sibling.get_text())
+                if not sib_text or sib_text in (':', ': '):
+                    continue
+                if len(sib_text) > 3 and not re.match(r'^\d+(\.\d+)*$', sib_text):
+                    if sib_text.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                        return sib_text
+            # Fallback: span.class='data' inside parent
+            data_span = parent.find('span', class_='data')
+            if data_span:
+                val = normalize_text(data_span.get_text())
+                if val and len(val) > 3 and val.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                    return val
+
+        return ""
+
+    def _extract_reference(self, text: str) -> str:
+        """Extrait la référence BOAMP depuis 'Identifiant interne' ou nom de fichier."""
+        # 1. "Identifiant interne" - PRIORITÉ MAX
+        ref = self._value_after_label(text, "Identifiant interne")
+        if ref and len(ref) < 60 and ref != '-':
+            return ref
+
+        # 2. Pattern fichier BOAMP dans le nom (26-XXXXX.html ou 3boampXXXX.html)
+        name = self.filename().lower()
+
+        # 26-41049.html → 26-41049
+        m = re.search(r'(26-\d+)', name)
+        if m:
+            return m.group(1)
+
+        # 3boamp2640079.html → 3/boamp/2640079
+        m = re.search(r'(\dboamp\d+)', name)
+        if m:
+            ref = m.group(1)
+            return f"{ref[0]}/boamp/{ref[6:]}"
+
+        return ""
+
+    def _money_after_label(self, text: str, label: str) -> str:
+        """Extrait une valeur monétaire après un label (plusieurs patterns)."""
+        # Pattern 1: Label sur sa ligne puis valeur puis devise
+        pattern = re.compile(rf"{re.escape(label)}\s*\n+([\d.,\s]+)\s*\n+(Euro|EUR)", re.I)
+        m = pattern.search(text)
+        if m:
+            value = normalize_text(m.group(1))
+            currency = normalize_text(m.group(2))
+            return f"{value} {currency}"
         
-        # "Durée" ou "Durée du marché"
-        match = re.search(
-            r'Dur[ée]e(?:\s+du\s+march[ée])?\s*:\s*([^\n<]+)',
+        # Pattern 2: Label: valeur EUR (sur même ligne)
+        pattern2 = re.compile(rf"{re.escape(label)}\s*[:\-]?\s*([\d.,\s]+)\s*(?:EUR|€|Euros?)", re.I)
+        m = pattern2.search(text)
+        if m:
+            value = normalize_text(m.group(1))
+            return f"{value} EUR"
+        
+        # Pattern 3: Juste chercher la valeur + EUR après le label (flexible)
+        pattern3 = re.compile(rf"{re.escape(label)}.*?([\d]{{1,3}}(?:\s*[\d]{{3}}){{1,4}}(?:[,.]\d+)?)\s*(?:EUR|€)", re.I | re.S)
+        m = pattern3.search(text)
+        if m:
+            value = m.group(1).replace(' ', '').replace(',', '.')
+            return f"{value} EUR"
+        
+        return ""
+
+    def _duration(self, text: str) -> str:
+        """Extrait la durée (X Mois ou X Ans)."""
+        # Pattern: Durée\\n+XX\\n+Mois/Années
+        m = re.search(r"Dur[ée]e\s*\n+(\d+)\s*\n+(Mois|Ans|Ann[ée]es)", text, re.I)
+        if m:
+            value = m.group(1)
+            unit = normalize_text(m.group(2))
+            return f"{value} {unit}"
+        return ""
+
+    def _deadline(self, text: str) -> str:
+        """Extrait la date limite de réception des offres."""
+        # Pattern: Date limite de réception des offres\\n+DD/MM/YYYY\\n+à\\n+HH:MM
+        m = re.search(
+            r"Date limite de r[ée]ception des offres\s*\n+(\d{2}/\d{2}/\d{4})\s*\n+[àa]?\s*\n*(\d{2}:\d{2})",
             text,
-            re.IGNORECASE
+            re.I
         )
-        if match:
-            duree_text = clean_text(match.group(1))
-            # Extraire les mois
-            mois_match = re.search(r'(\d+)\s*mois', duree_text, re.IGNORECASE)
-            if mois_match:
-                self.data.duree_mois = int(mois_match.group(1))
-                log_extraction_rule(self.data.extraction_notes, 'duree', 'mois', str(self.data.duree_mois))
-            elif 'an' in duree_text.lower():
-                an_match = re.search(r'(\d+)\s*an', duree_text, re.IGNORECASE)
-                if an_match:
-                    self.data.duree_mois = int(an_match.group(1)) * 12
-                    log_extraction_rule(self.data.extraction_notes, 'duree', 'annees', duree_text)
+        if m:
+            date = m.group(1)
+            time = m.group(2)
+            return f"{date} {time}"
+        return ""
+
+    def _location(self, text: str) -> str:
+        """Extrait la localisation (Ville + Code postal + NUTS)."""
+        city = self._value_after_label(text, "Ville")
+        cp = self._value_after_label(text, "Code postal")
+        nuts = self._value_after_label(text, "Subdivision pays (NUTS)")
+        
+        parts = [p for p in [city, cp, nuts] if p]
+        return " / ".join(parts) if parts else ""
     
-    def _extract_estimation(self) -> None:
-        """Extrait l'estimation 'Valeur estimée hors TVA'."""
-        text = self.soup.get_text("\n", strip=True)
-        
-        # "Valeur estimée hors TVA" ou "Valeur totale"
-        match = re.search(
-            r'Valeur\s+(?:estim[ée]e\s+)?(?:hors\s+TVA|totale)\s*:\s*([^\n<]+)',
-            text,
-            re.IGNORECASE
-        )
-        if match:
-            val_text = clean_text(match.group(1))
-            # Extraire le nombre
-            num_match = re.search(r'([\d\s.,]+)\s*(?:€|EUR|Euro)', val_text, re.IGNORECASE)
-            if num_match:
-                num_str = num_match.group(1).replace(' ', '').replace(',', '.')
-                try:
-                    self.data.estimation_eur = float(num_str)
-                    log_extraction_rule(self.data.extraction_notes, 'estimation', 'valeur_hors_tva', val_text)
-                except ValueError:
-                    pass
+    def _build_url(self, text: str) -> str:
+        """Construit l'URL BOAMP depuis l'identifiant."""
+        identifiant = self._value_after_label(text, "Identifiant interne")
+        if identifiant:
+            # URL BOAMP: https://www.boamp.fr/avis/detail/[identifiant]
+            return f"https://www.boamp.fr/avis/detail/{identifiant}"
+        return ""
     
-    def _extract_cpv(self) -> None:
-        """Extrait les codes CPV."""
-        matches = re.findall(r'data-code-cpv="(\d+)"', self.content)
-        if not matches:
-            text = self.soup.get_text()
-            matches = re.findall(r'(\d{8})', text)
-        
-        self.data.cpv = list(set(matches))[:3]
-        if matches:
-            log_extraction_rule(self.data.extraction_notes, 'cpv', 
-                              f'found_{len(matches)}', ','.join(matches[:3]))
+    def _procedure_type(self, text: str) -> str:
+        """Extrait le type de procédure."""
+        patterns = [
+            r"Type de proc[ée]dure\s*[:\-\n]\s*([^\n]+)",
+            r"Proc[ée]dure\s*[:\-\n]\s*([^\n]+)",
+            r"(Appel d'offres ouvert|Proc[ée]dure n[ée]goci[ée]e|March[ée] n[ée]goci[ée]|Dialogue comp[ée]titif)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.IGNORECASE)
+            if m:
+                return normalize_text(m.group(1))
+        return ""
     
-    def extract(self) -> MarketData:
-        """Extrait les données d'un fichier BOAMP."""
-        self.data.source_type = self.source_type
+    def _contract_nature(self, text: str) -> str:
+        """Extrait la nature du marché."""
+        patterns = [
+            r"Nature du march[ée]\s*[:\-\n]\s*([^\n]+)",
+            r"Type de march[ée]\s*[:\-\n]\s*([^\n]+)",
+            r"(Services|Fournitures|Travaux|Prestations intellectuelles)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.IGNORECASE)
+            if m:
+                nature = normalize_text(m.group(1))
+                if "service" in nature.lower() or "intellectuel" in nature.lower():
+                    return "Services"
+                elif "fourniture" in nature.lower():
+                    return "Fournitures"
+                elif "travail" in nature.lower() or "travaux" in nature.lower():
+                    return "Travaux"
+                return nature
+        return ""
+    
+    def _fonction_publique(self, text: str, buyer: str) -> str:
+        """Détecte la fonction publique."""
+        forme_match = re.search(r"Forme juridique.*?acheteur\s*[:\-\n]\s*([^\n]+)", text, re.IGNORECASE)
+        activite_match = re.search(r"Activit[ée].*?principale\s*[:\-\n]\s*([^\n]+)", text, re.IGNORECASE)
         
-        self._extract_title()
-        self._extract_reference()
-        self._extract_buyer()
-        self._extract_location()
-        self._extract_deadline()
-        self._extract_duree()
-        self._extract_estimation()
-        self._extract_cpv()
+        forme = forme_match.group(1).strip() if forme_match else ""
+        activite = activite_match.group(1).strip() if activite_match else ""
+        buyer_str = buyer or ""
         
-        # Statut avec score
-        completeness = self.data.completeness_score()
-        if completeness >= 0.8:
-            self.data.status = ExtractionStatus.SUCCESS
-            self.data.add_note(f"Extraction réussie (completude: {completeness:.0%})")
-        elif completeness >= 0.4:
-            self.data.status = ExtractionStatus.PARTIAL
-            self.data.add_note(f"Extraction partielle (completude: {completeness:.0%})")
-        else:
-            self.data.status = ExtractionStatus.FAILED
-            self.data.add_note(f"Extraction échouée (completude: {completeness:.0%})")
-        
-        return self.data
+        if any(x in activite.lower() for x in ["santé", "hospital", "soin"]) or \
+           any(x in buyer_str.lower() for x in ["chu ", "chru", "hôpital", "hopital"]):
+            return "hospitaliere"
+        elif any(x in forme.lower() for x in ["organisme de droit public", "établissement public", "ministère", "état"]):
+            return "etat"
+        elif any(x in forme.lower() for x in ["collectivité", "territoriale"]):
+            return "territoriale"
+        elif any(x in buyer_str.lower() for x in ["ministère", "dgfip"]):
+            return "etat"
+
+        # Fallback sur texte
+        if "santé" in text.lower() or "hospitalier" in text.lower():
+            return "hospitaliere"
+        elif "collectivité" in text.lower():
+            return "territoriale"
+        elif "ministère" in text.lower() or "état" in text.lower():
+            return "etat"
+
+        return "-"
