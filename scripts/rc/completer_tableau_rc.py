@@ -13,10 +13,12 @@ import re
 import os
 from datetime import datetime
 import json
+from pathlib import Path
 
-# Configuration
-PDF_DIR = "/home/michka/Documents/0-AO-DCE/public/rc"
-OUTPUT_DIR = "/home/michka/Documents/0-AO-DCE/data/output"
+# Configuration - chemins relatifs depuis scripts/rc/ (remonter 3 niveaux)
+BASE_DIR = Path(__file__).parent.parent.parent
+PDF_DIR = str(BASE_DIR / "public" / "rc")
+OUTPUT_DIR = str(BASE_DIR / "data" / "output")
 CSV_INPUT = f"{OUTPUT_DIR}/tableau_comparatif_RC.csv"
 EXCEL_OUTPUT = f"{OUTPUT_DIR}/tableau_comparatif_RC_completed.xlsx"
 

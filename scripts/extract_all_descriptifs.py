@@ -3,10 +3,16 @@
 
 import sys
 from pathlib import Path
-from extract_descriptif import extract_descriptif
+
+# Ajouter le répertoire parent au path pour importer ao_etl
+sys.path.insert(0, str(Path(__file__).parent))
+
+from ao_etl.parsing.extract_descriptif import extract_descriptif
 
 def main():
-    html_dir = Path('data/raw/html')
+    # Chemin depuis la racine du projet (remonter 1 niveau depuis scripts/)
+    base_dir = Path(__file__).parent.parent
+    html_dir = base_dir / 'data' / 'raw' / 'html'
     html_files = list(html_dir.glob('*.html'))
     
     print(f"Extraction de {len(html_files)} fichiers HTML...")

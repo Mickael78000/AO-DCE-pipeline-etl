@@ -3,7 +3,8 @@
 
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Remonter de 2 niveaux (scripts/debug/ -> scripts/ -> racine)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from ao_etl.llm.prompt_builder import build_user_prompt, get_system_prompt, build_resolved_hints, extract_html_signals
 
