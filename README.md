@@ -20,7 +20,7 @@ data/
 └── intermediate/         # Fichiers temporaires
 
 ao_etl/                   # Code source principal
-├── pipeline/             # Pipeline v2 (run.py)
+├── pipeline/             # Pipeline ETL unifié
 │   ├── run.py
 │   ├── discovery.py
 │   ├── reconcile.py
@@ -28,12 +28,15 @@ ao_etl/                   # Code source principal
 │   ├── validate.py
 │   └── export.py
 ├── sources/              # Extracteurs par source
-│   ├── router.py
-│   ├── boamp.py
-│   ├── joue.py
-│   ├── marches_online.py
-│   ├── place.py
-│   └── france_marches.py
+│   ├── router.py           # Routeur principal
+│   ├── base.py             # Classes de base
+│   ├── validation.py       # Validation et scoring
+│   ├── boamp_xml.py        # Extracteur BOAMP
+│   ├── joue.py             # Extracteur JOUE
+│   ├── marches_online.py   # Extracteur Marchés Online
+│   ├── place_numeric.py    # Extracteur PLACE
+│   ├── france_marches.py   # Extracteur France Marchés
+│   └── standard.py         # Extracteur standard
 └── models/               # Modèles de données
     └── market_data.py
 
@@ -71,10 +74,10 @@ Le point d'entrée canonique du pipeline est **`./run_pipeline.py`** :
 python run_pipeline.py
 
 # Avec chemins personnalisés
-python run_pipeline.py --input data/input/AO-completed.csv --html-dir data/raw/html --output data/output/AO-pipeline-v2.csv
+python run_pipeline.py --input data/input/AO-completed.csv --html-dir data/raw/html --output data/output/AO-pipeline.csv
 ```
 
-> **Note** : Le pipeline v2 intègre toutes les phases (discovery → reconcile → extract → merge → validate → export). Pour une extraction unitaire sans réconciliation, voir [Utilitaires](#utilitaires).
+> **Note** : Le pipeline intègre toutes les phases (discovery → reconcile → extract → merge → validate → export). Pour une extraction unitaire sans réconciliation, voir [Utilitaires](#utilitaires).
 
 ### Tests
 
@@ -176,18 +179,6 @@ print(f"Titre: {data.title}")
 print(f"Complet: {data.is_complete()}")
 ```
 
-### Utilisation du pont legacy
-
-```python
-from ao_etl.sources.bridge import extract_record
-from pathlib import Path
-
-# Retourne un dict compatible avec le legacy
-data = extract_record(Path('html_ao/mon_fichier.html'))
-print(data['reference'])
-print(data['title'])
-```
-
 ## 🧪 Développement
 
 ### Ajouter une source
@@ -228,7 +219,7 @@ Fichiers générés:
 - ✅ Bug 1838554 corrigé (références Marchés Online uniques)
 - ✅ Bug Unicode décodé (titres France Marchés)
 - ✅ 8 tests unitaires + 6 tests d'intégration
-- ✅ Pont legacy/nouveau système (`bridge.py`)
+- ✅ Pipeline ETL unifié (v2 devenue canonique)
 - ✅ CLI moderne
 
 ## 🔧 Utilitaires
@@ -248,17 +239,14 @@ python -m ao_etl.cli extract data/raw/html/ao-12345.html -o rapport.json
 
 ```bash
 # Retirer les lignes sans fichier HTML associé
-python scripts/cleanup_unmatched.py data/output/AO-pipeline-v2.csv
+python scripts/cleanup_unmatched.py data/output/AO-pipeline.csv
 ```
 
 ---
 
 ## 🗃️ Archives
 
-Les scripts obsolètes ou legacy sont conservés dans `archive/` pour référence historique :
-
-- `main-legacy.py` : Ancien pipeline (obsolète, utiliser `./run_pipeline.py`)
-- `add_orphan_html.py`, `fix_orphan_buyers.py`, `add_orphans_simple.py` : Fonctions intégrées au pipeline v2
+Les scripts obsolètes sont conservés dans `archive/` pour référence historique.
 
 ---
 
