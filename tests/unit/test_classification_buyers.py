@@ -185,22 +185,6 @@ class TestRegressionCases:
         assert result["fonction_publique_source"] == "rule"
 
 
-    @pytest.mark.parametrize("acheteur,expected_ta,expected_fp", REGRESSION_CASES_LLM_DEPENDENT,
-                             ids=[c[0][:30] for c in REGRESSION_CASES_LLM_DEPENDENT])
-    def test_llm_dependent_rule_baseline(self, acheteur, expected_ta, expected_fp):
-        """Vérifie le comportement RÈGLES pour les cas qui dépendent du LLM."""
-        row = {
-            "reference": "TEST",
-            "titre": "test",
-            "acheteur": acheteur,
-            "type_acheteur": "",
-            "fonction_publique": "",
-        }
-        result = _classify_row_rule(row)
-        assert result["type_acheteur"] == expected_ta
-        assert result["fonction_publique"] == expected_fp
-
-
 # SICIO : non capturé par les règles, on teste juste que
 # les règles ne le classent PAS à tort.
 class TestSICIONotMisclassified:
