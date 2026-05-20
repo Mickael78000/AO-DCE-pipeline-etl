@@ -122,10 +122,10 @@ def extraction_result_to_market_data(result: ExtractionResult) -> MarketData:
     )
 
 
-def extract_for_source_v2(file_path: Path) -> MarketData:
+def extract_for_source(file_path: Path) -> MarketData:
     """
-    Version V2 du routeur qui retourne MarketData (compatible pipeline legacy).
-    
+    Extrait les données d'un fichier HTML et retourne un MarketData.
+
     Fonction canonique d'extraction (anciennement V2).
     
     Args:
