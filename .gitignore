@@ -58,3 +58,8 @@ data/raw/html/*_descriptif.txt
 test_consolidation_llm.py
 verifier_llm_url.py
 scripts/classify_with_llm.py
+
+# Répertoires non versionnés (données brutes, conversations, DCE)
+conversations/
+data/raw/html/
+dce/
