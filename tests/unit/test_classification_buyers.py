@@ -24,11 +24,9 @@ from ao_etl.classification.buyers import (
     _classify_row_rule,
     _norm,
     classify_buyers_rule_based,
-    classify_buyers_llm_enrichment,
     report_buyer_classification_quality,
     run_buyer_classification,
 )
-from ao_etl.llm.backend import LLMDisabledError
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -120,7 +118,7 @@ class TestVocabulary:
 
     def test_allowed_source_is_frozenset(self):
         assert isinstance(ALLOWED_SOURCE, frozenset)
-        assert ALLOWED_SOURCE == {"original", "rule", "llm"}
+        assert ALLOWED_SOURCE == {"original", "rule"}
 
     def test_qa_detects_bad_source(self, tmp_dir):
         rows = [
@@ -136,24 +134,9 @@ class TestVocabulary:
         assert qa.bad_count == 1
         assert "type_acheteur_source='magic'" in qa.bad_rows[0]["violation"]
 
-    def test_llm_rejects_bad_vocab(self, tmp_dir):
-        rows = [
-            {"reference": "REF-001", "titre": "T", "acheteur": "Test Corp",
-             "type_acheteur": "inconnu", "fonction_publique": "inconnue",
-             "type_acheteur_source": "rule", "fonction_publique_source": "rule"},
-        ]
-        p = tmp_dir / "rule.csv"
-        fn = MINIMAL_FIELDNAMES + ["type_acheteur_source", "fonction_publique_source"]
-        _write_csv(p, rows, fn)
-
-        bad_db = {"test corp": {"type_acheteur": "INVALID", "fonction_publique": "etat"}}
-        stats = classify_buyers_llm_enrichment(p, tmp_dir / "out.csv", bad_db)
-        assert stats["skipped_bad_vocab"] == 1
-        assert stats["ta_llm"] == 0
-
 
 # ═══════════════════════════════════════════════════════════════════════════
-# CAS DE RÉGRESSION CRITIQUES
+# RÉGRESSION : comportement identique Phase A et Phase B
 # ═══════════════════════════════════════════════════════════════════════════
 
 # Chaque tuple : (acheteur, type_acheteur attendu, fonction_publique attendue)
@@ -169,12 +152,6 @@ REGRESSION_CASES = [
     ("SHOM", "etablissement_public", "etat"),
     ("SPL SEMEA", "collectivite_territoriale", "territoriale"),
     ("Compagnie Nationale du Rhône", "inconnu", "hors_fonction_publique"),
-]
-
-# Cas classés par les règles en inconnu/privé, enrichis ensuite par LLM
-REGRESSION_CASES_LLM_DEPENDENT = [
-    # UNICANCER : _PRIVE_KW → inconnu par règles, LLM upgrade en EP/hospitaliere
-    ("UNICANCER ACHATS", "inconnu", "hors_fonction_publique"),
 ]
 
 
@@ -224,7 +201,7 @@ class TestRegressionCases:
         assert result["fonction_publique"] == expected_fp
 
 
-# SICIO : classé par LLM (non capturé par les règles), on teste juste que
+# SICIO : non capturé par les règles, on teste juste que
 # les règles ne le classent PAS à tort.
 class TestSICIONotMisclassified:
     def test_sicio_remains_inconnu_by_rules(self):
@@ -246,46 +223,17 @@ class TestSICIONotMisclassified:
 class TestOrchestration:
 
     def test_rule_only_pipeline(self, sample_csv, tmp_dir):
-        config = BuyerClassificationConfig(enabled=True, run_llm=False)
+        config = BuyerClassificationConfig(enabled=True)
         stats = run_buyer_classification(sample_csv, config)
         assert stats["rule_stats"]["total"] == 2
-        assert stats["llm_stats"] == {}
         assert stats["qa"]["bad_count"] == 0
         assert Path(stats["output_csv"]).is_file()
-
-    def test_rule_plus_llm_pipeline_blocked(self, tmp_dir):
-        rows = [
-            {"reference": "REF-001", "titre": "T", "acheteur": "Acme Corp",
-             "type_acheteur": "inconnu", "fonction_publique": "inconnue"},
-        ]
-        p = tmp_dir / "input.csv"
-        _write_csv(p, rows)
-        config = BuyerClassificationConfig(
-            enabled=True, run_llm=True,
-            output_csv=tmp_dir / "final.csv",
-        )
-        with pytest.raises(LLMDisabledError):
-            run_buyer_classification(p, config)
 
     def test_canonical_output_naming(self, sample_csv, tmp_dir):
         config = BuyerClassificationConfig(enabled=True)
         stats = run_buyer_classification(sample_csv, config)
         out = Path(stats["output_csv"])
-        assert out.name == "input-classified-rule.csv"  # stem=input, no LLM
-
-    def test_canonical_naming_with_llm_blocked(self, tmp_dir):
-        rows = [
-            {"reference": "R", "titre": "T", "acheteur": "X",
-             "type_acheteur": "inconnu", "fonction_publique": "inconnue"},
-        ]
-        p = tmp_dir / "my-data.csv"
-        _write_csv(p, rows)
-        config = BuyerClassificationConfig(
-            enabled=True, run_llm=True,
-            acheteur_db={"x": {"type_acheteur": "etat", "fonction_publique": "etat"}},
-        )
-        with pytest.raises(LLMDisabledError):
-            run_buyer_classification(p, config)
+        assert out.name == "input-classified-rule.csv"
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -295,8 +243,8 @@ class TestOrchestration:
 class TestFinalSchema:
     """Vérifie que le CSV final ne contient pas les colonnes internes."""
 
-    def test_final_csv_no_internal_columns_rule_only(self, sample_csv, tmp_dir):
-        config = BuyerClassificationConfig(enabled=True, run_llm=False)
+    def test_final_csv_no_internal_columns(self, sample_csv, tmp_dir):
+        config = BuyerClassificationConfig(enabled=True)
         stats = run_buyer_classification(sample_csv, config)
         final = Path(stats["output_csv"])
         with open(final, newline="", encoding="utf-8") as f:
@@ -306,9 +254,8 @@ class TestFinalSchema:
         # Colonnes métier obligatoires
         assert "type_acheteur" in cols
         assert "fonction_publique" in cols
-        assert "verification_requise" not in cols or True  # optionnel (absent si pas de consolidation)
 
-    def test_final_csv_no_internal_columns_with_llm_blocked(self, tmp_dir):
+    def test_final_csv_no_internal_columns_extra(self, tmp_dir):
         rows = [
             {"reference": "R", "titre": "T", "acheteur": "Acme",
              "type_acheteur": "inconnu", "fonction_publique": "inconnue",
@@ -317,9 +264,6 @@ class TestFinalSchema:
         p = tmp_dir / "with-extra.csv"
         fn = MINIMAL_FIELDNAMES + ["sous_type_fonction_publique", "procedure_label"]
         _write_csv(p, rows, fn)
-        config = BuyerClassificationConfig(
-            enabled=True, run_llm=True,
-            acheteur_db={"acme": {"type_acheteur": "etat", "fonction_publique": "etat"}},
-        )
-        with pytest.raises(LLMDisabledError):
-            run_buyer_classification(p, config)
+        config = BuyerClassificationConfig(enabled=True)
+        stats = run_buyer_classification(p, config)
+        assert Path(stats["output_csv"]).is_file()

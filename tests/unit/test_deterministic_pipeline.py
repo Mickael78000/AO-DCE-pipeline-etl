@@ -1,13 +1,12 @@
 """Tests de non-régression — pipeline strictement déterministe.
 
 Vérifie que :
-1. aucun chemin LLM n'est accessible ;
-2. la taxonomie Fonction publique est respectée ;
-3. les fallbacks non contractuels sont morts ;
-4. validate_and_fix_row est idempotente ;
-5. le pipeline nominal produit un CSV valide sur un mini corpus.
+1. la taxonomie Fonction publique est respectée ;
+2. les fallbacks non contractuels sont morts ;
+3. validate_and_fix_row est idempotente ;
+4. le pipeline nominal produit un CSV valide sur un mini corpus.
 
-Règle absolue : aucun test ne doit appeler de LLM ni dépendre du réseau.
+Règle absolue : aucun test ne doit dépendre du réseau.
 """
 
 import csv
@@ -16,7 +15,6 @@ from pathlib import Path
 
 import pytest
 
-from ao_etl.llm.backend import LLMDisabledError
 from ao_etl.pipeline.normalize_final_phase import run_normalize_phase
 from ao_etl.normalize_fields import (
     ALLOWED_FONCTION_PUBLIQUE,
@@ -28,51 +26,7 @@ from ao_etl.normalize_fields import (
 
 
 # =============================================================================
-# 1. INTERDICTION LLM
-# =============================================================================
-
-class TestLLMDisabled:
-    """Toute tentative d'appel LLM doit lever LLMDisabledError immédiatement."""
-
-    def test_build_backend_raises(self):
-        from ao_etl.llm.backend import build_backend
-        with pytest.raises(LLMDisabledError):
-            build_backend()
-
-    def test_build_backend_any_backend_raises(self):
-        from ao_etl.llm.backend import build_backend
-        for backend in ("openai", "anthropic", "ollama"):
-            with pytest.raises(LLMDisabledError):
-                build_backend(backend=backend)
-
-    def test_enrich_llm_phase_raises(self):
-        from ao_etl.pipeline.enrich_llm_phase import run_enrich_llm_phase, EnrichLLMConfig
-        config = EnrichLLMConfig(enabled=True)
-        with pytest.raises(LLMDisabledError):
-            run_enrich_llm_phase(Path("/dev/null"), Path("/dev/null"), Path("/dev/null"), config)
-
-    def test_consolidation_raises(self, tmp_path):
-        from ao_etl.pipeline.consolidate import run_consolidation, ConsolidationConfig
-        config = ConsolidationConfig(enabled=True, dry_run=False)
-        with pytest.raises(LLMDisabledError):
-            run_consolidation(Path("/dev/null"), Path("/dev/null"), Path("/dev/null"), config)
-
-    def test_classify_buyers_run_llm_raises(self):
-        from ao_etl.classification.buyers import BuyerClassificationConfig, run_buyer_classification
-        config = BuyerClassificationConfig(enabled=True, run_llm=True)
-        with pytest.raises(LLMDisabledError):
-            run_buyer_classification(Path("/dev/null"), config)
-
-    def test_classify_with_ollama_raises(self):
-        import sys
-        sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
-        from classify_with_llm import classify_with_ollama
-        with pytest.raises(LLMDisabledError):
-            classify_with_ollama("Conseil d'État", {})
-
-
-# =============================================================================
-# 2. TAXONOMIE Fonction publique
+# 1. TAXONOMIE Fonction publique
 # =============================================================================
 
 class TestFonctionPubliqueTaxonomy:
