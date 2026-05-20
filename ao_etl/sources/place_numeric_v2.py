@@ -36,10 +36,8 @@ class PlaceNumericExtractor(BaseExtractor):
         text = self.text()
         lines = [normalize_text(x) for x in text.splitlines() if normalize_text(x)]
         
-        # 1. Référence (pattern XX-XXXXX-XX)
-        ref_match = REF_RE.search(text)
-        if ref_match:
-            result.reference = ref_match.group(0)
+        # 1. Référence — priorité à la référence métier via label DOM (ex: Shom_26AC07, A2026-018)
+        result.reference = self._extract_reference_dom(text)
         
         # 2. Date limite (pattern DD/MM/YYYY HH:MM)
         date_match = DATE_RE.search(text)
@@ -97,9 +95,11 @@ class PlaceNumericExtractor(BaseExtractor):
         for trace in traces:
             result.add_trace(trace)
         
-        # 6.5 Type de procédure, nature du marché, fonction publique
+        # 6.5 Type de procédure, nature du marché, fonction publique, CPV, duration
         result.raw['procedure_type'] = self._procedure_type(text)
         result.raw['contract_nature'] = self._contract_nature(text)
+        result.raw['cpv_codes'] = self._extract_cpv()
+        result.raw['duration_months'] = self._extract_duration_months()
         result.raw['fonction_publique'] = self._fonction_publique(text, result.buyer)
         
         # 7. Marquer pour révision si champs critiques manquants
@@ -108,6 +108,32 @@ class PlaceNumericExtractor(BaseExtractor):
         
         return result
     
+    def _extract_reference_dom(self, text: str) -> str:
+        """Extrait la référence métier depuis le label 'Référence :' (DOM-first).
+
+        La référence métier (ex: Shom_26AC07, A2026-018, 26_AMOE_AST) est portée
+        par le label <label>Référence :</label> + <span>VALEUR</span>.
+        Fallback sur le pattern REF_RE (format B26-01107-LS).
+        """
+        soup = self.context.soup
+
+        # 1. Label DOM "Référence :" → span valeur
+        for label in soup.find_all('label', string=re.compile(r'R[eé]f[eé]rence', re.I)):
+            parent = label.find_parent()
+            if parent:
+                val_span = parent.find('span')
+                if val_span:
+                    ref = normalize_text(val_span.get_text())
+                    if ref and ref != '-' and len(ref) > 2:
+                        return ref
+
+        # 2. Regex fallback (pattern technique B26-XXXXX-XX)
+        ref_match = REF_RE.search(text)
+        if ref_match:
+            return ref_match.group(0)
+
+        return ""
+
     def _procedure_type(self, text: str) -> str:
         """Extrait le type de procédure."""
         patterns = [
