@@ -1,22 +1,18 @@
-"""Phase 8 du pipeline : Classification déterministe + LLM des acheteurs.
+"""Phase 8 du pipeline : Classification déterministe des acheteurs.
 
 Séquence canonique complète :
   DISCOVERY → RECONCILE → EXTRACT → MERGE → VALIDATE → EXPORT
-  → [CONSOLIDATE] → [CLASSIFY_BUYERS]
+  → [CLASSIFY_BUYERS] → [ENRICH_JURIDIQUE] → [EXCEL_EXPORT]
 
-Ce module fournit trois fonctions publiques :
+Ce module fournit deux fonctions publiques :
   - classify_buyers_rule_based(input_csv, output_csv)
-  - classify_buyers_llm_enrichment(input_csv, output_csv, acheteur_db)
   - report_buyer_classification_quality(csv_path, report_path, bad_csv_path)
 
 Architecture :
   1. La couche RÈGLES est purement déterministe (pas de réseau, pas de LLM).
      Elle normalise et enrichit `type_acheteur` / `fonction_publique` à partir
      du libellé `acheteur` et de listes de mots-clés explicites.
-  2. La couche LLM est optionnelle et ne traite que les lignes résiduelles
-     (type_acheteur == "inconnu").  Elle prend en entrée un dictionnaire
-     `acheteur_db` alimenté en amont (par recherche web, API LLM, etc.).
-  3. Le rapport QA valide le vocabulaire, produit des distributions et une
+  2. Le rapport QA valide le vocabulaire, produit des distributions et une
      matrice croisée.
 """
 
@@ -30,8 +26,6 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, FrozenSet, List, Optional
-
-from ao_etl.llm.backend import LLMDisabledError
 
 log = logging.getLogger(__name__)
 
@@ -75,7 +69,6 @@ ALLOWED_FONCTION_PUBLIQUE: FrozenSet[str] = frozenset([
 ALLOWED_SOURCE: FrozenSet[str] = frozenset([
     "original",
     "rule",
-    "llm",
 ])
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -408,126 +401,6 @@ def classify_buyers_rule_based(
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# ENRICHISSEMENT LLM (optionnel)
-# ═══════════════════════════════════════════════════════════════════════════
-
-# Type attendu pour la base de connaissances acheteur
-# Clé = libellé acheteur normalisé (lower stripped)
-# Valeur = dict avec type_acheteur, fonction_publique, commentaire, urls
-AcheteurDB = Dict[str, Dict[str, Any]]
-
-
-def classify_buyers_llm_enrichment(
-    input_csv: Path,
-    output_csv: Path,
-    acheteur_db: AcheteurDB,
-    *,
-    overwrite: bool = True,
-) -> Dict[str, Any]:
-    """Enrichit les lignes résiduelles (type_acheteur=inconnu) via une base LLM.
-
-    La base ``acheteur_db`` est un dictionnaire pré-calculé (par appel LLM
-    externe, recherche web, etc.).  Ce module ne fait PAS d'appel réseau
-    lui-même : il applique uniquement le dictionnaire fourni.
-
-    Args:
-        input_csv:    CSV issu de classify_buyers_rule_based.
-        output_csv:   CSV enrichi final.
-        acheteur_db:  Base {acheteur_norm: {type_acheteur, fonction_publique, commentaire, urls}}.
-        overwrite:    Autoriser l'écrasement du fichier de sortie.
-
-    Returns:
-        Statistiques : {total, ta_llm, fp_llm, still_unknown, skipped_bad_vocab}.
-
-    Raises:
-        ClassificationInputError: CSV absent ou schéma invalide.
-        FileExistsError: fichier de sortie existant et overwrite=False.
-    """
-    input_csv, output_csv = Path(input_csv), Path(output_csv)
-    log.info("classify_buyers_llm_enrichment: entrée=%s, db=%d entrées", input_csv, len(acheteur_db))
-
-    fieldnames = _validate_input_csv(input_csv)
-    _safe_write(output_csv, overwrite=overwrite)
-
-    with open(input_csv, newline="", encoding="utf-8") as f:
-        rows = list(csv.DictReader(f))
-
-    if "classification_commentaire" not in fieldnames:
-        fieldnames.append("classification_commentaire")
-
-    ta_llm = 0
-    fp_llm = 0
-    skipped_bad_vocab = 0
-
-    for row in rows:
-        if "classification_commentaire" not in row:
-            row["classification_commentaire"] = ""
-
-        key = row["acheteur"].strip().lower()
-        match = acheteur_db.get(key)
-        if not match:
-            continue
-
-        # Valider que les valeurs LLM respectent le vocabulaire autorisé
-        proposed_ta = match.get("type_acheteur", "inconnu")
-        proposed_fp = match.get("fonction_publique", row["fonction_publique"])
-        if proposed_ta not in ALLOWED_TYPE_ACHETEUR or proposed_fp not in ALLOWED_FONCTION_PUBLIQUE:
-            skipped_bad_vocab += 1
-            log.warning(
-                "LLM db: valeur hors vocabulaire pour '%s' → ta='%s', fp='%s' — ignorée",
-                key[:40], proposed_ta, proposed_fp,
-            )
-            continue
-
-        # Ne modifier que les lignes encore « inconnu »
-        ta_changed = False
-        fp_changed = False
-
-        if row["type_acheteur"] == "inconnu" and proposed_ta != "inconnu":
-            row["type_acheteur"] = proposed_ta
-            row["type_acheteur_source"] = "llm"
-            ta_changed = True
-            ta_llm += 1
-
-        if row["fonction_publique"] in ("inconnue", "hors_fonction_publique"):
-            if proposed_fp != row["fonction_publique"]:
-                row["fonction_publique"] = proposed_fp
-                row["fonction_publique_source"] = "llm"
-                fp_changed = True
-                fp_llm += 1
-
-        if ta_changed or fp_changed:
-            urls = " ; ".join(match.get("urls", [])) or "N/A"
-            row["classification_commentaire"] = (
-                f"{match.get('commentaire', '')} Sources: {urls}"
-            )
-
-    with open(output_csv, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-    still_unknown = sum(
-        1 for r in rows
-        if r["type_acheteur"] == "inconnu" or r["fonction_publique"] == "inconnue"
-    )
-
-    stats = {
-        "total": len(rows),
-        "ta_llm": ta_llm,
-        "fp_llm": fp_llm,
-        "still_unknown": still_unknown,
-        "skipped_bad_vocab": skipped_bad_vocab,
-    }
-
-    log.info(
-        "classify_buyers_llm_enrichment: %d ta, %d fp modifiés, %d inconnus, %d ignorés (vocab) → %s",
-        ta_llm, fp_llm, still_unknown, skipped_bad_vocab, output_csv,
-    )
-    return stats
-
-
-# ═══════════════════════════════════════════════════════════════════════════
 # RAPPORT QA
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -765,8 +638,6 @@ def _build_markdown(
 class BuyerClassificationConfig:
     """Configuration de la phase CLASSIFY_BUYERS."""
     enabled: bool = False
-    run_llm: bool = False
-    acheteur_db: Optional[AcheteurDB] = None
     output_csv: Optional[Path] = None
     report_path: Optional[Path] = None
     bad_csv_path: Optional[Path] = None
@@ -777,10 +648,10 @@ def run_buyer_classification(
     consolidated_csv: Path,
     config: BuyerClassificationConfig,
 ) -> Dict[str, Any]:
-    """Orchestrateur : règles → (LLM optionnel) → rapport QA.
+    """Orchestrateur : règles → rapport QA.
 
     Args:
-        consolidated_csv: CSV issu de la phase CONSOLIDATE (ou export brut).
+        consolidated_csv: CSV issu du pipeline (ou export brut).
         config:           Configuration de la classification.
 
     Returns:
@@ -790,13 +661,6 @@ def run_buyer_classification(
         ClassificationInputError: CSV absent ou schéma invalide.
         FileExistsError: fichier de sortie existant et overwrite=False.
     """
-    # Garde-fou LLM — run_llm est interdit en mode déterministe
-    if config.run_llm:
-        raise LLMDisabledError(
-            "APPEL LLM INTERDIT — run_buyer_classification() avec run_llm=True est interdit. "
-            "Politique LLM OFF. Pour réactiver : voir ao_etl/llm/backend.py (LLMDisabledError)."
-        )
-
     consolidated_csv = Path(consolidated_csv)
     log.info("run_buyer_classification: entrée=%s", consolidated_csv)
 
@@ -817,8 +681,7 @@ def run_buyer_classification(
     # Phase 8a : règles
     rule_stats = classify_buyers_rule_based(consolidated_csv, rule_csv, overwrite=ow)
 
-    # Phase 8b : LLM désactivé — le CSV rules est directement le CSV final
-    llm_stats: Dict[str, Any] = {}
+    # Phase 8b : le CSV rules est directement le CSV final
     final_csv = rule_csv
 
     # Phase 8c : rapport QA (lit le CSV avec colonnes internes)
@@ -844,7 +707,6 @@ def run_buyer_classification(
 
     return {
         "rule_stats": rule_stats,
-        "llm_stats": llm_stats,
         "qa": {
             "total": qa.total,
             "bad_count": qa.bad_count,
@@ -863,15 +725,10 @@ def print_classification_summary(stats: Dict[str, Any]) -> None:
     print("PHASE 8 : CLASSIFICATION DES ACHETEURS")
     print("=" * 70)
     rs = stats.get("rule_stats", {})
-    ls = stats.get("llm_stats", {})
     qa = stats.get("qa", {})
     print(f"  Lignes totales           : {rs.get('total', '?')}")
     print(f"  type_acheteur par règles : {rs.get('ta_changed', 0)}")
     print(f"  fonction_publique règles : {rs.get('fp_changed', 0)}")
-    if ls:
-        print(f"  type_acheteur par LLM    : {ls.get('ta_llm', 0)}")
-        print(f"  fonction_publique LLM    : {ls.get('fp_llm', 0)}")
-        print(f"  Encore inconnus          : {ls.get('still_unknown', '?')}")
     print(f"  Violations vocabulaire   : {qa.get('bad_count', 0)}")
     print(f"  CSV final                : {stats.get('output_csv', '?')}")
     print(f"  Rapport QA               : {stats.get('report_path', '?')}")

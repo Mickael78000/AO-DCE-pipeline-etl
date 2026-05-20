@@ -2,14 +2,13 @@
 
 Séquence canonique :
   DISCOVERY → RECONCILE → EXTRACT → MERGE → VALIDATE → EXPORT
-  → [CONSOLIDATE] → [CLASSIFY_BUYERS]
+  → [CLASSIFY_BUYERS] → [ENRICH_JURIDIQUE] → [EXCEL_EXPORT]
 
-Les phases 7 (CONSOLIDATE) et 8 (CLASSIFY_BUYERS) sont optionnelles
-et désactivées par défaut.
+Les phases optionnelles (CLASSIFY_BUYERS, ENRICH_JURIDIQUE, EXCEL_EXPORT)
+sont désactivées par défaut.
 
 Usage:
     from ao_etl.pipeline import run_pipeline, PipelineResult
-    from ao_etl.pipeline.consolidate import ConsolidationConfig
     from ao_etl.classification import BuyerClassificationConfig
 
     result = run_pipeline(
@@ -17,7 +16,6 @@ Usage:
         input_csv=Path('AO.csv'),
         output_csv=Path('AO-final.csv'),
         report_path=Path('report.json'),
-        consolidation_config=ConsolidationConfig(enabled=True, backend='openai'),
         buyer_classification_config=BuyerClassificationConfig(enabled=True),
     )
 """
@@ -36,9 +34,6 @@ from .validate import validate_rows, print_validation_summary
 from .export import (
     export_csv, export_json_report, generate_report, print_export_summary
 )
-from .consolidate import (
-    ConsolidationConfig, run_consolidation, print_consolidation_summary
-)
 from ao_etl.classification import (
     BuyerClassificationConfig, run_buyer_classification, print_classification_summary
 )
@@ -48,10 +43,6 @@ from .enrich_descriptif_phase import (
 from .enrich_txt_phase import (
     EnrichTxtConfig, run_enrich_txt_phase, print_enrich_txt_summary
 )
-from .enrich_llm_phase import (
-    EnrichLLMConfig, run_enrich_llm_phase, print_enrich_llm_summary
-)
-from ao_etl.llm.backend import LLMDisabledError
 from .normalize_final_phase import (
     NormalizeConfig, run_normalize_phase, print_normalize_summary
 )
@@ -82,16 +73,12 @@ class PipelineResult:
     total_rows: int
     new_rows: int
     validation_passed: bool
-    consolidated_csv: Optional[Path] = None
-    consolidation_stats: Optional[Dict] = None
     classification_csv: Optional[Path] = None
     classification_stats: Optional[Dict] = None
     enrich_descriptif_csv: Optional[Path] = None
     enrich_descriptif_stats: Optional[Dict] = None
     enrich_txt_csv: Optional[Path] = None
     enrich_txt_stats: Optional[Dict] = None
-    enrich_llm_csv: Optional[Path] = None
-    enrich_llm_stats: Optional[Dict] = None
     normalize_csv: Optional[Path] = None
     normalize_stats: Optional[Dict] = None
     url_csv: Optional[Path] = None
@@ -108,11 +95,9 @@ def run_pipeline(
     output_csv: Path,
     report_path: Optional[Path] = None,
     verbose: bool = True,
-    consolidation_config: Optional[ConsolidationConfig] = None,
     buyer_classification_config: Optional[BuyerClassificationConfig] = None,
     enrich_descriptif_config: Optional[EnrichDescriptifConfig] = None,
     enrich_txt_config: Optional[EnrichTxtConfig] = None,
-    enrich_llm_config: Optional[EnrichLLMConfig] = None,
     normalize_config: Optional[NormalizeConfig] = None,
     url_config: Optional[EnrichUrlConfig] = None,
     enrich_juridique_config: Optional[EnrichJuridiqueConfig] = None,
@@ -311,41 +296,7 @@ def run_pipeline(
     _next_input_csv = enrich_txt_csv or output_csv
     
     # =====================================================================
-    # PHASE 7b (optionnelle): ENRICH_LLM - Complément via LLM
-    # =====================================================================
-    enrich_llm_csv: Optional[Path] = None
-    enrich_llm_stats: Optional[Dict] = None
-    
-    if enrich_llm_config and enrich_llm_config.enabled:
-        log.info("[7b] ENRICH_LLM - Complément des informations manquantes via LLM")
-        try:
-            _enrich_llm_output = (
-                enrich_llm_config.output_csv
-                or output_csv.parent / "final-v4-enriched.csv"
-            )
-            
-            enrich_llm_stats = run_enrich_llm_phase(
-                input_csv=_next_input_csv,
-                html_dir=html_dir,
-                output_csv=_enrich_llm_output,
-                config=enrich_llm_config,
-            )
-            enrich_llm_csv = _enrich_llm_output
-            
-            if verbose:
-                print_enrich_llm_summary(enrich_llm_stats)
-
-        except LLMDisabledError:
-            raise
-        except Exception as e:
-            log.error("Phase 7b (enrich LLM) échouée (pipeline non bloqué): %s", e)
-    
-    # Mettre à jour le prochain input
-    if enrich_llm_csv:
-        _next_input_csv = enrich_llm_csv
-    
-    # =====================================================================
-    # PHASE 7c (optionnelle): NORMALIZE - Mapping canonique final
+    # PHASE 7b (optionnelle): NORMALIZE - Mapping canonique final
     # =====================================================================
     normalize_csv: Optional[Path] = None
     normalize_stats: Optional[Dict] = None
@@ -432,47 +383,13 @@ def run_pipeline(
             log.error("Phase 7e (enrich descriptif) échouée (pipeline non bloqué): %s", e)
     
     # =====================================================================
-    # PHASE 8 (optionnelle): CONSOLIDATE
-    # =====================================================================
-    consolidated_csv: Optional[Path] = None
-    consolidation_stats: Optional[Dict] = None
-
-    if consolidation_config and consolidation_config.enabled:
-        log.info("[8] CONSOLIDATE - Consolidation LLM des champs métier")
-        try:
-            _consolidated_output = (
-                consolidation_config.output_csv
-                or output_csv.parent / "final-v3-consolidated.csv"
-            )
-            _json_dir = consolidation_config.json_dir
-
-            consolidation_stats = run_consolidation(
-                input_csv=_next_input_csv,
-                html_dir=html_dir,
-                output_csv=_consolidated_output,
-                config=consolidation_config,
-                json_dir=_json_dir,
-            )
-            consolidated_csv = _consolidated_output
-
-            if verbose:
-                print_consolidation_summary(consolidation_stats)
-
-        except LLMDisabledError:
-            raise
-        except EnvironmentError as e:
-            log.error("Phase 8 annulée - configuration LLM manquante: %s", e)
-        except Exception as e:
-            log.error("Phase 8 échouée (pipeline non bloqué): %s", e)
-
-    # =====================================================================
-    # PHASE 9 (optionnelle): CLASSIFY_BUYERS
+    # PHASE 8 (optionnelle): CLASSIFY_BUYERS
     # =====================================================================
     classification_csv: Optional[Path] = None
     classification_stats: Optional[Dict] = None
 
-    # Déterminer le CSV d'entrée : consolidé > enrichi > export brut
-    _classify_input = consolidated_csv or _next_input_csv
+    # Déterminer le CSV d'entrée : enrichi > export brut
+    _classify_input = _next_input_csv
 
     if buyer_classification_config and buyer_classification_config.enabled:
         log.info("[9] CLASSIFY_BUYERS - Classification des acheteurs")
@@ -495,8 +412,8 @@ def run_pipeline(
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
 
-    # Déterminer le CSV d'entrée : classification > consolidé > enrichi > export
-    _enrich_input = classification_csv or consolidated_csv or _next_input_csv
+    # Déterminer le CSV d'entrée : classification > enrichi > export
+    _enrich_input = classification_csv or _next_input_csv
 
     if enrich_juridique_config and enrich_juridique_config.enabled:
         log.info("[10] ENRICH_JURIDIQUE - Enrichissement juridique (regex)")
@@ -524,8 +441,8 @@ def run_pipeline(
     excel_output: Optional[Path] = None
     excel_stats: Optional[Dict] = None
 
-    # Déterminer le CSV d'entrée : juridique si disponible, sinon classification/consolidé/export
-    _excel_input = juridique_csv or classification_csv or consolidated_csv or output_csv
+    # Déterminer le CSV d'entrée : juridique si disponible, sinon classification/enrichi/export
+    _excel_input = juridique_csv or classification_csv or output_csv
 
     if excel_export_config and excel_export_config.enabled:
         log.info("[10] EXCEL_EXPORT - Export Excel formaté")
@@ -561,16 +478,12 @@ def run_pipeline(
         total_rows=len(merge_result.final_rows),
         new_rows=merge_result.new_count,
         validation_passed=validation_result.is_valid,
-        consolidated_csv=consolidated_csv,
-        consolidation_stats=consolidation_stats,
         classification_csv=classification_csv,
         classification_stats=classification_stats,
         enrich_descriptif_csv=enrich_descriptif_csv,
         enrich_descriptif_stats=enrich_descriptif_stats,
         enrich_txt_csv=enrich_txt_csv,
         enrich_txt_stats=enrich_txt_stats,
-        enrich_llm_csv=enrich_llm_csv,
-        enrich_llm_stats=enrich_llm_stats,
         normalize_csv=normalize_csv,
         normalize_stats=normalize_stats,
         url_csv=url_csv,

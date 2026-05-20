@@ -2,7 +2,7 @@
 
 Fournit la Phase 8 du pipeline ETL :
   DISCOVERY → RECONCILE → EXTRACT → MERGE → VALIDATE → EXPORT
-  → [CONSOLIDATE] → [CLASSIFY_BUYERS]
+  → [CLASSIFY_BUYERS] → [ENRICH_JURIDIQUE] → [EXCEL_EXPORT]
 """
 
 from .buyers import (
@@ -13,7 +13,6 @@ from .buyers import (
     ClassificationInputError,
     ClassificationQAReport,
     REQUIRED_INPUT_COLUMNS,
-    classify_buyers_llm_enrichment,
     classify_buyers_rule_based,
     print_classification_summary,
     report_buyer_classification_quality,
@@ -28,7 +27,6 @@ __all__ = [
     "ClassificationInputError",
     "ClassificationQAReport",
     "REQUIRED_INPUT_COLUMNS",
-    "classify_buyers_llm_enrichment",
     "classify_buyers_rule_based",
     "print_classification_summary",
     "report_buyer_classification_quality",
