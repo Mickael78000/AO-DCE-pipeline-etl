@@ -104,7 +104,6 @@ class TestMappingStability:
         assert row["Type d'AO"] == "Ouverte"
 
     def test_type_not_deduced_from_lot_objet(self):
-        from ao_etl.pipeline.enrich_txt_phase import run_enrich_txt_phase
         # Si le fallback lot→Type était encore présent, il écrirait le libellé du lot.
         # On vérifie que normalize_type_marche rejette un libellé de lot libre.
         lot_objet = "Fourniture et installation de mobilier de bureau ergonomique"
