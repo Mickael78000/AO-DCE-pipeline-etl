@@ -98,10 +98,13 @@ _DATE_RE = re.compile(r"\b\d{2}/\d{2}/\d{4}(?:\s*(?:à)?\s*\d{2}:\d{2})?\b")
 # =============================================================================
 
 def normalize_text(value: str | None) -> str:
-    """Normalise le texte: espaces, caractères spéciaux."""
+    """Normalise le texte: espaces, caractères spéciaux, apostrophes typographiques."""
     if not value:
         return ""
     value = value.replace("\xa0", " ").replace("­", "")
+    # Normaliser apostrophes typographiques → droites (cohérent avec legacy)
+    value = value.replace("\u2019", "'").replace("\u2018", "'")
+    value = value.replace("\u201c", '"').replace("\u201d", '"')
     value = _SPACE_RE.sub(" ", value).strip(" \n\r\t-:;,.")
     return value.strip()
 
