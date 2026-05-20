@@ -17,7 +17,7 @@ from ao_etl.models.market import MarketData, SourceType, ExtractionStatus
 
 # Import de la fonction de construction d'URL (quand disponible)
 try:
-    from ao_etl.pipeline.consolidate import build_market_url
+    from ao_etl.pipeline.url_builder import build_market_url
     HAS_BUILD_MARKET_URL = True
 except ImportError:
     HAS_BUILD_MARKET_URL = False
