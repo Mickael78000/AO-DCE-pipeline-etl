@@ -108,7 +108,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 1: DISCOVERY
     # =====================================================================
-    log.info("[1/6] DISCOVERY - Découverte des fichiers HTML")
+    log.info("[1/10] DISCOVERY - Découverte des fichiers HTML")
     
     try:
         discovery_result = discover_files(html_dir)
@@ -139,7 +139,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 2: RECONCILE
     # =====================================================================
-    log.info("[2/6] RECONCILE - Réconciliation avec CSV existant")
+    log.info("[2/10] RECONCILE - Réconciliation avec CSV existant")
     
     # Charger le CSV existant (ou créer une structure vide)
     csv_rows, fieldnames = load_csv(input_csv)
@@ -156,7 +156,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 3: EXTRACT (pour les nouveaux marchés et mises à jour)
     # =====================================================================
-    log.info("[3/6] EXTRACT - Extraction des données")
+    log.info("[3/10] EXTRACT - Extraction des données")
     
     extracted_data_map: Dict = {}
     extraction_errors = []
@@ -190,7 +190,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 4: MERGE
     # =====================================================================
-    log.info("[4/6] MERGE - Fusion et mise à jour")
+    log.info("[4/10] MERGE - Fusion et mise à jour")
     
     merge_result = merge(
         result=reconcile_result,
@@ -203,7 +203,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 5: VALIDATE
     # =====================================================================
-    log.info("[5/6] VALIDATE - Validation qualité")
+    log.info("[5/10] VALIDATE - Validation qualité")
     
     # Valider toutes les lignes
     validation_result = validate_rows(merge_result.final_rows, new_rows_only=False)
@@ -219,7 +219,7 @@ def run_pipeline(
     # =====================================================================
     # PHASE 6: EXPORT
     # =====================================================================
-    log.info("[6/6] EXPORT - Export des fichiers")
+    log.info("[6/10] EXPORT - Export des fichiers")
     
     # Export CSV
     export_csv(
@@ -257,7 +257,7 @@ def run_pipeline(
     normalize_stats: Optional[Dict] = None
     
     if normalize_config and normalize_config.enabled:
-        log.info("[7c] NORMALIZE - Mapping canonique des champs")
+        log.info("[7] NORMALIZE - Mapping canonique des champs")
         try:
             _normalize_output = (
                 normalize_config.output_csv
@@ -290,7 +290,7 @@ def run_pipeline(
     _classify_input = _next_input_csv
 
     if buyer_classification_config and buyer_classification_config.enabled:
-        log.info("[9] CLASSIFY_BUYERS - Classification des acheteurs")
+        log.info("[8] CLASSIFY_BUYERS - Classification des acheteurs")
         try:
             classification_stats = run_buyer_classification(
                 consolidated_csv=_classify_input,
@@ -305,7 +305,7 @@ def run_pipeline(
             log.error("Phase 8 échouée (pipeline non bloqué): %s", e)
 
     # =====================================================================
-    # PHASE 10 (optionnelle): ENRICH_JURIDIQUE
+    # PHASE 9 (optionnelle): ENRICH_JURIDIQUE
     # =====================================================================
     juridique_csv: Optional[Path] = None
     juridique_stats: Optional[Dict] = None
@@ -314,7 +314,7 @@ def run_pipeline(
     _enrich_input = classification_csv or _next_input_csv
 
     if enrich_juridique_config and enrich_juridique_config.enabled:
-        log.info("[10] ENRICH_JURIDIQUE - Enrichissement juridique (regex)")
+        log.info("[9] ENRICH_JURIDIQUE - Enrichissement juridique (regex)")
         try:
             _juridique_output = (
                 enrich_juridique_config.output_csv
