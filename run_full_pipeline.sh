@@ -3,6 +3,35 @@
 
 set -e  # Arrêter en cas d'erreur
 
+# ==========================================
+# ACTIVATION DU VIRTUAL ENVIRONMENT
+# ==========================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_PATH="${SCRIPT_DIR}/venv"
+
+# Vérifier si le venv existe
+if [ ! -d "$VENV_PATH" ]; then
+    echo "❌ Erreur: Virtual environment non trouvé à ${VENV_PATH}"
+    echo "   → Créez-le avec: python3 -m venv venv"
+    echo "   → Puis installez les dépendances: pip install -r requirements.txt"
+    exit 1
+fi
+
+# Activer le venv
+source "${VENV_PATH}/bin/activate"
+
+# Vérifier que Python du venv est utilisé
+PYTHON_VERSION=$(python --version 2>&1)
+echo "✅ Virtual environment activé: ${PYTHON_VERSION}"
+
+# Vérifier les dépendances critiques
+if ! python -c "import pandas" 2>/dev/null; then
+    echo "❌ Erreur: Dépendances manquantes"
+    echo "   → Installez-les avec: pip install -r requirements.txt"
+    exit 1
+fi
+
 echo "=========================================="
 echo "PIPELINE AO-DCE COMPLET (avec LLM)"
 echo "=========================================="
@@ -19,7 +48,7 @@ echo "🚀 Lancement du pipeline (phases 1-6, 8-10)..."
 echo "   ℹ️  Phase 7 (consolidation LLM) ignorée - trop lente sans GPU"
 echo "   → Phases actives: DISCOVERY → CLASSIFY → ENRICH → EXCEL"
 echo ""
-venv/bin/python run_pipeline.py \
+python run_pipeline.py \
     --classify-buyers \
     --enrich-juridique \
     --excel
@@ -27,7 +56,7 @@ venv/bin/python run_pipeline.py \
 # 3. Classification LLM des cas résiduels
 echo ""
 echo "🤖 Classification LLM des acheteurs difficiles..."
-venv/bin/python scripts/classify_with_llm.py \
+python scripts/classify_with_llm.py \
     -i data/output/final-v4-classified.csv \
     -o data/output/final-v4-complete.csv
 

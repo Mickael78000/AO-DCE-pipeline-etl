@@ -7,6 +7,10 @@ Usage:
 Exemples:
     python run_pipeline.py
     python run_pipeline.py --html-dir html_ao --input AO.csv --output AO-final.csv
+    
+Note: Ce script nécessite le virtual environment activé.
+    Utilisez: source venv/bin/activate
+    Ou exécutez via: ./run_full_pipeline.sh
 """
 
 import argparse
@@ -16,6 +20,14 @@ from pathlib import Path
 # Ajouter le répertoire courant au path pour les imports
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Vérification du virtual environment (optionnel mais recommandé)
+try:
+    from ao_etl.utils.venv_check import ensure_venv_activated
+    ensure_venv_activated()
+except ImportError:
+    # Si le module n'est pas trouvé, continuer (mode compatibilité)
+    pass
 
 from ao_etl.pipeline import run_pipeline, PipelineResult, ConsolidationConfig
 

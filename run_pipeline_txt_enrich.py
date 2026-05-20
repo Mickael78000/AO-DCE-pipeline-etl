@@ -3,6 +3,10 @@
 Script pour exécuter le pipeline avec enrichissement depuis fichiers .txt.
 Usage:
     python run_pipeline_txt_enrich.py [--llm] [--limit N]
+    
+Note: Ce script nécessite le virtual environment activé.
+    Utilisez: source venv/bin/activate
+    Ou exécutez via: ./run_full_pipeline.sh
 """
 
 import argparse
@@ -11,6 +15,13 @@ from pathlib import Path
 
 # Ajouter le répertoire parent au path
 sys.path.insert(0, str(Path(__file__).parent))
+
+# Vérification du virtual environment (optionnel mais recommandé)
+try:
+    from ao_etl.utils.venv_check import ensure_venv_activated
+    ensure_venv_activated()
+except ImportError:
+    pass
 
 from ao_etl.pipeline import (
     run_pipeline, EnrichTxtConfig, EnrichLLMConfig, NormalizeConfig, EnrichUrlConfig
