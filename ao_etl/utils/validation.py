@@ -37,14 +37,12 @@ class MarketDataValidated(BaseModel):
 
 class PipelineConfig(BaseModel):
     """Configuration validée du pipeline."""
-    
+
     html_dir: str = Field(..., min_length=1)
     input_csv: str = Field(..., min_length=1)
     output_csv: str = Field(..., min_length=1)
     verbose: bool = True
-    enable_enrich_descriptif: bool = False
-    enable_consolidation: bool = False
-    
+
     @validator('html_dir', 'input_csv', 'output_csv')
     def validate_paths(cls, v):
         if not v or len(v.strip()) == 0:
