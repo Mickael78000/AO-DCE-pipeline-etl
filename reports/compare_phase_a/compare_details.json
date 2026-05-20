@@ -1,0 +1,5665 @@
+[
+  {
+    "file": "13joue002671162026-2026-mise-disposition-gestion.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002671162026",
+        "v2": "13/joue/002671162026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Mise à disposition et gestion du workplace IT",
+        "v2": "Mise à disposition et gestion du workplace IT",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "RESA Innovation et Technologie SA en son nom et pour compte de RESA SA Intercommunale",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72500000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/267116-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 96,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002708922026-2026-fourniture-prestation-service.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002708922026",
+        "v2": "13/joue/002708922026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture d'une prestation de service relative à la gestion des activités de data management et la gestion des activités de biostatistiques à visée d'enregistrements auprès des autorités réglementaires au format ADAM des études cliniques pour UNICANCER RetD, les CLCC et les Etablissement affiliés.",
+        "v2": "fourniture d'une prestation de service relative à la gestion des activités de data management et la gestion des activités de biostatistiques à visée d'enregistrements auprès des autorités réglementaires au format ADAM des études cliniques pour UNICANCER RetD, les CLCC et les Etablissement affiliés",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "UNICANCER ACHATS",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72212463",
+          "72310000",
+          "72322000",
+          "72200000",
+          "72316000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/270892-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-05-18T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 36,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002845752026-2026-marche-prestations-maintenance.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002845752026",
+        "v2": "13/joue/002845752026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.",
+        "v2": "MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "EPPGHV",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72611000",
+          "72500000",
+          "72610000",
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/284575-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-01T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002850982026-2026-accord-cadre-bons.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002850982026",
+        "v2": "13/joue/002850982026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Accord-cadre à bons de commande pour le maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+        "v2": "Accord-cadre à bons de commande pour le maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "VILLE de PARIS - DFA - SDA",
+        "v2": "VILLE de PARIS - DFA - SDA",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "79995200",
+          "30237380",
+          "79999100",
+          "30234400",
+          "72250000",
+          "79952000",
+          "60181000",
+          "22110000",
+          "22112000",
+          "22111000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/285098-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-09T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002925532026-2026-marche-public-relatif.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002925532026",
+        "v2": "13/joue/002925532026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Marché public relatif à la mise à disposition d'un système ERP intégré portant sur la gestion financière, les ressources humaines et les composants annexes",
+        "v2": "Marché public relatif à la mise à disposition d’un système ERP intégré portant sur la gestion financière, les ressources humaines et les composants annexes",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Parlement Wallon",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/292553-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-08T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002929142026-2026-accompagnement-convergence-systemes.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002929142026",
+        "v2": "13/joue/002929142026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Accompagnement à la convergence des systèmes d'information de scolarité du Conservatoire national des arts et métiers – Cnam - Paris",
+        "v2": "Accompagnement à la convergence des systèmes d’information de scolarité du Conservatoire national des arts et métiers – Cnam - Paris",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Conservatoire national des arts et métiers -Cnam",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72224100",
+          "72224000",
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/292914-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002939872026-2026-marche-pour-maintenance.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002939872026",
+        "v2": "13/joue/002939872026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Marché pour la maintenance applicative, corrective et évolutive du site internet Culturethèque (et toutes ses fonctionnalités) et pour l'hébergement",
+        "v2": "Marché pour la maintenance applicative, corrective et évolutive du site internet Culturethèque (et toutes ses fonctionnalités) et pour l'hébergement",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Institut Français",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/293987-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-08T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002946202026",
+        "v2": "13/joue/002946202026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "La continuité, l'exploitation, l'hébergement, la maintenance et le développement de la plateforme de notification eTOD",
+        "v2": "La continuité",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Institut géographique national",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/294620-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-15T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue002946822026-2026-renouvellement-maintenance-serveurs.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/002946822026",
+        "v2": "13/joue/002946822026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées",
+        "v2": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "SICIO",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72250000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/294682-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-04T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003036002026-2026-accord-cadre-infrastructure.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003036002026",
+        "v2": "13/joue/003036002026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)",
+        "v2": "Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Compagnie Nationale du Rhône",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "48820000",
+          "72263000",
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/303600-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003085442026-2026-fourniture-solutions-infrastructure.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003085442026",
+        "v2": "13/joue/003085442026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture de solutions d'infrastructure informatique (matériels, logiciels et prestations associées)",
+        "v2": "Fourniture de solutions d'infrastructure informatique (matériels, logiciels et prestations associées)",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Union des Groupements d'Achats Publics",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "48822000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/308544-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Fournitures",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-29T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 36,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003107212026-2026-maintien-condition-operationnelle.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003107212026",
+        "v2": "13/joue/003107212026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde \\\\\\/ Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre",
+        "v2": "Maintien en Condition Opérationnelle de l’Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Centre Hospitalier de l'Agglomération de Nevers",
+        "v2": "Centre Hospitalier de l'Agglomération de Nevers",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72500000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/310721-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-05T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003228322026",
+        "v2": "13/joue/003228322026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "La continuité, l'exploitation, l'hébergement, la maintenance et le développement de la plateforme de notification eTOD",
+        "v2": "La continuité, l’exploitation, l’hébergement, la maintenance et le développement de la plateforme de notification eTOD",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Institut géographique national",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/322832-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-15T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003237302026",
+        "v2": "13/joue/003237302026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de Tierce Maintenance Applicative des Logiciels Systèmes Energétiques du LITEN",
+        "v2": "Prestations de Tierce Maintenance Applicative des Logiciels Systèmes Energétiques du LITEN",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "COMMISSARIAT A L'ENERGIE ATOMIQUE",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72500000",
+          "72250000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/323730-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-10T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003241312026-2026-prestations-support-maintenance?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003241312026",
+        "v2": "13/joue/003241312026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL",
+        "v2": "PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "2026-04",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72267100",
+          "72250000",
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/324131-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Restreinte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003272002026",
+        "v2": "13/joue/003272002026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Accompagnement à l extension de l ITSM de la DSI",
+        "v2": "Accompagnement à l extension de l ITSM de la DSI",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "DSI - Direction des systèmes d information",
+        "v2": "DSI - Direction des systèmes d information",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/327200-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-16T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003278382026",
+        "v2": "13/joue/003278382026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "HISI V2 - Hébergement et infogérance des sites internet",
+        "v2": "HISI V2 - Hébergement et infogérance des sites internet",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "BANQUE DE FRANCE - Direction des Achats",
+        "v2": "BANQUE DE FRANCE - Direction des Achats",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72400000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/327838-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 96,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003293162026",
+        "v2": "13/joue/003293162026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée",
+        "v2": "Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Département de la Vendée",
+        "v2": "Département de la Vendée",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72413000",
+          "72400000",
+          "72415000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/329316-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-12T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "13joue003304802026-2026-groupement-commandes-pour?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "13/joue/003304802026",
+        "v2": "13/joue/003304802026",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Groupement de commandes pour la fourniture de services de sécurité informatique pour les réseaux d'accès normands au profit des Etablissements Publics Locaux d'Enseignement",
+        "v2": "Groupement de commandes pour la fourniture de services de sécurité informatique pour les réseaux d'accès normands au profit des Etablissements Publics Locaux d'Enseignement",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "REGION NORMANDIE",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/330480-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-23T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 24,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026-022-BL.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026-022-BL",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations logicielles relatives aux automates industriels pour SOLEIL II.",
+        "v2": "Prestations logicielles relatives aux automates industriels pour SOLEIL II",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Synchrotron Soleil",
+        "v2": "Synchrotron Soleil",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "01693591",
+          "17750111",
+          "40956310",
+          "01607678",
+          "48100000"
+        ],
+        "v2": [
+          "48100000",
+          "72600000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/prestations-logicielles-relatives-aux-automates-industr/ao-9596814-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "SAINT-AUBIN (91190) - Essonne ( FR104 )",
+        "v2": "91 - SYNCHROTRON SOLEIL",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-01T00:00:00",
+        "v2": "2026-06-01T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 12,
+        "v2": 12,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026-30.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026-30",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre.",
+        "v2": "Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "GHT de la Nièvre - Centre hospitalier Pierre Beregovoy",
+        "v2": "GHT de la Nièvre - Centre hospitalier Pierre Beregovoy",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72500000",
+          "38693745",
+          "17210005",
+          "20001120"
+        ],
+        "v2": [
+          "72500000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/maintien-en-condition-operationnelle-de-l-infrastructu/ao-9599869-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "NEVERS cedex (58033) - Nièvre ( FRC12 )",
+        "v2": "58 - NEVERS",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-05T00:00:00",
+        "v2": "2026-06-05T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "202604-02.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "202604-02",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture et intégration de matériels et logiciels informatiques, services d'infogérance et de cybersécurité.",
+        "v2": "Fourniture et intégration de matériels et logiciels informatiques, services d'infogérance et de cybersécurité",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "SPL SEMEA",
+        "v2": "SPL SEMEA",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72500000",
+          "05496079",
+          "33480041",
+          "05496068",
+          "72700000"
+        ],
+        "v2": [
+          "72700000",
+          "72500000",
+          "72315200"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/fourniture-et-integration-de-materiels-et-logiciels-i/ao-9596601-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Angouleme (16000) - Charente ( FRI31 )",
+        "v2": "16 - ANGOULEME",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-02T00:00:00",
+        "v2": "2026-06-02T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 84,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026A0239.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026A0239",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de support, infogérance et supervision pour les Services Numériques Éducatifs, et pour les environnements de travail, Data Centers, Infrastructures, Réseaux, Pare-Feux et Téléphonie de la Région Grand-Est, ainsi que de stockage ...",
+        "v2": "Prestations de support, infogérance et supervision pour les Services Numériques Éducatifs, et pour les environnements de travail, Data Centers, Infrastructures, Réseaux, Pare-Feux et Téléphonie de la Région Grand-Est, ainsi que de stockage",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Région Grand Est",
+        "v2": "Région Grand Est",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "03876166",
+          "03882123",
+          "59879872",
+          "63120000",
+          "33480041"
+        ],
+        "v2": [
+          "72600000",
+          "72250000",
+          "63120000",
+          "72253000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/prestations-de-support-infogerance-et-supervision-pou/ao-9599071-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "67 - REGION GRAND EST",
+        "v2": "67 - REGION GRAND EST",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-18T00:00:00",
+        "v2": "2026-06-18T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 24,
+        "v2": 24,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 6500000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026M01.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026M01",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées.",
+        "v2": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "SICIO",
+        "v2": "SICIO",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "17770704",
+          "17236554",
+          "45072478",
+          "72250000",
+          "14961357"
+        ],
+        "v2": [
+          "72250000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/renouvellement-et-maintenance-des-serveurs-de-sauvegard/ao-9596821-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Villeneuve le roi (94290) - Val-de-Marne ( FR107 )",
+        "v2": "94 - SICIO",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-04T00:00:00",
+        "v2": "2026-06-04T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 800000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026MDAF0063.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026MDAF0063",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV..",
+        "v2": "Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)",
+        "v2": "Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72611000",
+          "72500000",
+          "72610000",
+          "01400375",
+          "01445944"
+        ],
+        "v2": [
+          "72611000",
+          "72500000",
+          "72610000",
+          "72600000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/marche-de-prestations-de-maintenance-d-assistance-et-d/ao-9594452-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Paris (75019) - Paris ( FR101 )",
+        "v2": "75 - EPPGHV",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-01T00:00:00",
+        "v2": "2026-06-01T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 660000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2026_07..html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2026_07.",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture, mise en oeuvre d'un Security Operation Center (SOC) managé et Protection des identités.",
+        "v2": "Fourniture, mise en oeuvre d'un Security Operation Center (SOC) managé et Protection des identités",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Gaz Electricité de Grenoble",
+        "v2": "Gaz Electricité de Grenoble",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "43821212",
+          "72500000",
+          "72222300",
+          "81857697",
+          "33480041"
+        ],
+        "v2": [
+          "72500000",
+          "72222300"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/fourniture-mise-en-oeuvre-d-un-security-operation-cent/ao-9592936-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Grenoble (38042) - Isère (FRK24)",
+        "v2": "38 - GRENOBLE",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-05-26T00:00:00",
+        "v2": "2026-05-26T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "26-011.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "26-011",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Tierce maintenance d'exploitation et de services des agences de l'eau.",
+        "v2": "Tierce maintenance d'exploitation et de services des agences de l'eau",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Agence de l'Eau Seine Normandie",
+        "v2": "Agence de l'Eau Seine Normandie",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "14120188",
+          "72250000",
+          "17950702",
+          "72514000",
+          "18750009"
+        ],
+        "v2": [
+          "72250000",
+          "72514000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/tierce-maintenance-d-exploitation-et-de-services-des-ag/ao-9595420-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Courbevoie (92416) - Hauts-de-Seine ( FR105 )",
+        "v2": "92 - AGENCE DE L'EAU SEINE NORMANDIE",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-05-26T00:00:00",
+        "v2": "2026-05-26T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 25000000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "26-41049.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "BOAMP_XML",
+        "v2": "BOAMP_XML",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "DGFIP-DRS-2500077",
+        "v2": "DGFIP-DRS-2500077",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication.",
+        "v2": "Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Direction Générale des Finances Publiques",
+        "v2": "Direction Générale des Finances Publiques",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "13000686",
+          "33141635",
+          "13000049"
+        ],
+        "v2": [
+          "72220000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/DGFIP-DRS-2500077",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Montreuil (93186)",
+        "v2": "Montreuil / Seine-Saint-Denis",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-04T17:00:00",
+        "v2": null,
+        "status": "only_legacy"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 400000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2600517.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "2600517",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+        "v2": "Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Ville de Paris",
+        "v2": "Ville de Paris",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "17750005",
+          "17127026",
+          "72250000",
+          "21750001"
+        ],
+        "v2": [
+          "72250000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/maintien-en-condition-operationnelle-et-l-accompagneme/ao-9595379-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "PARIS (75013) - Paris ( FR101 )",
+        "v2": "75 - VILLE DE PARIS",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-09T00:00:00",
+        "v2": "2026-06-09T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 8500000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2956468?orgAcronyme=g7h.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "Shom_26AC07",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintien en conditions opérationnelles et de sécurité du Digital Workplace Odyssée du Shom",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "MINARM / ESTM / EPA / SHOM - Service hydrographique et océanographique de la Marine",
+        "v2": "MINARM / ESTM / EPA / SHOM - Service hydrographique et océanographique de la Marine",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72200000",
+          "72267000"
+        ],
+        "v2": [
+          "72200000",
+          "72267000"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(29) Finistère",
+        "v2": "(29) Finistère",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-18T09:00:00",
+        "v2": "2026-06-18T09:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2986378?orgAcronyme=f2h.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "A2026-018",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture d'une solution de gestion pédagogique des doctorants",
+        "v2": "Fourniture d'une solution de gestion pédagogique des doctorants",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "EOESRI / COMUE - UdL - COMUE &quot;Université de Lyon&quot;",
+        "v2": "EOESRI / COMUE - UdL - COMUE &quot;Université de Lyon&quot",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72260000"
+        ],
+        "v2": [
+          "72260000"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(69) Rhône",
+        "v2": "(69) Rhône",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-12T12:00:00",
+        "v2": "2026-06-12T12:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2987833?orgAcronyme=f2h.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "2026-005",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "Réalisation d’opérations comptables et assistance fonctionnelle sur le système d’information financier et comptable SIFAC/SIFAC+ (S4/HANA SAP) de CentraleSupelec",
+        "v2": "Réalisation d’opérations comptables et assistance fonctionnelle sur le système d’information financier et comptable SIFAC/SIFAC+ (S4/HANA SAP) de CentraleSupelec",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "EOESRI / SUPELEC - Centrale SUPELEC",
+        "v2": "EOESRI / SUPELEC - Centrale SUPELEC",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "79211100",
+          "72212440"
+        ],
+        "v2": [
+          "79211100",
+          "72212440"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(91) Essonne",
+        "v2": "(91) Essonne",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-12T12:00:00",
+        "v2": "2026-06-12T12:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2990888?orgAcronyme=d3f.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "26_AMOE_AST",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "Accord-cadre d’assistance à maîtrise d’œuvre des applications du socle transverse",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "MJL / SG / DNUM - Direction du numérique",
+        "v2": "MJL / SG / DNUM - Direction du numérique",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72267100",
+          "72227000"
+        ],
+        "v2": [
+          "72267100",
+          "72227000"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "Ministère de la Justice",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-17T14:00:00",
+        "v2": "2026-06-17T14:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2992873?orgAcronyme=d4t.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "AOO_2026-02",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "Assistance à maîtrise d’ouvrage pour la conception et la passation de marchés publics de développement d’outils de gestion et de visualisation de données sur l’eau sur le bassin versant Marais poitevin",
+        "v2": "Assistance à maîtrise d’ouvrage pour la conception et la passation de marchés publics de développement d’outils de gestion et de visualisation de données sur l’eau sur le bassin versant Marais poitevin",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Ministère de la Transition Écologique, Ministère de la Cohésion des Territoires, Ministère de la Mer",
+        "v2": "MTES-MCTRCT-MER / EP / EP MP - Etablissement Public du Marais Poitevin",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "48810000",
+          "72222000",
+          "71241000"
+        ],
+        "v2": [
+          "48810000",
+          "72222000",
+          "71241000"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(85) Vendée, (17) Charente-Maritime, (79) Deux-Sèvres",
+        "v2": "(85) Vendée, (17) Charente-Maritime, (79) Deux-Sèvres",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-22T12:00:00",
+        "v2": "2026-06-22T12:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2997383?orgAcronyme=s2d.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "B26-01107-LS",
+        "v2": "B26-01107-LS",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de tierce maintenance applicative (TMA) des Logiciels Systèmes Energétiques du CEA Liten",
+        "v2": "Prestations de tierce maintenance applicative (TMA) des Logiciels Systèmes Energétiques du CEA Liten",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "AO / CEA / CEA / GRENOBLE - CENTRE DE GRENOBLE",
+        "v2": "AO / CEA / CEA / GRENOBLE - CENTRE DE GRENOBLE",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72250000"
+        ],
+        "v2": [
+          "72250000"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(38) Isère",
+        "v2": "(38) Isère",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Appel d'offres ouvert",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-10T16:00:00",
+        "v2": "2026-06-10T16:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "2998043?orgAcronyme=f2h.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "PLACE_NUMERIC",
+        "v2": "PLACE_NUMERIC",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "RFI_CRM_2026-02",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "title",
+        "legacy": "RFI \"Outil de connaissance et de gestion des relations extérieures du CNRS\"",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "EOESRI / CNRS / CNRS - DR14 - CNRS Délégation Occitanie Ouest",
+        "v2": "EOESRI / CNRS / CNRS - DR14 - CNRS Délégation Occitanie Ouest",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72212445"
+        ],
+        "v2": [
+          "72212445"
+        ],
+        "status": "match"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "",
+        "status": "both_empty"
+      },
+      {
+        "field": "location",
+        "legacy": "(75) Paris, (92) Hauts-de-Seine, (31) Haute-Garonne",
+        "v2": "(75) Paris, (92) Hauts-de-Seine, (31) Haute-Garonne",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Procédure autre",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-15T12:00:00",
+        "v2": "2026-06-15T12:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "36parisien1157695-2026-infogerance-systeme-information.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "FRANCE_MARCHES",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "1157695",
+        "v2": "1157695",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Infogérance du système d'information de la ville de Croissy-sur-Seine",
+        "v2": "Infogérance du système d'information de la ville de Croissy-sur-Seine Enregistrer cet appel d’offre Localisation : Yvelines (78) - Croissy-sur-Seine Date de clotûre",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Ville de Croissy-sur-Seine",
+        "v2": "Ville de Croissy-sur-Seine",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.francemarches.com/appel-offre/36parisien1157695-2026-infogerance-systeme-information",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Plusieurs lieux",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Procédure adaptée",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "37ao26154015290520267275-2026-cadrage-conception-developpement.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "37AO26154015290520267275",
+        "v2": "26_TMA_CASIER",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Cadrage, la conception, le développement, le maintien en conditions opérationnelles et de sécurité et l'assistance pour les applications composant le système d'information du Casier Judiciaire",
+        "v2": "Accord-cadre",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Ministère de la Justice",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72267100",
+          "72267000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/26_TMA_CASIER",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Paris, Amiens, Nantes et locaux du titulaire / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Paris ( FR101 )",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 16000000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "37ao26181552260520267275-2026-prestations-assistance-technique.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "37AO26181552260520267275",
+        "v2": "07_26",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations d'assistance technique, d'expertise et de conseil concernant les infrastructures, les services applicatifs et l'urbanisation du système d'information (' SI ') de la CNAF",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "CNAF Établissement public",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72220000",
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/07_26",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Paris / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Paris ( FR101 )",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 24,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 8700000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "37ao26181581260520263294-2026-prestations-assistance-expertise.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "37AO26181581260520263294",
+        "v2": "DAF_2025_001001",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Commissariat au Numérique de Défense (CND)",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72220000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/DAF_2025_001001",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Le Kremlin-Bicêtre / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Val-de-Marne ( FR107 )",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 66,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 18025000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2640079-2026-mise-disposition-adaptation.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2640079",
+        "v2": "3boamp2640079-2026-mise-disposition-adaptation",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Mise à disposition, adaptation et maintenance du système d'information financière destiné à la gestion budgétaire et comptable de la HAS, organisme en comptabilité budgétaire publique.",
+        "v2": "Mise à disposition, adaptation et maintenance du système d’information financière destiné à la gestion budgétaire et comptable de la HAS, organisme en comptabilité budgétaire publique, ainsi qu’à la préparation et au suivi d’exécution de son budget",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Haute Autorité de Santé",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "48442000",
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/273519-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Autre procédure en une seule étape",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-07-08T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2641049-2026-assistance-externe-pour.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2641049",
+        "v2": "DGFIP-DRS-2500077",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l'information et de la communication",
+        "v2": "Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Direction Générale des Finances Publiques",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72220000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/DGFIP-DRS-2500077",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Montreuil / Seine-Saint-Denis",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 400000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2641974-2026-maintien-condition-operationnelle.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2641974",
+        "v2": "3boamp2641974-2026-maintien-condition-operationnelle",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP",
+        "v2": "Accord-cadre",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "VILLE de PARIS - DFA - SDA",
+        "v2": "VILLE DE PARIS-DFA-SDA",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "79995200",
+          "30237380",
+          "79999100",
+          "30234400",
+          "72250000",
+          "79952000",
+          "60181000",
+          "22110000",
+          "22112000",
+          "22111000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/274985-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Subdivision pays (NUTS) : Paris ( FR101 )",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-09T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2642071-2026-assistance-ingenierie-coordination.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2642071",
+        "v2": "3boamp2642071-2026-assistance-ingenierie-coordination",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "ASSISTANCE EN INGENIERIE DE COORDINATION DE PROJETS DATA \\\\\\/ INGENIERIE D'EXPERTISE DATA AU SEIN DE LA DIRECTION DU SYSTEME D'INFORMATION DE LA REGION NOUVELLE-AQUITAINE",
+        "v2": "ASSISTANCE EN INGENIERIE DE COORDINATION DE PROJETS DATA / INGENIERIE D'EXPERTISE DATA AU SEIN DE LA DIRECTION DU SYSTEME D'INFORMATION DE LA REGION NOUVELLE-AQUITAINE",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Région Nouvelle-Aquitaine",
+        "v2": "Région Nouvelle-Aquitaine",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72220000",
+          "45421000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/264857-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Subdivision pays (NUTS) : Gironde ( FRI12 )",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-05-29T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 3,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2642106-2026-acquisition-mise-oeuvre.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2642106",
+        "v2": "3boamp2642106-2026-acquisition-mise-oeuvre",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Acquisition et mise en œuvre d'une solution ERP en mode SaaS avec site web marchand et application mobile",
+        "v2": "Acquisition et mise en œuvre d'une solution ERP en mode SaaS avec site web marchand et application mobile",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Association ASF Vacances",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/288908-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-05T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2642682-2026-renouvellement-maintenance-serveurs.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2642682",
+        "v2": "3boamp2642682-2026-renouvellement-maintenance-serveurs",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées",
+        "v2": "Renouvellement et maintenance des serveurs de sauvegarde et prestations associées",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "SICIO",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72250000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/294682-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-04T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2643374-2026-refonte-site-internet.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2643374",
+        "v2": "de la consultation",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "REFONTE DU SITE INTERNET DE L'ACADEMIE FRANCAISE - HEBERGEMENT - MAINTENANCE",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "buyer",
+        "legacy": "ACADEMIE FRANCAISE",
+        "v2": "",
+        "status": "only_legacy"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/de la consultation",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "PARIS / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Procédure adaptée",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2643609-2026-prestations-services-informatiques.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2643609",
+        "v2": "M_3530",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA",
+        "v2": "Prestations de services informatiques pour le développement et la maintenance des outils",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "GCS-UNIHA",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72261000",
+          "72200000",
+          "72262000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/M_3530",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "LYON / Rhône",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2644098-2026-prestations-conseil-collecte.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2644098",
+        "v2": "3boamp2644098-2026-prestations-conseil-collecte",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de conseil, de collecte, de développement, d'exploitation de données pour le Data Office",
+        "v2": "Prestations de conseil, de collecte, de développement, d'exploitation de données pour le Data Office",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Organisation qui passe un marché subventionné par un pouvoir adjudicateur",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72600000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/302559-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-03T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2644226-2026-assistance-maitrise-oeuvre.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2644226",
+        "v2": "2026-22",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Assistance à maîtrise d'oeuvre : prestations d'expertise, de développements informatiques et d'assistance technique",
+        "v2": "Accord cadre mono/multi-attributaire en procèdure d'appel d'offre ouvert",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "INSTITUT FRANCAIS DUCHEVAL ET DE L'EQUITATION",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72500000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/2026-22",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Arnac-Pompadour / Corrèze",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 2000000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2644837-2026-systeme-information-dpsm.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2644837",
+        "v2": "3boamp2644837-2026-systeme-information-dpsm",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "TMA - TME DU SYSTEME D'INFORMATION DU DPSM",
+        "v2": "TMA - TME DU SYSTEME D'INFORMATION DU DPSM",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Bureau de Recherche en Géologie Minière (BRGM)",
+        "v2": "Bureau de Recherche en Géologie Minière (BRGM)",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72610000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/309435-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-05T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 48,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2646966-2026-present-marche-pour?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2646966",
+        "v2": "2026-04",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Le présent marché a pour objet des prestations de maintien en condition opérationnelle de l'architecture technique de stockage de données et virtualisation de la HAS et des prestations associées.",
+        "v2": "PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "2026-04",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72267100"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/2026-04",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Saint-Denis La Plaine Cedex / Seine-Saint-Denis",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Restreinte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 440000.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2647530",
+        "v2": "3boamp2647530-2026-missions-infogerance-systemes?q=72200000",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "MISSIONS D'INFOGERANCE DE SYSTEMES D'INFORMATION",
+        "v2": "MISSIONS D'INFOGERANCE DE SYSTEMES D'INFORMATION",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Syndicat des énergies et de l'aménagement numérique de la Haute-Savoie (SYANE)",
+        "v2": "Syndicat des énergies et de l'aménagement numérique de la Haute-Savoie (SYANE)",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72610000",
+          "72514000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://ted.europa.eu/fr/notice/-/detail/327362-2026",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "officiels de l’organisme acheteur public",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": "2026-06-11T00:00:00",
+        "status": "only_v2"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": 171.0,
+        "status": "only_v2"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2647639-2026-mise-place-outil?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2647639",
+        "v2": "INPI-1847",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "MIse en place d'un outil conversationnel (chatbot).",
+        "v2": "Mise en place d’un outil conversationnel (chatbot)",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Tribunal admnistratif Cergy-Pontoise",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/INPI-1847",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "Courbevoie / Paris",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 12,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "FRANCE_MARCHES",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2648308",
+        "v2": "3/boamp/2648308",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestation IT : Réseau \\\\\\/ Cloud \\\\\\/ Sécurité",
+        "v2": "Prestation IT : Réseau / Cloud / Sécurité",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "SPL P.A.R.S.E.F",
+        "v2": "SPL P.A.R.S.E.F",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72000000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.francemarches.com/appel-offre/3boamp2648308-2026-prestation-reseau-cloud",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "(77) Seine-et-Marne",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Procédure adaptée",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "DAF_2025_001001.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "DAF_2025_001001",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM",
+        "v2": "Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "MINDEF/DIRISI/Bureau Marchés.",
+        "v2": "MINDEF/DIRISI/Bureau Marchés",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "17770704",
+          "01562033",
+          "32786617",
+          "96813755",
+          "72220000"
+        ],
+        "v2": [
+          "72220000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/prestations-d-assistance-et-d-expertise-pour-la-migrati/ao-9591946-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Le Kremlin-Bicêtre (94270) - Val-de-Marne ( FR107 )",
+        "v2": "94 - MINISTERE DES ARMEES",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-05-26T00:00:00",
+        "v2": "2026-05-26T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 66,
+        "v2": 66,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 18025000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "DDA.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "DDA",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)",
+        "v2": "Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Compagnie Nationale du Rhône",
+        "v2": "Compagnie Nationale du Rhône",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "17690111",
+          "72263000",
+          "48820000",
+          "06838919",
+          "72600000"
+        ],
+        "v2": [
+          "48820000",
+          "72263000",
+          "72600000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/accord-cadre-infrastructure-hyperconvergee-et-vdi-vir/ao-9598475-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Lyon (69004) - Rhône (FRK26)",
+        "v2": "69 - LYON",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "v2": "Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-10T00:00:00",
+        "v2": "2026-06-10T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": 96,
+        "status": "only_v2"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "Lot.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "Lot",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Renouvellement du système d'information, virtualisation de serveurs, plateforme de stockage et système de sauvegarde",
+        "v2": "Renouvellement du système d'information, virtualisation de serveurs, plateforme de stockage et système de sauvegarde",
+        "status": "match"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Le Muretain Agglo",
+        "v2": "Le Muretain Agglo",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "51611100",
+          "48800000",
+          "53446614",
+          "58005186",
+          "20006864"
+        ],
+        "v2": [
+          "48822000",
+          "48800000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/renouvellement-du-systeme-d-information-virtualisatio/ao-9597894-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "MURET Cedex (31601) - Haute-Garonne ( FRJ23 )",
+        "v2": "31 - MURET",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Fournitures",
+        "v2": "Fournitures",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-02T00:00:00",
+        "v2": "2026-06-02T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 60,
+        "v2": 60,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "M_3530.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "FRANCE_MARCHES",
+        "v2": "BOAMP_XML",
+        "status": "diff"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "3/boamp/2643609",
+        "v2": "M_3530",
+        "status": "diff"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA",
+        "v2": "Prestations de services informatiques pour le développement et la maintenance des outils",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "GCS-UNIHA",
+        "v2": "Opérateur",
+        "status": "diff"
+      },
+      {
+        "field": "cpv",
+        "legacy": [],
+        "v2": [
+          "72261000",
+          "72262000"
+        ],
+        "status": "only_v2"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.boamp.fr/avis/detail/M_3530",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "",
+        "v2": "LYON / Rhône",
+        "status": "only_v2"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "",
+        "v2": "Ouverte",
+        "status": "only_v2"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "ao-9594452-1.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "MO-9594452",
+        "v2": "MO-9594452",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV..",
+        "v2": "Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)",
+        "v2": "Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72611000",
+          "72500000",
+          "72610000",
+          "01400375",
+          "01445944"
+        ],
+        "v2": [
+          "72611000",
+          "72500000",
+          "72610000",
+          "72600000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/marche-de-prestations-de-maintenance-d-assistance-et-d/ao-9594452-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "Paris (75019) - Paris ( FR101 )",
+        "v2": "75 - EPPGHV",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-01T00:00:00",
+        "v2": "2026-06-01T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 660000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "ao-9596025-2.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "MO-9596025",
+        "v2": "MO-9596025",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Prestations de services informatiques pour le développement et la maintenance des outils informatiques.",
+        "v2": "Prestations de services informatiques pour le développement et la maintenance des outils informatiques",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "GCS UNIHA",
+        "v2": "GCS UNIHA",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72261000",
+          "13000222",
+          "17690005",
+          "72200000",
+          "72262000"
+        ],
+        "v2": [
+          "72261000",
+          "72200000",
+          "72262000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/prestations-de-services-informatiques-pour-le-developp/ao-9596025-2",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "LYON (69003) - Rhône ( FRK26 )",
+        "v2": "69 - LYON",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-02T00:00:00",
+        "v2": "2026-06-02T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 900000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "ao-9597280-1.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 1,
+        "v2": 2,
+        "status": "diff"
+      },
+      {
+        "field": "reference",
+        "legacy": "MO-9597280",
+        "v2": "MO-9597280",
+        "status": "match"
+      },
+      {
+        "field": "title",
+        "legacy": "Fourniture, mise en oeuvre et maintien en condition opérationnelle de l'infrastructure informatique de CMC.",
+        "v2": "Fourniture, mise en oeuvre et maintien en condition opérationnelle de l'infrastructure informatique de CMC",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "Centre Morbihan Communauté",
+        "v2": "Centre Morbihan Communauté",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "72222300",
+          "29744225",
+          "72250000",
+          "17350005",
+          "48000000"
+        ],
+        "v2": [
+          "72250000",
+          "48000000",
+          "72222300"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/fourniture-mise-en-oeuvre-et-maintien-en-condition-op/ao-9597280-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "LOCMINE CEDEX (56503) - Morbihan ( FRH04 )",
+        "v2": "56 - CC CENTRE MORBIHAN",
+        "status": "diff"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Ouverte",
+        "v2": "Ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "Services",
+        "v2": "Services",
+        "status": "match"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-06-02T00:00:00",
+        "v2": "2026-06-02T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": 48,
+        "v2": 48,
+        "status": "match"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": 450000.0,
+        "v2": null,
+        "status": "only_legacy"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  },
+  {
+    "file": "de.html",
+    "fields": [
+      {
+        "field": "source_type",
+        "legacy": "MARCHES_ONLINE",
+        "v2": "MARCHES_ONLINE",
+        "status": "match"
+      },
+      {
+        "field": "status",
+        "legacy": 2,
+        "v2": 2,
+        "status": "match"
+      },
+      {
+        "field": "reference",
+        "legacy": "",
+        "v2": "de",
+        "status": "only_v2"
+      },
+      {
+        "field": "title",
+        "legacy": "Infogérance du système d'information de l'INSEAMM.",
+        "v2": "Infogérance du système d'information de l'INSEAMM",
+        "status": "diff"
+      },
+      {
+        "field": "buyer",
+        "legacy": "ESADMM",
+        "v2": "ESADMM",
+        "status": "match"
+      },
+      {
+        "field": "cpv",
+        "legacy": [
+          "20002920",
+          "72500000"
+        ],
+        "v2": [
+          "72500000"
+        ],
+        "status": "diff"
+      },
+      {
+        "field": "url_source",
+        "legacy": "",
+        "v2": "https://www.marchesonline.com/appels-offres/avis/infogerance-du-systeme-d-information-de-l-inseamm/ao-9589316-1",
+        "status": "only_v2"
+      },
+      {
+        "field": "location",
+        "legacy": "13 - MARSEILLE",
+        "v2": "13 - MARSEILLE",
+        "status": "match"
+      },
+      {
+        "field": "procedure_type",
+        "legacy": "Procédure adaptée ouverte",
+        "v2": "Procédure adaptée ouverte",
+        "status": "match"
+      },
+      {
+        "field": "contract_nature",
+        "legacy": "",
+        "v2": "Services",
+        "status": "only_v2"
+      },
+      {
+        "field": "date_limite",
+        "legacy": "2026-05-29T00:00:00",
+        "v2": "2026-05-29T00:00:00",
+        "status": "match"
+      },
+      {
+        "field": "duree_mois",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      },
+      {
+        "field": "estimation_eur",
+        "legacy": null,
+        "v2": null,
+        "status": "both_empty"
+      }
+    ],
+    "legacy_error": null,
+    "v2_error": null
+  }
+]

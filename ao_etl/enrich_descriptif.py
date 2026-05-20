@@ -9,11 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 
-import sys
-from pathlib import Path
-# extract_descriptif.py est à la racine du projet
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from extract_descriptif import extract_descriptif
+from ao_etl.parsing.extract_descriptif import extract_descriptif
 
 log = logging.getLogger(__name__)
 

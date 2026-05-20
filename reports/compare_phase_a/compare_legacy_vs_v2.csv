@@ -1,0 +1,820 @@
+file,field,status,legacy,v2
+13joue002671162026-2026-mise-disposition-gestion.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002671162026-2026-mise-disposition-gestion.html,status,diff,1,2
+13joue002671162026-2026-mise-disposition-gestion.html,reference,match,13/joue/002671162026,13/joue/002671162026
+13joue002671162026-2026-mise-disposition-gestion.html,title,match,Mise à disposition et gestion du workplace IT,Mise à disposition et gestion du workplace IT
+13joue002671162026-2026-mise-disposition-gestion.html,buyer,diff,RESA Innovation et Technologie SA en son nom et pour compte de RESA SA Intercommunale,Opérateur
+13joue002671162026-2026-mise-disposition-gestion.html,cpv,only_v2,[],['72500000']
+13joue002671162026-2026-mise-disposition-gestion.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/267116-2026
+13joue002671162026-2026-mise-disposition-gestion.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002671162026-2026-mise-disposition-gestion.html,procedure_type,only_v2,,Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation
+13joue002671162026-2026-mise-disposition-gestion.html,contract_nature,only_v2,,Services
+13joue002671162026-2026-mise-disposition-gestion.html,date_limite,both_empty,,
+13joue002671162026-2026-mise-disposition-gestion.html,duree_mois,only_v2,,96
+13joue002671162026-2026-mise-disposition-gestion.html,estimation_eur,only_v2,,171.0
+13joue002708922026-2026-fourniture-prestation-service.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002708922026-2026-fourniture-prestation-service.html,status,diff,1,2
+13joue002708922026-2026-fourniture-prestation-service.html,reference,match,13/joue/002708922026,13/joue/002708922026
+13joue002708922026-2026-fourniture-prestation-service.html,title,diff,"Fourniture d'une prestation de service relative à la gestion des activités de data management et la gestion des activités de biostatistiques à visée d'enregistrements auprès des autorités réglementaires au format ADAM des études cliniques pour UNICANCER RetD, les CLCC et les Etablissement affiliés.","fourniture d'une prestation de service relative à la gestion des activités de data management et la gestion des activités de biostatistiques à visée d'enregistrements auprès des autorités réglementaires au format ADAM des études cliniques pour UNICANCER RetD, les CLCC et les Etablissement affiliés"
+13joue002708922026-2026-fourniture-prestation-service.html,buyer,diff,UNICANCER ACHATS,Opérateur
+13joue002708922026-2026-fourniture-prestation-service.html,cpv,only_v2,[],"['72212463', '72310000', '72322000', '72200000', '72316000']"
+13joue002708922026-2026-fourniture-prestation-service.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/270892-2026
+13joue002708922026-2026-fourniture-prestation-service.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002708922026-2026-fourniture-prestation-service.html,procedure_type,only_v2,,Ouverte
+13joue002708922026-2026-fourniture-prestation-service.html,contract_nature,only_v2,,Services
+13joue002708922026-2026-fourniture-prestation-service.html,date_limite,only_v2,,2026-05-18T00:00:00
+13joue002708922026-2026-fourniture-prestation-service.html,duree_mois,only_v2,,36
+13joue002708922026-2026-fourniture-prestation-service.html,estimation_eur,only_v2,,171.0
+13joue002845752026-2026-marche-prestations-maintenance.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002845752026-2026-marche-prestations-maintenance.html,status,diff,1,2
+13joue002845752026-2026-marche-prestations-maintenance.html,reference,match,13/joue/002845752026,13/joue/002845752026
+13joue002845752026-2026-marche-prestations-maintenance.html,title,diff,"MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV.","MARCHE DE PRESTATIONS DE MAINTENANCE D'ASSISTANCE ET D'INFOGERANCE DU PARC INFORMATIQUE, RESEAU ET TELECOM DE L'EPPGHV"
+13joue002845752026-2026-marche-prestations-maintenance.html,buyer,diff,EPPGHV,Opérateur
+13joue002845752026-2026-marche-prestations-maintenance.html,cpv,only_v2,[],"['72611000', '72500000', '72610000', '72600000']"
+13joue002845752026-2026-marche-prestations-maintenance.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/284575-2026
+13joue002845752026-2026-marche-prestations-maintenance.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002845752026-2026-marche-prestations-maintenance.html,procedure_type,only_v2,,Ouverte
+13joue002845752026-2026-marche-prestations-maintenance.html,contract_nature,only_v2,,Services
+13joue002845752026-2026-marche-prestations-maintenance.html,date_limite,only_v2,,2026-06-01T00:00:00
+13joue002845752026-2026-marche-prestations-maintenance.html,duree_mois,only_v2,,48
+13joue002845752026-2026-marche-prestations-maintenance.html,estimation_eur,only_v2,,171.0
+13joue002850982026-2026-accord-cadre-bons.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002850982026-2026-accord-cadre-bons.html,status,diff,1,2
+13joue002850982026-2026-accord-cadre-bons.html,reference,match,13/joue/002850982026,13/joue/002850982026
+13joue002850982026-2026-accord-cadre-bons.html,title,match,Accord-cadre à bons de commande pour le maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP,Accord-cadre à bons de commande pour le maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP
+13joue002850982026-2026-accord-cadre-bons.html,buyer,match,VILLE de PARIS - DFA - SDA,VILLE de PARIS - DFA - SDA
+13joue002850982026-2026-accord-cadre-bons.html,cpv,only_v2,[],"['79995200', '30237380', '79999100', '30234400', '72250000', '79952000', '60181000', '22110000', '22112000', '22111000']"
+13joue002850982026-2026-accord-cadre-bons.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/285098-2026
+13joue002850982026-2026-accord-cadre-bons.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002850982026-2026-accord-cadre-bons.html,procedure_type,only_v2,,Ouverte
+13joue002850982026-2026-accord-cadre-bons.html,contract_nature,only_v2,,Services
+13joue002850982026-2026-accord-cadre-bons.html,date_limite,only_v2,,2026-06-09T00:00:00
+13joue002850982026-2026-accord-cadre-bons.html,duree_mois,only_v2,,48
+13joue002850982026-2026-accord-cadre-bons.html,estimation_eur,only_v2,,171.0
+13joue002925532026-2026-marche-public-relatif.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002925532026-2026-marche-public-relatif.html,status,diff,1,2
+13joue002925532026-2026-marche-public-relatif.html,reference,match,13/joue/002925532026,13/joue/002925532026
+13joue002925532026-2026-marche-public-relatif.html,title,diff,"Marché public relatif à la mise à disposition d'un système ERP intégré portant sur la gestion financière, les ressources humaines et les composants annexes","Marché public relatif à la mise à disposition d’un système ERP intégré portant sur la gestion financière, les ressources humaines et les composants annexes"
+13joue002925532026-2026-marche-public-relatif.html,buyer,diff,Parlement Wallon,Opérateur
+13joue002925532026-2026-marche-public-relatif.html,cpv,only_v2,[],['72000000']
+13joue002925532026-2026-marche-public-relatif.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/292553-2026
+13joue002925532026-2026-marche-public-relatif.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002925532026-2026-marche-public-relatif.html,procedure_type,only_v2,,Ouverte
+13joue002925532026-2026-marche-public-relatif.html,contract_nature,only_v2,,Services
+13joue002925532026-2026-marche-public-relatif.html,date_limite,only_v2,,2026-06-08T00:00:00
+13joue002925532026-2026-marche-public-relatif.html,duree_mois,both_empty,,
+13joue002925532026-2026-marche-public-relatif.html,estimation_eur,only_v2,,171.0
+13joue002929142026-2026-accompagnement-convergence-systemes.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002929142026-2026-accompagnement-convergence-systemes.html,status,diff,1,2
+13joue002929142026-2026-accompagnement-convergence-systemes.html,reference,match,13/joue/002929142026,13/joue/002929142026
+13joue002929142026-2026-accompagnement-convergence-systemes.html,title,diff,Accompagnement à la convergence des systèmes d'information de scolarité du Conservatoire national des arts et métiers – Cnam - Paris,Accompagnement à la convergence des systèmes d’information de scolarité du Conservatoire national des arts et métiers – Cnam - Paris
+13joue002929142026-2026-accompagnement-convergence-systemes.html,buyer,diff,Conservatoire national des arts et métiers -Cnam,Opérateur
+13joue002929142026-2026-accompagnement-convergence-systemes.html,cpv,only_v2,[],"['72224100', '72224000', '72000000']"
+13joue002929142026-2026-accompagnement-convergence-systemes.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/292914-2026
+13joue002929142026-2026-accompagnement-convergence-systemes.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002929142026-2026-accompagnement-convergence-systemes.html,procedure_type,only_v2,,Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation
+13joue002929142026-2026-accompagnement-convergence-systemes.html,contract_nature,only_v2,,Services
+13joue002929142026-2026-accompagnement-convergence-systemes.html,date_limite,both_empty,,
+13joue002929142026-2026-accompagnement-convergence-systemes.html,duree_mois,only_v2,,48
+13joue002929142026-2026-accompagnement-convergence-systemes.html,estimation_eur,only_v2,,171.0
+13joue002939872026-2026-marche-pour-maintenance.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002939872026-2026-marche-pour-maintenance.html,status,diff,1,2
+13joue002939872026-2026-marche-pour-maintenance.html,reference,match,13/joue/002939872026,13/joue/002939872026
+13joue002939872026-2026-marche-pour-maintenance.html,title,match,"Marché pour la maintenance applicative, corrective et évolutive du site internet Culturethèque (et toutes ses fonctionnalités) et pour l'hébergement","Marché pour la maintenance applicative, corrective et évolutive du site internet Culturethèque (et toutes ses fonctionnalités) et pour l'hébergement"
+13joue002939872026-2026-marche-pour-maintenance.html,buyer,diff,Institut Français,Opérateur
+13joue002939872026-2026-marche-pour-maintenance.html,cpv,only_v2,[],['72000000']
+13joue002939872026-2026-marche-pour-maintenance.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/293987-2026
+13joue002939872026-2026-marche-pour-maintenance.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002939872026-2026-marche-pour-maintenance.html,procedure_type,only_v2,,Ouverte
+13joue002939872026-2026-marche-pour-maintenance.html,contract_nature,only_v2,,Services
+13joue002939872026-2026-marche-pour-maintenance.html,date_limite,only_v2,,2026-06-08T00:00:00
+13joue002939872026-2026-marche-pour-maintenance.html,duree_mois,both_empty,,
+13joue002939872026-2026-marche-pour-maintenance.html,estimation_eur,only_v2,,171.0
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,status,diff,1,2
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,reference,match,13/joue/002946202026,13/joue/002946202026
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,title,diff,"La continuité, l'exploitation, l'hébergement, la maintenance et le développement de la plateforme de notification eTOD",La continuité
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,buyer,diff,Institut géographique national,Opérateur
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,cpv,only_v2,[],['72000000']
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/294620-2026
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,procedure_type,only_v2,,Ouverte
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,contract_nature,only_v2,,Services
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,date_limite,only_v2,,2026-06-15T00:00:00
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,duree_mois,both_empty,,
+13joue002946202026-2026-continuite-exploitation-hebergement?q=h%C3%A9bergement web.html,estimation_eur,only_v2,,171.0
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,status,diff,1,2
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,reference,match,13/joue/002946822026,13/joue/002946822026
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,title,match,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,buyer,diff,SICIO,Opérateur
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,cpv,only_v2,[],['72250000']
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/294682-2026
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,procedure_type,only_v2,,Ouverte
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,contract_nature,only_v2,,Services
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,date_limite,only_v2,,2026-06-04T00:00:00
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,duree_mois,both_empty,,
+13joue002946822026-2026-renouvellement-maintenance-serveurs.html,estimation_eur,only_v2,,171.0
+13joue003036002026-2026-accord-cadre-infrastructure.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003036002026-2026-accord-cadre-infrastructure.html,status,diff,1,2
+13joue003036002026-2026-accord-cadre-infrastructure.html,reference,match,13/joue/003036002026,13/joue/003036002026
+13joue003036002026-2026-accord-cadre-infrastructure.html,title,match,Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure),Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)
+13joue003036002026-2026-accord-cadre-infrastructure.html,buyer,diff,Compagnie Nationale du Rhône,Opérateur
+13joue003036002026-2026-accord-cadre-infrastructure.html,cpv,only_v2,[],"['48820000', '72263000', '72600000']"
+13joue003036002026-2026-accord-cadre-infrastructure.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/303600-2026
+13joue003036002026-2026-accord-cadre-infrastructure.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003036002026-2026-accord-cadre-infrastructure.html,procedure_type,only_v2,,Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation
+13joue003036002026-2026-accord-cadre-infrastructure.html,contract_nature,only_v2,,Services
+13joue003036002026-2026-accord-cadre-infrastructure.html,date_limite,both_empty,,
+13joue003036002026-2026-accord-cadre-infrastructure.html,duree_mois,both_empty,,
+13joue003036002026-2026-accord-cadre-infrastructure.html,estimation_eur,only_v2,,171.0
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,status,diff,1,2
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,reference,match,13/joue/003085442026,13/joue/003085442026
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,title,match,"Fourniture de solutions d'infrastructure informatique (matériels, logiciels et prestations associées)","Fourniture de solutions d'infrastructure informatique (matériels, logiciels et prestations associées)"
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,buyer,diff,Union des Groupements d'Achats Publics,Opérateur
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,cpv,only_v2,[],['48822000']
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/308544-2026
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,procedure_type,only_v2,,Ouverte
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,contract_nature,only_v2,,Fournitures
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,date_limite,only_v2,,2026-06-29T00:00:00
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,duree_mois,only_v2,,36
+13joue003085442026-2026-fourniture-solutions-infrastructure.html,estimation_eur,only_v2,,171.0
+13joue003107212026-2026-maintien-condition-operationnelle.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003107212026-2026-maintien-condition-operationnelle.html,status,diff,1,2
+13joue003107212026-2026-maintien-condition-operationnelle.html,reference,match,13/joue/003107212026,13/joue/003107212026
+13joue003107212026-2026-maintien-condition-operationnelle.html,title,diff,"Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde \\\/ Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre","Maintien en Condition Opérationnelle de l’Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre"
+13joue003107212026-2026-maintien-condition-operationnelle.html,buyer,match,Centre Hospitalier de l'Agglomération de Nevers,Centre Hospitalier de l'Agglomération de Nevers
+13joue003107212026-2026-maintien-condition-operationnelle.html,cpv,only_v2,[],['72500000']
+13joue003107212026-2026-maintien-condition-operationnelle.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/310721-2026
+13joue003107212026-2026-maintien-condition-operationnelle.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003107212026-2026-maintien-condition-operationnelle.html,procedure_type,only_v2,,Ouverte
+13joue003107212026-2026-maintien-condition-operationnelle.html,contract_nature,only_v2,,Services
+13joue003107212026-2026-maintien-condition-operationnelle.html,date_limite,only_v2,,2026-06-05T00:00:00
+13joue003107212026-2026-maintien-condition-operationnelle.html,duree_mois,both_empty,,
+13joue003107212026-2026-maintien-condition-operationnelle.html,estimation_eur,only_v2,,171.0
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,status,diff,1,2
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,reference,match,13/joue/003228322026,13/joue/003228322026
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,title,diff,"La continuité, l'exploitation, l'hébergement, la maintenance et le développement de la plateforme de notification eTOD","La continuité, l’exploitation, l’hébergement, la maintenance et le développement de la plateforme de notification eTOD"
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,buyer,diff,Institut géographique national,Opérateur
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,cpv,only_v2,[],['72000000']
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/322832-2026
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,procedure_type,only_v2,,Ouverte
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,contract_nature,only_v2,,Services
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,date_limite,only_v2,,2026-06-15T00:00:00
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,duree_mois,both_empty,,
+13joue003228322026-2026-continuite-exploitation-hebergement?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,status,diff,1,2
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,reference,match,13/joue/003237302026,13/joue/003237302026
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,title,match,Prestations de Tierce Maintenance Applicative des Logiciels Systèmes Energétiques du LITEN,Prestations de Tierce Maintenance Applicative des Logiciels Systèmes Energétiques du LITEN
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,buyer,diff,COMMISSARIAT A L'ENERGIE ATOMIQUE,Opérateur
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,cpv,only_v2,[],"['72500000', '72250000']"
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/323730-2026
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,procedure_type,only_v2,,Ouverte
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,contract_nature,only_v2,,Services
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,date_limite,only_v2,,2026-06-10T00:00:00
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,duree_mois,both_empty,,
+13joue003237302026-2026-prestations-tierce-maintenance?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,status,diff,1,2
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,reference,match,13/joue/003241312026,13/joue/003241312026
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,title,match,PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL,PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,buyer,diff,2026-04,Opérateur
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,cpv,only_v2,[],"['72267100', '72250000', '72000000']"
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/324131-2026
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,procedure_type,only_v2,,Restreinte
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,contract_nature,only_v2,,Services
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,date_limite,both_empty,,
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,duree_mois,only_v2,,12
+13joue003241312026-2026-prestations-support-maintenance?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,status,diff,1,2
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,reference,match,13/joue/003272002026,13/joue/003272002026
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,title,match,Accompagnement à l extension de l ITSM de la DSI,Accompagnement à l extension de l ITSM de la DSI
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,buyer,match,DSI - Direction des systèmes d information,DSI - Direction des systèmes d information
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,cpv,only_v2,[],['72000000']
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/327200-2026
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,procedure_type,only_v2,,Ouverte
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,contract_nature,only_v2,,Services
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,date_limite,only_v2,,2026-06-16T00:00:00
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,duree_mois,both_empty,,
+13joue003272002026-2026-accompagnement-extension-itsm?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,status,diff,1,2
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,reference,match,13/joue/003278382026,13/joue/003278382026
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,title,match,HISI V2 - Hébergement et infogérance des sites internet,HISI V2 - Hébergement et infogérance des sites internet
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,buyer,match,BANQUE DE FRANCE - Direction des Achats,BANQUE DE FRANCE - Direction des Achats
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,cpv,only_v2,[],['72400000']
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/327838-2026
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,procedure_type,only_v2,,Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,contract_nature,only_v2,,Services
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,date_limite,both_empty,,
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,duree_mois,only_v2,,96
+13joue003278382026-2026-hisi-hebergement-infogerance?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,status,diff,1,2
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,reference,match,13/joue/003293162026,13/joue/003293162026
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,title,match,"Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée","Maintenance, hébergement et développements des sites et applicatifs web du Département de la Vendée"
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,buyer,match,Département de la Vendée,Département de la Vendée
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,cpv,only_v2,[],"['72413000', '72400000', '72415000']"
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/329316-2026
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,procedure_type,only_v2,,Ouverte
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,contract_nature,only_v2,,Services
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,date_limite,only_v2,,2026-06-12T00:00:00
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,duree_mois,only_v2,,12
+13joue003293162026-2026-maintenance-hebergement-developpements?q=72200000.html,estimation_eur,only_v2,,171.0
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,status,diff,1,2
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,reference,match,13/joue/003304802026,13/joue/003304802026
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,title,match,Groupement de commandes pour la fourniture de services de sécurité informatique pour les réseaux d'accès normands au profit des Etablissements Publics Locaux d'Enseignement,Groupement de commandes pour la fourniture de services de sécurité informatique pour les réseaux d'accès normands au profit des Etablissements Publics Locaux d'Enseignement
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,buyer,diff,REGION NORMANDIE,Opérateur
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,cpv,only_v2,[],['72600000']
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/330480-2026
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,procedure_type,only_v2,,Ouverte
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,contract_nature,only_v2,,Services
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,date_limite,only_v2,,2026-06-23T00:00:00
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,duree_mois,only_v2,,24
+13joue003304802026-2026-groupement-commandes-pour?q=72200000.html,estimation_eur,only_v2,,171.0
+2026-022-BL.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026-022-BL.html,status,match,2,2
+2026-022-BL.html,reference,only_v2,,2026-022-BL
+2026-022-BL.html,title,diff,Prestations logicielles relatives aux automates industriels pour SOLEIL II.,Prestations logicielles relatives aux automates industriels pour SOLEIL II
+2026-022-BL.html,buyer,match,Synchrotron Soleil,Synchrotron Soleil
+2026-022-BL.html,cpv,diff,"['01693591', '17750111', '40956310', '01607678', '48100000']","['48100000', '72600000']"
+2026-022-BL.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/prestations-logicielles-relatives-aux-automates-industr/ao-9596814-1
+2026-022-BL.html,location,diff,SAINT-AUBIN (91190) - Essonne ( FR104 ),91 - SYNCHROTRON SOLEIL
+2026-022-BL.html,procedure_type,match,Ouverte,Ouverte
+2026-022-BL.html,contract_nature,match,Services,Services
+2026-022-BL.html,date_limite,match,2026-06-01T00:00:00,2026-06-01T00:00:00
+2026-022-BL.html,duree_mois,match,12,12
+2026-022-BL.html,estimation_eur,both_empty,,
+2026-30.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026-30.html,status,match,2,2
+2026-30.html,reference,only_v2,,2026-30
+2026-30.html,title,diff,"Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre.","Maintien en Condition Opérationnelle de l'Infrastructure Système, Stockage, Serveurs et Sauvegarde / Renouvellement, installation et maintenance de composants essentiels - GHT de la Nièvre"
+2026-30.html,buyer,match,GHT de la Nièvre - Centre hospitalier Pierre Beregovoy,GHT de la Nièvre - Centre hospitalier Pierre Beregovoy
+2026-30.html,cpv,diff,"['72500000', '38693745', '17210005', '20001120']",['72500000']
+2026-30.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/maintien-en-condition-operationnelle-de-l-infrastructu/ao-9599869-1
+2026-30.html,location,diff,NEVERS cedex (58033) - Nièvre ( FRC12 ),58 - NEVERS
+2026-30.html,procedure_type,match,Ouverte,Ouverte
+2026-30.html,contract_nature,match,Services,Services
+2026-30.html,date_limite,match,2026-06-05T00:00:00,2026-06-05T00:00:00
+2026-30.html,duree_mois,both_empty,,
+2026-30.html,estimation_eur,both_empty,,
+202604-02.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+202604-02.html,status,match,2,2
+202604-02.html,reference,only_v2,,202604-02
+202604-02.html,title,diff,"Fourniture et intégration de matériels et logiciels informatiques, services d'infogérance et de cybersécurité.","Fourniture et intégration de matériels et logiciels informatiques, services d'infogérance et de cybersécurité"
+202604-02.html,buyer,match,SPL SEMEA,SPL SEMEA
+202604-02.html,cpv,diff,"['72500000', '05496079', '33480041', '05496068', '72700000']","['72700000', '72500000', '72315200']"
+202604-02.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/fourniture-et-integration-de-materiels-et-logiciels-i/ao-9596601-1
+202604-02.html,location,diff,Angouleme (16000) - Charente ( FRI31 ),16 - ANGOULEME
+202604-02.html,procedure_type,match,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+202604-02.html,contract_nature,match,Services,Services
+202604-02.html,date_limite,match,2026-06-02T00:00:00,2026-06-02T00:00:00
+202604-02.html,duree_mois,only_v2,,84
+202604-02.html,estimation_eur,both_empty,,
+2026A0239.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026A0239.html,status,match,2,2
+2026A0239.html,reference,only_v2,,2026A0239
+2026A0239.html,title,diff,"Prestations de support, infogérance et supervision pour les Services Numériques Éducatifs, et pour les environnements de travail, Data Centers, Infrastructures, Réseaux, Pare-Feux et Téléphonie de la Région Grand-Est, ainsi que de stockage ...","Prestations de support, infogérance et supervision pour les Services Numériques Éducatifs, et pour les environnements de travail, Data Centers, Infrastructures, Réseaux, Pare-Feux et Téléphonie de la Région Grand-Est, ainsi que de stockage"
+2026A0239.html,buyer,match,Région Grand Est,Région Grand Est
+2026A0239.html,cpv,diff,"['03876166', '03882123', '59879872', '63120000', '33480041']","['72600000', '72250000', '63120000', '72253000']"
+2026A0239.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/prestations-de-support-infogerance-et-supervision-pou/ao-9599071-1
+2026A0239.html,location,match,67 - REGION GRAND EST,67 - REGION GRAND EST
+2026A0239.html,procedure_type,match,Ouverte,Ouverte
+2026A0239.html,contract_nature,match,Services,Services
+2026A0239.html,date_limite,match,2026-06-18T00:00:00,2026-06-18T00:00:00
+2026A0239.html,duree_mois,match,24,24
+2026A0239.html,estimation_eur,only_legacy,6500000.0,
+2026M01.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026M01.html,status,match,2,2
+2026M01.html,reference,only_v2,,2026M01
+2026M01.html,title,diff,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées.,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées
+2026M01.html,buyer,match,SICIO,SICIO
+2026M01.html,cpv,diff,"['17770704', '17236554', '45072478', '72250000', '14961357']",['72250000']
+2026M01.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/renouvellement-et-maintenance-des-serveurs-de-sauvegard/ao-9596821-1
+2026M01.html,location,diff,Villeneuve le roi (94290) - Val-de-Marne ( FR107 ),94 - SICIO
+2026M01.html,procedure_type,match,Ouverte,Ouverte
+2026M01.html,contract_nature,match,Services,Services
+2026M01.html,date_limite,match,2026-06-04T00:00:00,2026-06-04T00:00:00
+2026M01.html,duree_mois,match,48,48
+2026M01.html,estimation_eur,only_legacy,800000.0,
+2026MDAF0063.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026MDAF0063.html,status,match,2,2
+2026MDAF0063.html,reference,only_v2,,2026MDAF0063
+2026MDAF0063.html,title,diff,"Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV..","Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV"
+2026MDAF0063.html,buyer,match,Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV),Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)
+2026MDAF0063.html,cpv,diff,"['72611000', '72500000', '72610000', '01400375', '01445944']","['72611000', '72500000', '72610000', '72600000']"
+2026MDAF0063.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/marche-de-prestations-de-maintenance-d-assistance-et-d/ao-9594452-1
+2026MDAF0063.html,location,diff,Paris (75019) - Paris ( FR101 ),75 - EPPGHV
+2026MDAF0063.html,procedure_type,match,Ouverte,Ouverte
+2026MDAF0063.html,contract_nature,match,Services,Services
+2026MDAF0063.html,date_limite,match,2026-06-01T00:00:00,2026-06-01T00:00:00
+2026MDAF0063.html,duree_mois,match,48,48
+2026MDAF0063.html,estimation_eur,only_legacy,660000.0,
+2026_07..html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2026_07..html,status,match,2,2
+2026_07..html,reference,only_v2,,2026_07.
+2026_07..html,title,diff,"Fourniture, mise en oeuvre d'un Security Operation Center (SOC) managé et Protection des identités.","Fourniture, mise en oeuvre d'un Security Operation Center (SOC) managé et Protection des identités"
+2026_07..html,buyer,match,Gaz Electricité de Grenoble,Gaz Electricité de Grenoble
+2026_07..html,cpv,diff,"['43821212', '72500000', '72222300', '81857697', '33480041']","['72500000', '72222300']"
+2026_07..html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/fourniture-mise-en-oeuvre-d-un-security-operation-cent/ao-9592936-1
+2026_07..html,location,diff,Grenoble (38042) - Isère (FRK24),38 - GRENOBLE
+2026_07..html,procedure_type,match,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+2026_07..html,contract_nature,only_v2,,Services
+2026_07..html,date_limite,match,2026-05-26T00:00:00,2026-05-26T00:00:00
+2026_07..html,duree_mois,only_v2,,48
+2026_07..html,estimation_eur,both_empty,,
+26-011.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+26-011.html,status,match,2,2
+26-011.html,reference,only_v2,,26-011
+26-011.html,title,diff,Tierce maintenance d'exploitation et de services des agences de l'eau.,Tierce maintenance d'exploitation et de services des agences de l'eau
+26-011.html,buyer,match,Agence de l'Eau Seine Normandie,Agence de l'Eau Seine Normandie
+26-011.html,cpv,diff,"['14120188', '72250000', '17950702', '72514000', '18750009']","['72250000', '72514000']"
+26-011.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/tierce-maintenance-d-exploitation-et-de-services-des-ag/ao-9595420-1
+26-011.html,location,diff,Courbevoie (92416) - Hauts-de-Seine ( FR105 ),92 - AGENCE DE L'EAU SEINE NORMANDIE
+26-011.html,procedure_type,match,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+26-011.html,contract_nature,match,Services,Services
+26-011.html,date_limite,match,2026-05-26T00:00:00,2026-05-26T00:00:00
+26-011.html,duree_mois,only_v2,,12
+26-011.html,estimation_eur,only_legacy,25000000.0,
+26-41049.html,source_type,match,BOAMP_XML,BOAMP_XML
+26-41049.html,status,diff,1,2
+26-41049.html,reference,match,DGFIP-DRS-2500077,DGFIP-DRS-2500077
+26-41049.html,title,diff,Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication.,Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication
+26-41049.html,buyer,match,Direction Générale des Finances Publiques,Direction Générale des Finances Publiques
+26-41049.html,cpv,diff,"['13000686', '33141635', '13000049']",['72220000']
+26-41049.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/DGFIP-DRS-2500077
+26-41049.html,location,diff,Montreuil (93186),Montreuil / Seine-Saint-Denis
+26-41049.html,procedure_type,only_v2,,Ouverte
+26-41049.html,contract_nature,only_v2,,Services
+26-41049.html,date_limite,only_legacy,2026-06-04T17:00:00,
+26-41049.html,duree_mois,only_v2,,48
+26-41049.html,estimation_eur,only_v2,,400000.0
+2600517.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+2600517.html,status,match,2,2
+2600517.html,reference,only_v2,,2600517
+2600517.html,title,match,Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP,Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP
+2600517.html,buyer,match,Ville de Paris,Ville de Paris
+2600517.html,cpv,diff,"['17750005', '17127026', '72250000', '21750001']",['72250000']
+2600517.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/maintien-en-condition-operationnelle-et-l-accompagneme/ao-9595379-1
+2600517.html,location,diff,PARIS (75013) - Paris ( FR101 ),75 - VILLE DE PARIS
+2600517.html,procedure_type,match,Ouverte,Ouverte
+2600517.html,contract_nature,match,Services,Services
+2600517.html,date_limite,match,2026-06-09T00:00:00,2026-06-09T00:00:00
+2600517.html,duree_mois,match,48,48
+2600517.html,estimation_eur,only_v2,,8500000.0
+2956468?orgAcronyme=g7h.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2956468?orgAcronyme=g7h.html,status,diff,1,2
+2956468?orgAcronyme=g7h.html,reference,only_legacy,Shom_26AC07,
+2956468?orgAcronyme=g7h.html,title,only_legacy,Maintien en conditions opérationnelles et de sécurité du Digital Workplace Odyssée du Shom,
+2956468?orgAcronyme=g7h.html,buyer,match,MINARM / ESTM / EPA / SHOM - Service hydrographique et océanographique de la Marine,MINARM / ESTM / EPA / SHOM - Service hydrographique et océanographique de la Marine
+2956468?orgAcronyme=g7h.html,cpv,match,"['72200000', '72267000']","['72200000', '72267000']"
+2956468?orgAcronyme=g7h.html,url_source,both_empty,,
+2956468?orgAcronyme=g7h.html,location,match,(29) Finistère,(29) Finistère
+2956468?orgAcronyme=g7h.html,procedure_type,only_v2,,Appel d'offres ouvert
+2956468?orgAcronyme=g7h.html,contract_nature,only_v2,,Services
+2956468?orgAcronyme=g7h.html,date_limite,match,2026-06-18T09:00:00,2026-06-18T09:00:00
+2956468?orgAcronyme=g7h.html,duree_mois,both_empty,,
+2956468?orgAcronyme=g7h.html,estimation_eur,both_empty,,
+2986378?orgAcronyme=f2h.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2986378?orgAcronyme=f2h.html,status,diff,1,2
+2986378?orgAcronyme=f2h.html,reference,only_legacy,A2026-018,
+2986378?orgAcronyme=f2h.html,title,match,Fourniture d'une solution de gestion pédagogique des doctorants,Fourniture d'une solution de gestion pédagogique des doctorants
+2986378?orgAcronyme=f2h.html,buyer,diff,EOESRI / COMUE - UdL - COMUE &quot;Université de Lyon&quot;,EOESRI / COMUE - UdL - COMUE &quot;Université de Lyon&quot
+2986378?orgAcronyme=f2h.html,cpv,match,['72260000'],['72260000']
+2986378?orgAcronyme=f2h.html,url_source,both_empty,,
+2986378?orgAcronyme=f2h.html,location,match,(69) Rhône,(69) Rhône
+2986378?orgAcronyme=f2h.html,procedure_type,only_v2,,Appel d'offres ouvert
+2986378?orgAcronyme=f2h.html,contract_nature,only_v2,,Services
+2986378?orgAcronyme=f2h.html,date_limite,match,2026-06-12T12:00:00,2026-06-12T12:00:00
+2986378?orgAcronyme=f2h.html,duree_mois,both_empty,,
+2986378?orgAcronyme=f2h.html,estimation_eur,both_empty,,
+2987833?orgAcronyme=f2h.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2987833?orgAcronyme=f2h.html,status,diff,1,2
+2987833?orgAcronyme=f2h.html,reference,only_legacy,2026-005,
+2987833?orgAcronyme=f2h.html,title,match,Réalisation d’opérations comptables et assistance fonctionnelle sur le système d’information financier et comptable SIFAC/SIFAC+ (S4/HANA SAP) de CentraleSupelec,Réalisation d’opérations comptables et assistance fonctionnelle sur le système d’information financier et comptable SIFAC/SIFAC+ (S4/HANA SAP) de CentraleSupelec
+2987833?orgAcronyme=f2h.html,buyer,match,EOESRI / SUPELEC - Centrale SUPELEC,EOESRI / SUPELEC - Centrale SUPELEC
+2987833?orgAcronyme=f2h.html,cpv,match,"['79211100', '72212440']","['79211100', '72212440']"
+2987833?orgAcronyme=f2h.html,url_source,both_empty,,
+2987833?orgAcronyme=f2h.html,location,match,(91) Essonne,(91) Essonne
+2987833?orgAcronyme=f2h.html,procedure_type,only_v2,,Appel d'offres ouvert
+2987833?orgAcronyme=f2h.html,contract_nature,only_v2,,Services
+2987833?orgAcronyme=f2h.html,date_limite,match,2026-06-12T12:00:00,2026-06-12T12:00:00
+2987833?orgAcronyme=f2h.html,duree_mois,both_empty,,
+2987833?orgAcronyme=f2h.html,estimation_eur,both_empty,,
+2990888?orgAcronyme=d3f.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2990888?orgAcronyme=d3f.html,status,diff,1,2
+2990888?orgAcronyme=d3f.html,reference,only_legacy,26_AMOE_AST,
+2990888?orgAcronyme=d3f.html,title,only_legacy,Accord-cadre d’assistance à maîtrise d’œuvre des applications du socle transverse,
+2990888?orgAcronyme=d3f.html,buyer,match,MJL / SG / DNUM - Direction du numérique,MJL / SG / DNUM - Direction du numérique
+2990888?orgAcronyme=d3f.html,cpv,match,"['72267100', '72227000']","['72267100', '72227000']"
+2990888?orgAcronyme=d3f.html,url_source,both_empty,,
+2990888?orgAcronyme=d3f.html,location,only_legacy,Ministère de la Justice,
+2990888?orgAcronyme=d3f.html,procedure_type,only_v2,,Appel d'offres ouvert
+2990888?orgAcronyme=d3f.html,contract_nature,only_v2,,Services
+2990888?orgAcronyme=d3f.html,date_limite,match,2026-06-17T14:00:00,2026-06-17T14:00:00
+2990888?orgAcronyme=d3f.html,duree_mois,both_empty,,
+2990888?orgAcronyme=d3f.html,estimation_eur,both_empty,,
+2992873?orgAcronyme=d4t.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2992873?orgAcronyme=d4t.html,status,diff,1,2
+2992873?orgAcronyme=d4t.html,reference,only_legacy,AOO_2026-02,
+2992873?orgAcronyme=d4t.html,title,match,Assistance à maîtrise d’ouvrage pour la conception et la passation de marchés publics de développement d’outils de gestion et de visualisation de données sur l’eau sur le bassin versant Marais poitevin,Assistance à maîtrise d’ouvrage pour la conception et la passation de marchés publics de développement d’outils de gestion et de visualisation de données sur l’eau sur le bassin versant Marais poitevin
+2992873?orgAcronyme=d4t.html,buyer,diff,"Ministère de la Transition Écologique, Ministère de la Cohésion des Territoires, Ministère de la Mer",MTES-MCTRCT-MER / EP / EP MP - Etablissement Public du Marais Poitevin
+2992873?orgAcronyme=d4t.html,cpv,match,"['48810000', '72222000', '71241000']","['48810000', '72222000', '71241000']"
+2992873?orgAcronyme=d4t.html,url_source,both_empty,,
+2992873?orgAcronyme=d4t.html,location,match,"(85) Vendée, (17) Charente-Maritime, (79) Deux-Sèvres","(85) Vendée, (17) Charente-Maritime, (79) Deux-Sèvres"
+2992873?orgAcronyme=d4t.html,procedure_type,only_v2,,Appel d'offres ouvert
+2992873?orgAcronyme=d4t.html,contract_nature,only_v2,,Services
+2992873?orgAcronyme=d4t.html,date_limite,match,2026-06-22T12:00:00,2026-06-22T12:00:00
+2992873?orgAcronyme=d4t.html,duree_mois,both_empty,,
+2992873?orgAcronyme=d4t.html,estimation_eur,both_empty,,
+2997383?orgAcronyme=s2d.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2997383?orgAcronyme=s2d.html,status,diff,1,2
+2997383?orgAcronyme=s2d.html,reference,match,B26-01107-LS,B26-01107-LS
+2997383?orgAcronyme=s2d.html,title,match,Prestations de tierce maintenance applicative (TMA) des Logiciels Systèmes Energétiques du CEA Liten,Prestations de tierce maintenance applicative (TMA) des Logiciels Systèmes Energétiques du CEA Liten
+2997383?orgAcronyme=s2d.html,buyer,match,AO / CEA / CEA / GRENOBLE - CENTRE DE GRENOBLE,AO / CEA / CEA / GRENOBLE - CENTRE DE GRENOBLE
+2997383?orgAcronyme=s2d.html,cpv,match,['72250000'],['72250000']
+2997383?orgAcronyme=s2d.html,url_source,both_empty,,
+2997383?orgAcronyme=s2d.html,location,match,(38) Isère,(38) Isère
+2997383?orgAcronyme=s2d.html,procedure_type,only_v2,,Appel d'offres ouvert
+2997383?orgAcronyme=s2d.html,contract_nature,only_v2,,Services
+2997383?orgAcronyme=s2d.html,date_limite,match,2026-06-10T16:00:00,2026-06-10T16:00:00
+2997383?orgAcronyme=s2d.html,duree_mois,both_empty,,
+2997383?orgAcronyme=s2d.html,estimation_eur,both_empty,,
+2998043?orgAcronyme=f2h.html,source_type,match,PLACE_NUMERIC,PLACE_NUMERIC
+2998043?orgAcronyme=f2h.html,status,diff,1,2
+2998043?orgAcronyme=f2h.html,reference,only_legacy,RFI_CRM_2026-02,
+2998043?orgAcronyme=f2h.html,title,only_legacy,"RFI ""Outil de connaissance et de gestion des relations extérieures du CNRS""",
+2998043?orgAcronyme=f2h.html,buyer,match,EOESRI / CNRS / CNRS - DR14 - CNRS Délégation Occitanie Ouest,EOESRI / CNRS / CNRS - DR14 - CNRS Délégation Occitanie Ouest
+2998043?orgAcronyme=f2h.html,cpv,match,['72212445'],['72212445']
+2998043?orgAcronyme=f2h.html,url_source,both_empty,,
+2998043?orgAcronyme=f2h.html,location,match,"(75) Paris, (92) Hauts-de-Seine, (31) Haute-Garonne","(75) Paris, (92) Hauts-de-Seine, (31) Haute-Garonne"
+2998043?orgAcronyme=f2h.html,procedure_type,only_v2,,Procédure autre
+2998043?orgAcronyme=f2h.html,contract_nature,only_v2,,Services
+2998043?orgAcronyme=f2h.html,date_limite,match,2026-06-15T12:00:00,2026-06-15T12:00:00
+2998043?orgAcronyme=f2h.html,duree_mois,both_empty,,
+2998043?orgAcronyme=f2h.html,estimation_eur,both_empty,,
+36parisien1157695-2026-infogerance-systeme-information.html,source_type,match,FRANCE_MARCHES,FRANCE_MARCHES
+36parisien1157695-2026-infogerance-systeme-information.html,status,diff,1,2
+36parisien1157695-2026-infogerance-systeme-information.html,reference,match,1157695,1157695
+36parisien1157695-2026-infogerance-systeme-information.html,title,diff,Infogérance du système d'information de la ville de Croissy-sur-Seine,Infogérance du système d'information de la ville de Croissy-sur-Seine Enregistrer cet appel d’offre Localisation : Yvelines (78) - Croissy-sur-Seine Date de clotûre
+36parisien1157695-2026-infogerance-systeme-information.html,buyer,match,Ville de Croissy-sur-Seine,Ville de Croissy-sur-Seine
+36parisien1157695-2026-infogerance-systeme-information.html,cpv,only_v2,[],['72600000']
+36parisien1157695-2026-infogerance-systeme-information.html,url_source,only_v2,,https://www.francemarches.com/appel-offre/36parisien1157695-2026-infogerance-systeme-information
+36parisien1157695-2026-infogerance-systeme-information.html,location,only_v2,,Plusieurs lieux
+36parisien1157695-2026-infogerance-systeme-information.html,procedure_type,only_v2,,Procédure adaptée
+36parisien1157695-2026-infogerance-systeme-information.html,contract_nature,only_v2,,Services
+36parisien1157695-2026-infogerance-systeme-information.html,date_limite,both_empty,,
+36parisien1157695-2026-infogerance-systeme-information.html,duree_mois,both_empty,,
+36parisien1157695-2026-infogerance-systeme-information.html,estimation_eur,both_empty,,
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,status,diff,1,2
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,reference,diff,37AO26154015290520267275,26_TMA_CASIER
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,title,diff,"Cadrage, la conception, le développement, le maintien en conditions opérationnelles et de sécurité et l'assistance pour les applications composant le système d'information du Casier Judiciaire",Accord-cadre
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,buyer,diff,Ministère de la Justice,Opérateur
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,cpv,only_v2,[],"['72267100', '72267000']"
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/26_TMA_CASIER
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,location,only_v2,,"Paris, Amiens, Nantes et locaux du titulaire / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Paris ( FR101 )"
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,procedure_type,only_v2,,Ouverte
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,contract_nature,only_v2,,Services
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,date_limite,both_empty,,
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,duree_mois,only_v2,,48
+37ao26154015290520267275-2026-cadrage-conception-developpement.html,estimation_eur,only_v2,,16000000.0
+37ao26181552260520267275-2026-prestations-assistance-technique.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+37ao26181552260520267275-2026-prestations-assistance-technique.html,status,diff,1,2
+37ao26181552260520267275-2026-prestations-assistance-technique.html,reference,diff,37AO26181552260520267275,07_26
+37ao26181552260520267275-2026-prestations-assistance-technique.html,title,only_legacy,"Prestations d'assistance technique, d'expertise et de conseil concernant les infrastructures, les services applicatifs et l'urbanisation du système d'information (' SI ') de la CNAF",
+37ao26181552260520267275-2026-prestations-assistance-technique.html,buyer,diff,CNAF Établissement public,Opérateur
+37ao26181552260520267275-2026-prestations-assistance-technique.html,cpv,only_v2,[],"['72220000', '72600000']"
+37ao26181552260520267275-2026-prestations-assistance-technique.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/07_26
+37ao26181552260520267275-2026-prestations-assistance-technique.html,location,only_v2,,"Paris / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Paris ( FR101 )"
+37ao26181552260520267275-2026-prestations-assistance-technique.html,procedure_type,only_v2,,Ouverte
+37ao26181552260520267275-2026-prestations-assistance-technique.html,contract_nature,only_v2,,Services
+37ao26181552260520267275-2026-prestations-assistance-technique.html,date_limite,both_empty,,
+37ao26181552260520267275-2026-prestations-assistance-technique.html,duree_mois,only_v2,,24
+37ao26181552260520267275-2026-prestations-assistance-technique.html,estimation_eur,only_v2,,8700000.0
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,status,diff,1,2
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,reference,diff,37AO26181581260520263294,DAF_2025_001001
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,title,only_legacy,Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM,
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,buyer,diff,Commissariat au Numérique de Défense (CND),Opérateur
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,cpv,only_v2,[],['72220000']
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/DAF_2025_001001
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,location,only_v2,,"Le Kremlin-Bicêtre / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider / Val-de-Marne ( FR107 )"
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,procedure_type,only_v2,,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,contract_nature,only_v2,,Services
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,date_limite,both_empty,,
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,duree_mois,only_v2,,66
+37ao26181581260520263294-2026-prestations-assistance-expertise.html,estimation_eur,only_v2,,18025000.0
+3boamp2640079-2026-mise-disposition-adaptation.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2640079-2026-mise-disposition-adaptation.html,status,diff,1,2
+3boamp2640079-2026-mise-disposition-adaptation.html,reference,diff,3/boamp/2640079,3boamp2640079-2026-mise-disposition-adaptation
+3boamp2640079-2026-mise-disposition-adaptation.html,title,diff,"Mise à disposition, adaptation et maintenance du système d'information financière destiné à la gestion budgétaire et comptable de la HAS, organisme en comptabilité budgétaire publique.","Mise à disposition, adaptation et maintenance du système d’information financière destiné à la gestion budgétaire et comptable de la HAS, organisme en comptabilité budgétaire publique, ainsi qu’à la préparation et au suivi d’exécution de son budget"
+3boamp2640079-2026-mise-disposition-adaptation.html,buyer,diff,Haute Autorité de Santé,Opérateur
+3boamp2640079-2026-mise-disposition-adaptation.html,cpv,only_v2,[],"['48442000', '72000000']"
+3boamp2640079-2026-mise-disposition-adaptation.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/273519-2026
+3boamp2640079-2026-mise-disposition-adaptation.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2640079-2026-mise-disposition-adaptation.html,procedure_type,only_v2,,Autre procédure en une seule étape
+3boamp2640079-2026-mise-disposition-adaptation.html,contract_nature,only_v2,,Services
+3boamp2640079-2026-mise-disposition-adaptation.html,date_limite,only_v2,,2026-07-08T00:00:00
+3boamp2640079-2026-mise-disposition-adaptation.html,duree_mois,only_v2,,48
+3boamp2640079-2026-mise-disposition-adaptation.html,estimation_eur,only_v2,,171.0
+3boamp2641049-2026-assistance-externe-pour.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2641049-2026-assistance-externe-pour.html,status,diff,1,2
+3boamp2641049-2026-assistance-externe-pour.html,reference,diff,3/boamp/2641049,DGFIP-DRS-2500077
+3boamp2641049-2026-assistance-externe-pour.html,title,diff,Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l'information et de la communication,Assistance externe pour la conduite de consultations organisées dans le cadre des dispositions du code de la commande publique pour les marchés de techniques de l’information et de la communication
+3boamp2641049-2026-assistance-externe-pour.html,buyer,diff,Direction Générale des Finances Publiques,Opérateur
+3boamp2641049-2026-assistance-externe-pour.html,cpv,only_v2,[],['72220000']
+3boamp2641049-2026-assistance-externe-pour.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/DGFIP-DRS-2500077
+3boamp2641049-2026-assistance-externe-pour.html,location,only_v2,,Montreuil / Seine-Saint-Denis
+3boamp2641049-2026-assistance-externe-pour.html,procedure_type,only_v2,,Ouverte
+3boamp2641049-2026-assistance-externe-pour.html,contract_nature,only_v2,,Services
+3boamp2641049-2026-assistance-externe-pour.html,date_limite,both_empty,,
+3boamp2641049-2026-assistance-externe-pour.html,duree_mois,only_v2,,48
+3boamp2641049-2026-assistance-externe-pour.html,estimation_eur,only_v2,,400000.0
+3boamp2641974-2026-maintien-condition-operationnelle.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2641974-2026-maintien-condition-operationnelle.html,status,diff,1,2
+3boamp2641974-2026-maintien-condition-operationnelle.html,reference,diff,3/boamp/2641974,3boamp2641974-2026-maintien-condition-operationnelle
+3boamp2641974-2026-maintien-condition-operationnelle.html,title,diff,Maintien en condition opérationnelle et l'accompagnement à l'évolution des infrastructures et services numériques de la Ville de Paris et du CASVP,Accord-cadre
+3boamp2641974-2026-maintien-condition-operationnelle.html,buyer,diff,VILLE de PARIS - DFA - SDA,VILLE DE PARIS-DFA-SDA
+3boamp2641974-2026-maintien-condition-operationnelle.html,cpv,only_v2,[],"['79995200', '30237380', '79999100', '30234400', '72250000', '79952000', '60181000', '22110000', '22112000', '22111000']"
+3boamp2641974-2026-maintien-condition-operationnelle.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/274985-2026
+3boamp2641974-2026-maintien-condition-operationnelle.html,location,only_v2,,Subdivision pays (NUTS) : Paris ( FR101 )
+3boamp2641974-2026-maintien-condition-operationnelle.html,procedure_type,only_v2,,Ouverte
+3boamp2641974-2026-maintien-condition-operationnelle.html,contract_nature,only_v2,,Services
+3boamp2641974-2026-maintien-condition-operationnelle.html,date_limite,only_v2,,2026-06-09T00:00:00
+3boamp2641974-2026-maintien-condition-operationnelle.html,duree_mois,only_v2,,48
+3boamp2641974-2026-maintien-condition-operationnelle.html,estimation_eur,only_v2,,171.0
+3boamp2642071-2026-assistance-ingenierie-coordination.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2642071-2026-assistance-ingenierie-coordination.html,status,diff,1,2
+3boamp2642071-2026-assistance-ingenierie-coordination.html,reference,diff,3/boamp/2642071,3boamp2642071-2026-assistance-ingenierie-coordination
+3boamp2642071-2026-assistance-ingenierie-coordination.html,title,diff,ASSISTANCE EN INGENIERIE DE COORDINATION DE PROJETS DATA \\\/ INGENIERIE D'EXPERTISE DATA AU SEIN DE LA DIRECTION DU SYSTEME D'INFORMATION DE LA REGION NOUVELLE-AQUITAINE,ASSISTANCE EN INGENIERIE DE COORDINATION DE PROJETS DATA / INGENIERIE D'EXPERTISE DATA AU SEIN DE LA DIRECTION DU SYSTEME D'INFORMATION DE LA REGION NOUVELLE-AQUITAINE
+3boamp2642071-2026-assistance-ingenierie-coordination.html,buyer,match,Région Nouvelle-Aquitaine,Région Nouvelle-Aquitaine
+3boamp2642071-2026-assistance-ingenierie-coordination.html,cpv,only_v2,[],"['72220000', '45421000']"
+3boamp2642071-2026-assistance-ingenierie-coordination.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/264857-2026
+3boamp2642071-2026-assistance-ingenierie-coordination.html,location,only_v2,,Subdivision pays (NUTS) : Gironde ( FRI12 )
+3boamp2642071-2026-assistance-ingenierie-coordination.html,procedure_type,only_v2,,Ouverte
+3boamp2642071-2026-assistance-ingenierie-coordination.html,contract_nature,only_v2,,Services
+3boamp2642071-2026-assistance-ingenierie-coordination.html,date_limite,only_v2,,2026-05-29T00:00:00
+3boamp2642071-2026-assistance-ingenierie-coordination.html,duree_mois,only_v2,,3
+3boamp2642071-2026-assistance-ingenierie-coordination.html,estimation_eur,only_v2,,171.0
+3boamp2642106-2026-acquisition-mise-oeuvre.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2642106-2026-acquisition-mise-oeuvre.html,status,diff,1,2
+3boamp2642106-2026-acquisition-mise-oeuvre.html,reference,diff,3/boamp/2642106,3boamp2642106-2026-acquisition-mise-oeuvre
+3boamp2642106-2026-acquisition-mise-oeuvre.html,title,match,Acquisition et mise en œuvre d'une solution ERP en mode SaaS avec site web marchand et application mobile,Acquisition et mise en œuvre d'une solution ERP en mode SaaS avec site web marchand et application mobile
+3boamp2642106-2026-acquisition-mise-oeuvre.html,buyer,diff,Association ASF Vacances,Opérateur
+3boamp2642106-2026-acquisition-mise-oeuvre.html,cpv,only_v2,[],['72000000']
+3boamp2642106-2026-acquisition-mise-oeuvre.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/288908-2026
+3boamp2642106-2026-acquisition-mise-oeuvre.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2642106-2026-acquisition-mise-oeuvre.html,procedure_type,only_v2,,Ouverte
+3boamp2642106-2026-acquisition-mise-oeuvre.html,contract_nature,only_v2,,Services
+3boamp2642106-2026-acquisition-mise-oeuvre.html,date_limite,only_v2,,2026-06-05T00:00:00
+3boamp2642106-2026-acquisition-mise-oeuvre.html,duree_mois,only_v2,,48
+3boamp2642106-2026-acquisition-mise-oeuvre.html,estimation_eur,only_v2,,171.0
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,status,diff,1,2
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,reference,diff,3/boamp/2642682,3boamp2642682-2026-renouvellement-maintenance-serveurs
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,title,match,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées,Renouvellement et maintenance des serveurs de sauvegarde et prestations associées
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,buyer,diff,SICIO,Opérateur
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,cpv,only_v2,[],['72250000']
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/294682-2026
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,procedure_type,only_v2,,Ouverte
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,contract_nature,only_v2,,Services
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,date_limite,only_v2,,2026-06-04T00:00:00
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,duree_mois,both_empty,,
+3boamp2642682-2026-renouvellement-maintenance-serveurs.html,estimation_eur,only_v2,,171.0
+3boamp2643374-2026-refonte-site-internet.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2643374-2026-refonte-site-internet.html,status,diff,1,2
+3boamp2643374-2026-refonte-site-internet.html,reference,diff,3/boamp/2643374,de la consultation
+3boamp2643374-2026-refonte-site-internet.html,title,only_legacy,REFONTE DU SITE INTERNET DE L'ACADEMIE FRANCAISE - HEBERGEMENT - MAINTENANCE,
+3boamp2643374-2026-refonte-site-internet.html,buyer,only_legacy,ACADEMIE FRANCAISE,
+3boamp2643374-2026-refonte-site-internet.html,cpv,only_v2,[],['72000000']
+3boamp2643374-2026-refonte-site-internet.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/de la consultation
+3boamp2643374-2026-refonte-site-internet.html,location,only_v2,,"PARIS / Votre code postal ne semble pas en France. Rien de grave, vous pouvez le modifier ou simplement valider"
+3boamp2643374-2026-refonte-site-internet.html,procedure_type,only_v2,,Procédure adaptée
+3boamp2643374-2026-refonte-site-internet.html,contract_nature,only_v2,,Services
+3boamp2643374-2026-refonte-site-internet.html,date_limite,both_empty,,
+3boamp2643374-2026-refonte-site-internet.html,duree_mois,both_empty,,
+3boamp2643374-2026-refonte-site-internet.html,estimation_eur,both_empty,,
+3boamp2643609-2026-prestations-services-informatiques.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2643609-2026-prestations-services-informatiques.html,status,diff,1,2
+3boamp2643609-2026-prestations-services-informatiques.html,reference,diff,3/boamp/2643609,M_3530
+3boamp2643609-2026-prestations-services-informatiques.html,title,diff,Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA,Prestations de services informatiques pour le développement et la maintenance des outils
+3boamp2643609-2026-prestations-services-informatiques.html,buyer,diff,GCS-UNIHA,Opérateur
+3boamp2643609-2026-prestations-services-informatiques.html,cpv,only_v2,[],"['72261000', '72200000', '72262000']"
+3boamp2643609-2026-prestations-services-informatiques.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/M_3530
+3boamp2643609-2026-prestations-services-informatiques.html,location,only_v2,,LYON / Rhône
+3boamp2643609-2026-prestations-services-informatiques.html,procedure_type,only_v2,,Ouverte
+3boamp2643609-2026-prestations-services-informatiques.html,contract_nature,only_v2,,Services
+3boamp2643609-2026-prestations-services-informatiques.html,date_limite,both_empty,,
+3boamp2643609-2026-prestations-services-informatiques.html,duree_mois,both_empty,,
+3boamp2643609-2026-prestations-services-informatiques.html,estimation_eur,both_empty,,
+3boamp2644098-2026-prestations-conseil-collecte.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2644098-2026-prestations-conseil-collecte.html,status,diff,1,2
+3boamp2644098-2026-prestations-conseil-collecte.html,reference,diff,3/boamp/2644098,3boamp2644098-2026-prestations-conseil-collecte
+3boamp2644098-2026-prestations-conseil-collecte.html,title,match,"Prestations de conseil, de collecte, de développement, d'exploitation de données pour le Data Office","Prestations de conseil, de collecte, de développement, d'exploitation de données pour le Data Office"
+3boamp2644098-2026-prestations-conseil-collecte.html,buyer,diff,Organisation qui passe un marché subventionné par un pouvoir adjudicateur,Opérateur
+3boamp2644098-2026-prestations-conseil-collecte.html,cpv,only_v2,[],['72600000']
+3boamp2644098-2026-prestations-conseil-collecte.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/302559-2026
+3boamp2644098-2026-prestations-conseil-collecte.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2644098-2026-prestations-conseil-collecte.html,procedure_type,only_v2,,Ouverte
+3boamp2644098-2026-prestations-conseil-collecte.html,contract_nature,only_v2,,Services
+3boamp2644098-2026-prestations-conseil-collecte.html,date_limite,only_v2,,2026-06-03T00:00:00
+3boamp2644098-2026-prestations-conseil-collecte.html,duree_mois,both_empty,,
+3boamp2644098-2026-prestations-conseil-collecte.html,estimation_eur,only_v2,,171.0
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,status,diff,1,2
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,reference,diff,3/boamp/2644226,2026-22
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,title,diff,"Assistance à maîtrise d'oeuvre : prestations d'expertise, de développements informatiques et d'assistance technique",Accord cadre mono/multi-attributaire en procèdure d'appel d'offre ouvert
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,buyer,diff,INSTITUT FRANCAIS DUCHEVAL ET DE L'EQUITATION,Opérateur
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,cpv,only_v2,[],['72500000']
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/2026-22
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,location,only_v2,,Arnac-Pompadour / Corrèze
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,procedure_type,only_v2,,Ouverte
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,contract_nature,only_v2,,Services
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,date_limite,both_empty,,
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,duree_mois,only_v2,,48
+3boamp2644226-2026-assistance-maitrise-oeuvre.html,estimation_eur,only_v2,,2000000.0
+3boamp2644837-2026-systeme-information-dpsm.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2644837-2026-systeme-information-dpsm.html,status,diff,1,2
+3boamp2644837-2026-systeme-information-dpsm.html,reference,diff,3/boamp/2644837,3boamp2644837-2026-systeme-information-dpsm
+3boamp2644837-2026-systeme-information-dpsm.html,title,match,TMA - TME DU SYSTEME D'INFORMATION DU DPSM,TMA - TME DU SYSTEME D'INFORMATION DU DPSM
+3boamp2644837-2026-systeme-information-dpsm.html,buyer,match,Bureau de Recherche en Géologie Minière (BRGM),Bureau de Recherche en Géologie Minière (BRGM)
+3boamp2644837-2026-systeme-information-dpsm.html,cpv,only_v2,[],['72610000']
+3boamp2644837-2026-systeme-information-dpsm.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/309435-2026
+3boamp2644837-2026-systeme-information-dpsm.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2644837-2026-systeme-information-dpsm.html,procedure_type,only_v2,,Ouverte
+3boamp2644837-2026-systeme-information-dpsm.html,contract_nature,only_v2,,Services
+3boamp2644837-2026-systeme-information-dpsm.html,date_limite,only_v2,,2026-06-05T00:00:00
+3boamp2644837-2026-systeme-information-dpsm.html,duree_mois,only_v2,,48
+3boamp2644837-2026-systeme-information-dpsm.html,estimation_eur,only_v2,,171.0
+3boamp2646966-2026-present-marche-pour?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2646966-2026-present-marche-pour?q=72200000.html,status,diff,1,2
+3boamp2646966-2026-present-marche-pour?q=72200000.html,reference,diff,3/boamp/2646966,2026-04
+3boamp2646966-2026-present-marche-pour?q=72200000.html,title,diff,Le présent marché a pour objet des prestations de maintien en condition opérationnelle de l'architecture technique de stockage de données et virtualisation de la HAS et des prestations associées.,PRESTATIONS DE SUPPORT ET MAINTENANCE LOGICIEL
+3boamp2646966-2026-present-marche-pour?q=72200000.html,buyer,diff,2026-04,Opérateur
+3boamp2646966-2026-present-marche-pour?q=72200000.html,cpv,only_v2,[],['72267100']
+3boamp2646966-2026-present-marche-pour?q=72200000.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/2026-04
+3boamp2646966-2026-present-marche-pour?q=72200000.html,location,only_v2,,Saint-Denis La Plaine Cedex / Seine-Saint-Denis
+3boamp2646966-2026-present-marche-pour?q=72200000.html,procedure_type,only_v2,,Restreinte
+3boamp2646966-2026-present-marche-pour?q=72200000.html,contract_nature,only_v2,,Services
+3boamp2646966-2026-present-marche-pour?q=72200000.html,date_limite,both_empty,,
+3boamp2646966-2026-present-marche-pour?q=72200000.html,duree_mois,only_v2,,12
+3boamp2646966-2026-present-marche-pour?q=72200000.html,estimation_eur,only_v2,,440000.0
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,status,diff,1,2
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,reference,diff,3/boamp/2647530,3boamp2647530-2026-missions-infogerance-systemes?q=72200000
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,title,match,MISSIONS D'INFOGERANCE DE SYSTEMES D'INFORMATION,MISSIONS D'INFOGERANCE DE SYSTEMES D'INFORMATION
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,buyer,match,Syndicat des énergies et de l'aménagement numérique de la Haute-Savoie (SYANE),Syndicat des énergies et de l'aménagement numérique de la Haute-Savoie (SYANE)
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,cpv,only_v2,[],"['72610000', '72514000']"
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,url_source,only_v2,,https://ted.europa.eu/fr/notice/-/detail/327362-2026
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,location,only_v2,,officiels de l’organisme acheteur public
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,procedure_type,only_v2,,Négociée avec publication préalable d’un appel à la concurrence / concurrentielle avec négociation
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,contract_nature,only_v2,,Services
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,date_limite,only_v2,,2026-06-11T00:00:00
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,duree_mois,only_v2,,12
+3boamp2647530-2026-missions-infogerance-systemes?q=72200000.html,estimation_eur,only_v2,,171.0
+3boamp2647639-2026-mise-place-outil?q=72200000.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+3boamp2647639-2026-mise-place-outil?q=72200000.html,status,diff,1,2
+3boamp2647639-2026-mise-place-outil?q=72200000.html,reference,diff,3/boamp/2647639,INPI-1847
+3boamp2647639-2026-mise-place-outil?q=72200000.html,title,diff,MIse en place d'un outil conversationnel (chatbot).,Mise en place d’un outil conversationnel (chatbot)
+3boamp2647639-2026-mise-place-outil?q=72200000.html,buyer,diff,Tribunal admnistratif Cergy-Pontoise,Opérateur
+3boamp2647639-2026-mise-place-outil?q=72200000.html,cpv,only_v2,[],['72000000']
+3boamp2647639-2026-mise-place-outil?q=72200000.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/INPI-1847
+3boamp2647639-2026-mise-place-outil?q=72200000.html,location,only_v2,,Courbevoie / Paris
+3boamp2647639-2026-mise-place-outil?q=72200000.html,procedure_type,only_v2,,Ouverte
+3boamp2647639-2026-mise-place-outil?q=72200000.html,contract_nature,only_v2,,Services
+3boamp2647639-2026-mise-place-outil?q=72200000.html,date_limite,both_empty,,
+3boamp2647639-2026-mise-place-outil?q=72200000.html,duree_mois,only_v2,,12
+3boamp2647639-2026-mise-place-outil?q=72200000.html,estimation_eur,both_empty,,
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,source_type,match,FRANCE_MARCHES,FRANCE_MARCHES
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,status,diff,1,2
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,reference,match,3/boamp/2648308,3/boamp/2648308
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,title,diff,Prestation IT : Réseau \\\/ Cloud \\\/ Sécurité,Prestation IT : Réseau / Cloud / Sécurité
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,buyer,match,SPL P.A.R.S.E.F,SPL P.A.R.S.E.F
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,cpv,only_v2,[],['72000000']
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,url_source,only_v2,,https://www.francemarches.com/appel-offre/3boamp2648308-2026-prestation-reseau-cloud
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,location,only_v2,,(77) Seine-et-Marne
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,procedure_type,only_v2,,Procédure adaptée
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,contract_nature,only_v2,,Services
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,date_limite,both_empty,,
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,duree_mois,both_empty,,
+3boamp2648308-2026-prestation-reseau-cloud?q=72200000.html,estimation_eur,both_empty,,
+DAF_2025_001001.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+DAF_2025_001001.html,status,match,2,2
+DAF_2025_001001.html,reference,only_v2,,DAF_2025_001001
+DAF_2025_001001.html,title,match,Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM,Prestations d'assistance et d'expertise pour la migration et le déploiement des systèmes d'information vers le cloud au profit du Centre Spécialisé Cloud du MINARM
+DAF_2025_001001.html,buyer,diff,MINDEF/DIRISI/Bureau Marchés.,MINDEF/DIRISI/Bureau Marchés
+DAF_2025_001001.html,cpv,diff,"['17770704', '01562033', '32786617', '96813755', '72220000']",['72220000']
+DAF_2025_001001.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/prestations-d-assistance-et-d-expertise-pour-la-migrati/ao-9591946-1
+DAF_2025_001001.html,location,diff,Le Kremlin-Bicêtre (94270) - Val-de-Marne ( FR107 ),94 - MINISTERE DES ARMEES
+DAF_2025_001001.html,procedure_type,match,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+DAF_2025_001001.html,contract_nature,match,Services,Services
+DAF_2025_001001.html,date_limite,match,2026-05-26T00:00:00,2026-05-26T00:00:00
+DAF_2025_001001.html,duree_mois,match,66,66
+DAF_2025_001001.html,estimation_eur,only_legacy,18025000.0,
+DDA.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+DDA.html,status,match,2,2
+DDA.html,reference,only_v2,,DDA
+DDA.html,title,match,Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure),Accord-cadre Infrastructure hyperconvergée et VDI (Virtual Desktop Infrastructure)
+DDA.html,buyer,match,Compagnie Nationale du Rhône,Compagnie Nationale du Rhône
+DDA.html,cpv,diff,"['17690111', '72263000', '48820000', '06838919', '72600000']","['48820000', '72263000', '72600000']"
+DDA.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/accord-cadre-infrastructure-hyperconvergee-et-vdi-vir/ao-9598475-1
+DDA.html,location,diff,Lyon (69004) - Rhône (FRK26),69 - LYON
+DDA.html,procedure_type,match,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation,Négociée avec publication préalable d'un appel à la concurrence / concurrentielle avec négociation
+DDA.html,contract_nature,only_v2,,Services
+DDA.html,date_limite,match,2026-06-10T00:00:00,2026-06-10T00:00:00
+DDA.html,duree_mois,only_v2,,96
+DDA.html,estimation_eur,both_empty,,
+Lot.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+Lot.html,status,match,2,2
+Lot.html,reference,only_v2,,Lot
+Lot.html,title,match,"Renouvellement du système d'information, virtualisation de serveurs, plateforme de stockage et système de sauvegarde","Renouvellement du système d'information, virtualisation de serveurs, plateforme de stockage et système de sauvegarde"
+Lot.html,buyer,match,Le Muretain Agglo,Le Muretain Agglo
+Lot.html,cpv,diff,"['51611100', '48800000', '53446614', '58005186', '20006864']","['48822000', '48800000']"
+Lot.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/renouvellement-du-systeme-d-information-virtualisatio/ao-9597894-1
+Lot.html,location,diff,MURET Cedex (31601) - Haute-Garonne ( FRJ23 ),31 - MURET
+Lot.html,procedure_type,match,Ouverte,Ouverte
+Lot.html,contract_nature,match,Fournitures,Fournitures
+Lot.html,date_limite,match,2026-06-02T00:00:00,2026-06-02T00:00:00
+Lot.html,duree_mois,match,60,60
+Lot.html,estimation_eur,both_empty,,
+M_3530.html,source_type,diff,FRANCE_MARCHES,BOAMP_XML
+M_3530.html,status,diff,1,2
+M_3530.html,reference,diff,3/boamp/2643609,M_3530
+M_3530.html,title,diff,Prestations de services informatiques pour le développement et la maintenance des outils informatiques du GCS UniHA,Prestations de services informatiques pour le développement et la maintenance des outils
+M_3530.html,buyer,diff,GCS-UNIHA,Opérateur
+M_3530.html,cpv,only_v2,[],"['72261000', '72262000']"
+M_3530.html,url_source,only_v2,,https://www.boamp.fr/avis/detail/M_3530
+M_3530.html,location,only_v2,,LYON / Rhône
+M_3530.html,procedure_type,only_v2,,Ouverte
+M_3530.html,contract_nature,only_v2,,Services
+M_3530.html,date_limite,both_empty,,
+M_3530.html,duree_mois,both_empty,,
+M_3530.html,estimation_eur,both_empty,,
+ao-9594452-1.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+ao-9594452-1.html,status,diff,1,2
+ao-9594452-1.html,reference,match,MO-9594452,MO-9594452
+ao-9594452-1.html,title,diff,"Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV..","Marché de prestations de maintenance d'assistance et d'infogérance du parc informatique, réseau et télécom de l'EPPGHV"
+ao-9594452-1.html,buyer,match,Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV),Etablissement Public du Parc et de la Grande Halle de la Villette (EPPGHV)
+ao-9594452-1.html,cpv,diff,"['72611000', '72500000', '72610000', '01400375', '01445944']","['72611000', '72500000', '72610000', '72600000']"
+ao-9594452-1.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/marche-de-prestations-de-maintenance-d-assistance-et-d/ao-9594452-1
+ao-9594452-1.html,location,diff,Paris (75019) - Paris ( FR101 ),75 - EPPGHV
+ao-9594452-1.html,procedure_type,match,Ouverte,Ouverte
+ao-9594452-1.html,contract_nature,match,Services,Services
+ao-9594452-1.html,date_limite,match,2026-06-01T00:00:00,2026-06-01T00:00:00
+ao-9594452-1.html,duree_mois,match,48,48
+ao-9594452-1.html,estimation_eur,only_legacy,660000.0,
+ao-9596025-2.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+ao-9596025-2.html,status,diff,1,2
+ao-9596025-2.html,reference,match,MO-9596025,MO-9596025
+ao-9596025-2.html,title,diff,Prestations de services informatiques pour le développement et la maintenance des outils informatiques.,Prestations de services informatiques pour le développement et la maintenance des outils informatiques
+ao-9596025-2.html,buyer,match,GCS UNIHA,GCS UNIHA
+ao-9596025-2.html,cpv,diff,"['72261000', '13000222', '17690005', '72200000', '72262000']","['72261000', '72200000', '72262000']"
+ao-9596025-2.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/prestations-de-services-informatiques-pour-le-developp/ao-9596025-2
+ao-9596025-2.html,location,diff,LYON (69003) - Rhône ( FRK26 ),69 - LYON
+ao-9596025-2.html,procedure_type,match,Ouverte,Ouverte
+ao-9596025-2.html,contract_nature,match,Services,Services
+ao-9596025-2.html,date_limite,match,2026-06-02T00:00:00,2026-06-02T00:00:00
+ao-9596025-2.html,duree_mois,match,48,48
+ao-9596025-2.html,estimation_eur,only_legacy,900000.0,
+ao-9597280-1.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+ao-9597280-1.html,status,diff,1,2
+ao-9597280-1.html,reference,match,MO-9597280,MO-9597280
+ao-9597280-1.html,title,diff,"Fourniture, mise en oeuvre et maintien en condition opérationnelle de l'infrastructure informatique de CMC.","Fourniture, mise en oeuvre et maintien en condition opérationnelle de l'infrastructure informatique de CMC"
+ao-9597280-1.html,buyer,match,Centre Morbihan Communauté,Centre Morbihan Communauté
+ao-9597280-1.html,cpv,diff,"['72222300', '29744225', '72250000', '17350005', '48000000']","['72250000', '48000000', '72222300']"
+ao-9597280-1.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/fourniture-mise-en-oeuvre-et-maintien-en-condition-op/ao-9597280-1
+ao-9597280-1.html,location,diff,LOCMINE CEDEX (56503) - Morbihan ( FRH04 ),56 - CC CENTRE MORBIHAN
+ao-9597280-1.html,procedure_type,match,Ouverte,Ouverte
+ao-9597280-1.html,contract_nature,match,Services,Services
+ao-9597280-1.html,date_limite,match,2026-06-02T00:00:00,2026-06-02T00:00:00
+ao-9597280-1.html,duree_mois,match,48,48
+ao-9597280-1.html,estimation_eur,only_legacy,450000.0,
+de.html,source_type,match,MARCHES_ONLINE,MARCHES_ONLINE
+de.html,status,match,2,2
+de.html,reference,only_v2,,de
+de.html,title,diff,Infogérance du système d'information de l'INSEAMM.,Infogérance du système d'information de l'INSEAMM
+de.html,buyer,match,ESADMM,ESADMM
+de.html,cpv,diff,"['20002920', '72500000']",['72500000']
+de.html,url_source,only_v2,,https://www.marchesonline.com/appels-offres/avis/infogerance-du-systeme-d-information-de-l-inseamm/ao-9589316-1
+de.html,location,match,13 - MARSEILLE,13 - MARSEILLE
+de.html,procedure_type,match,Procédure adaptée ouverte,Procédure adaptée ouverte
+de.html,contract_nature,only_v2,,Services
+de.html,date_limite,match,2026-05-29T00:00:00,2026-05-29T00:00:00
+de.html,duree_mois,both_empty,,
+de.html,estimation_eur,both_empty,,

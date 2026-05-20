@@ -1,7 +1,7 @@
 """Tests unitaires pour les sources V2 - validation et scoring."""
 
 import pytest
-from ao_etl.sources.validation_v2 import (
+from ao_etl.sources.validation import (
     normalize_text,
     is_valid_title,
     is_valid_buyer,
@@ -11,7 +11,7 @@ from ao_etl.sources.validation_v2 import (
     _TITLE_EXACT_BLACKLIST,
     _BUYER_EXACT_BLACKLIST,
 )
-from ao_etl.sources.base_v2 import FieldCandidate, ExtractionTrace
+from ao_etl.sources.base import FieldCandidate, ExtractionTrace
 
 
 class TestNormalizeText:

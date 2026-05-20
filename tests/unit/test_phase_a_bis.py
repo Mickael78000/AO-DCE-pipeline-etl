@@ -12,8 +12,8 @@ from pathlib import Path
 
 import pytest
 
-from ao_etl.sources.router_v2 import extract_from_html
-from ao_etl.sources.validation_v2 import normalize_text
+from ao_etl.sources.router import extract_from_html
+from ao_etl.sources.validation import normalize_text
 
 # ---------------------------------------------------------------------------
 # Helpers
