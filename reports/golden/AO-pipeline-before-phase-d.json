@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-05-20T18:59:18.834407",
+  "version": "2.0.0",
+  "files_discovered": 63,
+  "files_by_category": {
+    "joue": 19,
+    "standard": 15,
+    "place_numeric": 7,
+    "france_marches": 4,
+    "boamp_xml": 15,
+    "marches_online": 3
+  },
+  "aliases_found": 0,
+  "files_matched": 2,
+  "new_markets": 61,
+  "orphans": 0,
+  "collisions": 0,
+  "aliases_ignored": 0,
+  "rows_preserved": 0,
+  "rows_updated": 2,
+  "rows_added": 61,
+  "total_rows": 63,
+  "validation_passed": false,
+  "unique_references": 60,
+  "duplicate_references": 3,
+  "buyer_completion_rate": 96.82539682539682,
+  "new_rows_with_issues": 6,
+  "anomalies": [
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "DGFIP-DRS-2500077",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "DGFIP-DRS-2500077",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "DAF_2025_001001",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "DAF_2025_001001",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "M_3530",
+      "message": "Référence dupliquée (2 occurrences)"
+    },
+    {
+      "type": "error",
+      "field": "Référence",
+      "reference": "M_3530",
+      "message": "Référence dupliquée (2 occurrences)"
+    }
+  ],
+  "output_csv": "reports/golden/AO-pipeline-before-phase-d.csv",
+  "output_report_json": "reports/golden/AO-pipeline-before-phase-d.json"
+}
