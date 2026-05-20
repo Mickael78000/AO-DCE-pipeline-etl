@@ -35,7 +35,38 @@ class JoueExtractor(BaseExtractor):
         
         # 2. Collecter les candidats titre
         title_candidates = []
-        
+        soup = self.context.soup
+
+        # DOM-first: chercher span.class='data' sibling du label "Titre"
+        for label_span in soup.find_all('span'):
+            if not re.match(r'^Titre$', label_span.get_text(strip=True), re.I):
+                continue
+            parent = label_span.parent
+            if parent is None:
+                continue
+            data_span = parent.find('span', class_='data')
+            if data_span:
+                val = normalize_text(data_span.get_text(strip=True))
+                if val and len(val) >= 10:
+                    title_candidates.append(FieldCandidate("title", val, "dom_titre_data", score=55))
+                    break
+            # Variante: parcourir les siblings après le label
+            found_label = False
+            for sibling in parent.children:
+                if not hasattr(sibling, 'get_text'):
+                    continue
+                if sibling is label_span:
+                    found_label = True
+                    continue
+                if not found_label:
+                    continue
+                sib_text = normalize_text(sibling.get_text(strip=True))
+                if not sib_text or sib_text in (':', ': '):
+                    continue
+                if len(sib_text) >= 10:
+                    title_candidates.append(FieldCandidate("title", sib_text, "dom_titre_sibling", score=50))
+                break
+
         # Pattern: Objet / Description
         m = re.search(r"Objet\s*:\s*([^.\n]{10,300})", text, re.I)
         if m:
@@ -46,8 +77,8 @@ class JoueExtractor(BaseExtractor):
                 score=40
             ))
         
-        # Pattern: Titre du marché
-        m = re.search(r"Titre\s*:\s*([^.\n]{10,300})", text, re.I)
+        # Pattern: Titre du marché — s'arrête sur fin de ligne (tolère les virgules)
+        m = re.search(r"Titre\s*:\s*([^\n]{10,400})", text, re.I)
         if m:
             title_candidates.append(FieldCandidate(
                 "title",
@@ -56,32 +87,30 @@ class JoueExtractor(BaseExtractor):
                 score=45
             ))
         
-        # 3. Collecter les candidats acheteur
+        # 3. Collecter les candidats acheteur (DOM-first + regex fallback)
         buyer_candidates = []
-        
-        # Nom et adresse de l'autorité
-        m = re.search(
-            r"Nom\s+et\s+adresse\s+de\s+l['']?autorit[ée]\s+attribuant\s+le\s+march[ée]\s*:\s*([^.\n]{3,150})",
-            text,
-            re.I
-        )
-        if m:
-            buyer_candidates.append(FieldCandidate(
-                "buyer",
-                normalize_text(m.group(1)),
-                "autorite_attribuant",
-                score=45
-            ))
-        
-        # Acheteur public
-        m = re.search(r"Acheteur\s+public\s*:\s*([^.\n]{3,150})", text, re.I)
-        if m:
-            buyer_candidates.append(FieldCandidate(
-                "buyer",
-                normalize_text(m.group(1)),
-                "acheteur_public",
-                score=40
-            ))
+
+        # DOM-first extraction pour JOUE (section I.1 Nom officiel)
+        dom_buyer = self._extract_buyer_dom()
+        if dom_buyer:
+            buyer_candidates.append(FieldCandidate("buyer", dom_buyer, "dom_nom_officiel", score=50))
+
+        # Patterns regex fallback - patterns simplifiés pour matcher l'autorité
+        buyer_patterns = [
+            # Pattern prioritaire: Nom et adresse de l'autorité attribuant le marché
+            # Utilise .*? pour capturer tout après le : jusqu'à la fin de ligne
+            (r"Nom\s+et\s+adresse\s+de\s+l.*?autorit[ée].*?attribuant.*?march[ée].*?[:\-]\s*(.+?)(?:\n|</p>|$)", 'autorite_attribuant'),
+            (r"Nom\s+officiel\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|\s*Adresse|\s*Code\s+postal|$)", 'nom_officiel'),
+            (r"Nom\s+complet\s+de\s+l.*?acheteur\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|$)", 'nom_complet'),
+            (r"Acheteur\s+public\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|$)", 'acheteur_public'),
+        ]
+        for pattern, rule in buyer_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = normalize_text(m.group(1))
+                # Rejeter les numéros de section (1.1, 2.3, etc.)
+                if val and len(val) > 3 and not re.match(r'^\d+(\.\d+)*$', val):
+                    buyer_candidates.append(FieldCandidate("buyer", val, rule, score=45 if 'autorite' in rule else 40))
         
         # 4. Champs structurés
         result.location = self._extract_location(text)
@@ -96,6 +125,12 @@ class JoueExtractor(BaseExtractor):
         
         # 5. URL source (JOUE/TED)
         result.raw['url_source'] = self._build_url(result.reference)
+        
+        # 5.5 CPV codes
+        result.raw['cpv_codes'] = self._extract_cpv()
+        
+        # 5.6 Duration months
+        result.raw['duration_months'] = self._extract_duration_months()
         
         # 6. Sélectionner le meilleur titre
         result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
@@ -115,19 +150,81 @@ class JoueExtractor(BaseExtractor):
     
     def _extract_reference(self, text: str) -> str:
         """Extrait la référence JOUE (13/joue/XXXXXXXX)."""
-        # Pattern dans le texte
+        # Pattern dans le texte: 13/joue/XXXXXXXX (préserve les zéros initiaux)
         m = re.search(r"13/joue/(\d{8,12})", text, re.I)
         if m:
             return f"13/joue/{m.group(1)}"
-        
-        # Fallback: depuis le nom de fichier
+
+        # Fallback: depuis le nom de fichier (13joueXXXXXXXXYYYY → 13/joue/XXXXXXXXYYYY)
+        # Format: 13joue002671162026 où 00267116 est le numéro et 2026 l'année
         name = self.filename()
         m = re.match(r"13joue(\d{8,12})", name, re.I)
         if m:
             return f"13/joue/{m.group(1)}"
-        
+
+        # Dernier fallback: extraire tout ce qui ressemble à 13joue
+        m = re.search(r"13joue([a-z0-9]+)", name, re.I)
+        if m:
+            return f"13/joue/{m.group(1)}"
+
         return name.replace('.html', '')
-    
+
+    _BUYER_LABEL_BLACKLIST = frozenset([
+        "opérateur", "opérateur économique", "nom officiel",
+        "adresse", "1.1", "i.1", "pouvoir adjudicateur",
+        "autorité contractante", "entité adjudicatrice",
+    ])
+
+    def _extract_buyer_dom(self) -> str:
+        """Extrait l'acheteur via DOM-first approach (section I.1 Nom officiel).
+
+        Structure JOUE/BOAMP attendue dans le DOM :
+          <div>
+            <span class="label">Nom officiel</span>
+            <span>: </span>
+            <span class="data">VALEUR</span>
+          </div>
+        ou variante sans classes:
+          <div>
+            <span class="fr-text--bold">Nom officiel</span>
+            <span>:</span>
+            <span>VALEUR</span>
+          </div>
+        """
+        soup = self.context.soup
+
+        for label_span in soup.find_all('span'):
+            if not re.match(r'^Nom\s+officiel$', label_span.get_text(strip=True), re.I):
+                continue
+            parent = label_span.parent
+            if parent is None:
+                continue
+            # Chercher le span suivant contenant la vraie valeur
+            # (sauter le span du séparateur ":")
+            found_label = False
+            for sibling in parent.children:
+                if not hasattr(sibling, 'get_text'):
+                    continue
+                if sibling is label_span:
+                    found_label = True
+                    continue
+                if not found_label:
+                    continue
+                sib_text = normalize_text(sibling.get_text())
+                if not sib_text or sib_text in (':', ': '):
+                    continue
+                if len(sib_text) > 3 and not re.match(r'^\d+(\.\d+)*$', sib_text):
+                    if sib_text.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                        return sib_text
+            # Fallback: span.class='data' inside parent
+            data_span = parent.find('span', class_='data')
+            if data_span:
+                val = normalize_text(data_span.get_text())
+                if val and len(val) > 3 and val.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                    return val
+
+        return ""
+
     def _extract_deadline(self, text: str) -> str:
         """Extrait la date limite de réception des offres."""
         # Pattern: Date limite de réception des offres ou des candidatures
@@ -226,7 +323,7 @@ class JoueExtractor(BaseExtractor):
         """Extrait la localisation (amélioré)."""
         # Lieu d'exécution principal
         m = re.search(
-            r"Lieu\s+d['']?ex[ée]cution\s*[:\-]?\s*([^.\n,]{3,100}(?:,\s*[^.\n]{3,50})?)",
+            r"Lieu\s+d[']?ex[ée]cution\s*[:\-]?\s*([^\.\n,]{3,100}(?:,\s*[^\.\n]{3,50})?)",
             text,
             re.I
         )

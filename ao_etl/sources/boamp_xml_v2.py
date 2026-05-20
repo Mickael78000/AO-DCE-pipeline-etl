@@ -34,22 +34,37 @@ class BoampExtractor(BaseExtractor):
             FieldCandidate("title", self._value_after_label(text, "Titre"), "label_titre", score=40),
         ]
         
-        # 2. Collecter les candidats acheteur
-        buyer_candidates = [
-            FieldCandidate("buyer", self._value_after_label(text, "Nom officiel"), "label_nom_officiel", score=40),
-            FieldCandidate("buyer", self._value_after_label(text, "Acheteur"), "label_acheteur", score=30),
+        # 2. Collecter les candidats acheteur (DOM-first, puis regex fallback)
+        buyer_candidates = []
+
+        # DOM-first extraction (section I.1)
+        dom_buyer = self._extract_buyer_dom()
+        if dom_buyer:
+            buyer_candidates.append(FieldCandidate("buyer", dom_buyer, "dom_nom_officiel", score=50))
+
+        # Regex fallback patterns
+        buyer_patterns = [
+            (r'Nom\s+officiel\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|\s*Adresse|\s*Code\s+postal|$)', 'regex_nom_officiel'),
+            (r'Nom\s+complet\s+de\s+l\'?acheteur\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|\s*Adresse|$)', 'regex_nom_complet'),
+            (r'Acheteur\s+public\s*[:\-]?\s*([^<\n]{3,200}?)(?:\s*<|$)', 'regex_acheteur_public'),
         ]
-        
-        # Rejeter explicitement les faux candidats
+        for pattern, rule in buyer_patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = normalize_text(m.group(1))
+                if val and len(val) > 3 and not re.match(r'^\d+(\.\d+)*$', val):
+                    buyer_candidates.append(FieldCandidate("buyer", val, rule, score=40))
+
+        # Rejeter explicitement les faux candidats (organisation d'info complémentaire)
         org_info = self._value_after_label(
-            text, 
+            text,
             "Organisation qui fournit des informations complémentaires sur la procédure de passation de marché"
         )
         if org_info:
-            buyer_candidates.append(FieldCandidate("buyer", org_info, "org_info_complementaires", score=-50))
+            buyer_candidates.append(FieldCandidate("buyer", org_info, "org_info_complementaires", score=-100))
         
         # 3. Champs structurés directs
-        result.reference = self._value_after_label(text, "Identifiant interne")
+        result.reference = self._extract_reference(text)
         result.estimation = self._money_after_label(text, "Valeur estimée hors TVA")
         result.duration = self._duration(text)
         result.deadline = self._deadline(text)
@@ -63,7 +78,13 @@ class BoampExtractor(BaseExtractor):
         # 4. URL source (BOAMP)
         result.raw['url_source'] = self._build_url(text)
         
-        # 4. Sélectionner le meilleur titre
+        # 4.5 CPV codes
+        result.raw['cpv_codes'] = self._extract_cpv()
+        
+        # 4.6 Duration months
+        result.raw['duration_months'] = self._extract_duration_months()
+        
+        # 5. Sélectionner le meilleur titre
         result.title, traces = pick_best_candidate(title_candidates, is_valid_title, score_title)
         for trace in traces:
             result.add_trace(trace)
@@ -80,10 +101,102 @@ class BoampExtractor(BaseExtractor):
         return result
 
     def _value_after_label(self, text: str, label: str) -> str:
-        """Extrait la valeur après un label (pattern label\\n+valeur)."""
-        pattern = re.compile(rf"{re.escape(label)}\s*\n+(.+?)(?:\n|$)", re.I)
-        m = pattern.search(text)
-        return normalize_text(m.group(1)) if m else ""
+        """Extrait la valeur après un label avec plusieurs patterns."""
+        patterns = [
+            # Pattern 1: Label suivi de : ou - puis valeur
+            rf"{re.escape(label)}\s*[:\-]?\s*(.+?)(?:\n|</|\Z)",
+            # Pattern 2: Label sur sa ligne puis valeur sur ligne suivante
+            rf"{re.escape(label)}\s*\n+(.+?)(?:\n|</|\Z)",
+            # Pattern 3: Label dans balise, valeur dans balise suivante
+            rf">{re.escape(label)}<[^>]*>\s*(.+?)(?:\n|</|\Z)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text, re.I)
+            if m:
+                val = normalize_text(m.group(1))
+                # Rejeter les valeurs qui sont juste des numéros de section (1.1, 2.3, etc.)
+                if val and not re.match(r'^\d+(\.\d+)*$', val):
+                    return val
+        return ""
+
+    _BUYER_LABEL_BLACKLIST = frozenset([
+        "opérateur", "opérateur économique", "nom officiel",
+        "adresse", "1.1", "i.1", "pouvoir adjudicateur",
+        "autorité contractante", "entité adjudicatrice",
+    ])
+
+    def _extract_buyer_dom(self) -> str:
+        """Extrait l'acheteur via DOM-first approach (section I.1 Nom officiel).
+
+        Structure JOUE/BOAMP attendue dans le DOM :
+          <div>
+            <span class="label">Nom officiel</span>
+            <span>: </span>
+            <span class="data">VALEUR</span>
+          </div>
+        ou variante sans classes:
+          <div>
+            <span class="fr-text--bold">Nom officiel</span>
+            <span>:</span>
+            <span>VALEUR</span>
+          </div>
+        """
+        soup = self.context.soup
+
+        for label_span in soup.find_all('span'):
+            if not re.match(r'^Nom\s+officiel$', label_span.get_text(strip=True), re.I):
+                continue
+            parent = label_span.parent
+            if parent is None:
+                continue
+            # Chercher le span suivant contenant la vraie valeur
+            # (sauter le span du séparateur ":")
+            found_label = False
+            for sibling in parent.children:
+                if not hasattr(sibling, 'get_text'):
+                    continue
+                if sibling is label_span:
+                    found_label = True
+                    continue
+                if not found_label:
+                    continue
+                sib_text = normalize_text(sibling.get_text())
+                if not sib_text or sib_text in (':', ': '):
+                    continue
+                if len(sib_text) > 3 and not re.match(r'^\d+(\.\d+)*$', sib_text):
+                    if sib_text.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                        return sib_text
+            # Fallback: span.class='data' inside parent
+            data_span = parent.find('span', class_='data')
+            if data_span:
+                val = normalize_text(data_span.get_text())
+                if val and len(val) > 3 and val.casefold() not in self._BUYER_LABEL_BLACKLIST:
+                    return val
+
+        return ""
+
+    def _extract_reference(self, text: str) -> str:
+        """Extrait la référence BOAMP depuis 'Identifiant interne' ou nom de fichier."""
+        # 1. "Identifiant interne" - PRIORITÉ MAX
+        ref = self._value_after_label(text, "Identifiant interne")
+        if ref and len(ref) < 60 and ref != '-':
+            return ref
+
+        # 2. Pattern fichier BOAMP dans le nom (26-XXXXX.html ou 3boampXXXX.html)
+        name = self.filename().lower()
+
+        # 26-41049.html → 26-41049
+        m = re.search(r'(26-\d+)', name)
+        if m:
+            return m.group(1)
+
+        # 3boamp2640079.html → 3/boamp/2640079
+        m = re.search(r'(\dboamp\d+)', name)
+        if m:
+            ref = m.group(1)
+            return f"{ref[0]}/boamp/{ref[6:]}"
+
+        return ""
 
     def _money_after_label(self, text: str, label: str) -> str:
         """Extrait une valeur monétaire après un label (plusieurs patterns)."""
